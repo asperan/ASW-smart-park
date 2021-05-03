@@ -2,14 +2,16 @@ import express from 'express';
 import cors from 'cors';
 
 const app = express();
+const cityRoutes = require('./routes/city-routes');
+const parkingRoutes = require('./routes/parking-routes');
+
 app.use(express.json());
 app.use(cors());
 
 const PORT = 3000;
 
-app.get("/", (req, res) => {
-    res.status(200).json({ message: "Hello, world!"});
-});
+app.use('/api/city', cityRoutes);
+app.use('/api/parking', parkingRoutes);
 
 app.listen(PORT, () => {
     console.log("Listening on port " + PORT);
