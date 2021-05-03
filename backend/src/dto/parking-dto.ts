@@ -1,18 +1,17 @@
+import { Coordinates } from "../data/Coordinates";
 import { Parking } from "../models/parking-model";
 
 export class ParkingDto {
 
     currentOccupancy: number;
-    longitude: number;
-    latitude: number;
+    coordinates: Coordinates;
 
-    constructor(currentOccupancy: number, longitude: number, latitude: number) {
+    constructor(currentOccupancy: number, coordinates: Coordinates ) {
         this.currentOccupancy = currentOccupancy;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.coordinates = this.coordinates = coordinates;
     }
 
     static fromModel(parking: Parking): ParkingDto {
-        return new ParkingDto(parking.currentOccupancy, parking.latitude, parking.longitude);
+        return new ParkingDto(parking.currentOccupancy, parking.coordinates);
     }
 }

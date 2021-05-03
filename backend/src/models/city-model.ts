@@ -1,15 +1,15 @@
+import { Coordinates } from "../data/Coordinates";
+
 export class City {
 
     id: number;
     name: string;
-    longitude: number;
-    latitude: number;
+    coordinates: Coordinates;
 
-    constructor(id: number, name: string, longitude: number, latitude: number) {
+    constructor(id: number, name: string, coordinates: Coordinates) {
         this.id = id;
         this.name = name;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.coordinates = coordinates;
     }
 }
 
@@ -23,14 +23,18 @@ const CITIES = {
     "Cesena": new City(
         1,
         "Cesena",
-        44.1390945,
-        12.2429281
-    ), 
+        new Coordinates(
+            44.1390945,
+            12.2429281
+        )
+    ),
     "Rimini": new City(
         2,
         "Rimini",
-        44.059444,
-        12.568333
+        new Coordinates(
+            44.059444,
+            12.568333
+        )
     )
 }
 
@@ -39,6 +43,10 @@ function findAllCities(): Array<City> {
         CITIES.Cesena,
         CITIES.Rimini
     ];
+}
+
+function findCityById(id: number): City {
+    return CITIES.Cesena;
 }
 
 function findCitiesByPartialName(name: String): Array<City> {
@@ -51,5 +59,6 @@ function findCitiesByPartialName(name: String): Array<City> {
 
 module.exports = {
     findAllCities,
+    findCityById,
     findCitiesByPartialName
 }
