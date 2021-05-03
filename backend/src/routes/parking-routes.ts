@@ -1,11 +1,13 @@
 import express from 'express';
+import { body, validationResult} from 'express-validator';
+import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../common/validation';
 import { Coordinates } from '../data/Coordinates';
 
 const parkingController = require('../controllers/parking-controller');
 const routes = require('express').Router();
 
 routes.get(
-    '/:cityId/all/',
+    '/all/:cityId/',
     (req: express.Request, res: express.Response) => {
         const cityId = req.params.cityId;
         const parkings = parkingController.getParkingInCity(cityId);
@@ -13,21 +15,31 @@ routes.get(
     });
 
 routes.get(
-    '/:cityId/radius',
+    '/radius/',
+    body("cityId").exists(),
+    body("latitude").exists(),
+    body("longitude").exists(),
+    body("radiusKM").exists(),
     (req: express.Request, res: express.Response) => {
-        const cityId = req.params.cityId;
+        validateExpressArgumentsNoErrorsElseReturnBadArguments(req, res);
+
+        const cityId = req.body.cityId;
         const latitude = req.body.latitude;
         const longitude = req.body.longitude;
         const radiusKm = req.body.radiusKM;
 
-        const parkings = parkingController.findAvailableParkingByCityIdWithinRadiusFromPoint(cityId, new Coordinates(latitude, longitude), radiusKm);
+        const parkings = parkingController.getParkingInCityIdWithinRadiusFromPoint(cityId, new Coordinates(latitude, longitude), radiusKm);
         res.json(parkings);
     });
 
     routes.get(
-        '/:cityId/radius-center',
+        '/radius-center/',
+        body("cityId").exists(),
+        body("radiusKM").exists(),
         (req: express.Request, res: express.Response) => {
-            const cityId = req.params.cityId;
+            validateExpressArgumentsNoErrorsElseReturnBadArguments(req, res);
+
+            const cityId = req.body.cityId;
             const radiusKm = req.body.radiusKM;
     
             const parkings = parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId, radiusKm);

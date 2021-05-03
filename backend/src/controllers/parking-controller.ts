@@ -8,8 +8,8 @@ function getParkingInCity(cityId: number): Array<ParkingDto> {
     return parkingService.findAvailableParkingByCityId(cityId).map((p: Parking) => ParkingDto.fromModel(p));
 }
 
-function getParkingInCityIdWithinRadius(cityId: number, center: Coordinates, radiusKm: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityIdWithinRadius(cityId, center, radiusKm).map((p: Parking) => ParkingDto.fromModel(p));
+function getParkingInCityIdWithinRadiusFromPoint(cityId: number, center: Coordinates, radiusKm: number): Array<ParkingDto> {
+    return parkingService.findAvailableParkingByCityIdWithinRadiusFromPoint(cityId, center, radiusKm).map((p: Parking) => ParkingDto.fromModel(p));
 }
 
 function getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, radiusKm: number): Array<ParkingDto> {
@@ -18,6 +18,6 @@ function getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, r
 
 module.exports = {
     getParkingInCity,
-    getParkingInCityIdWithinRadius,
+    getParkingInCityIdWithinRadiusFromPoint,
     getAvailableParkingByCityIdWithinRadiusFromCityCenter
 }
