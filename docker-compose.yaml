@@ -1,7 +1,7 @@
 version: '3'
 
-# volumes:
-  # mongo-datastore:
+volumes:
+  mongo-datastore:
 
 services: 
   frontend:
@@ -19,16 +19,16 @@ services:
       - 3000
     ports:
     - "3000:3000" # For debug purpose only
-    # depends_on:
-    #   - mongo
+    depends_on:
+      - mongo
 
-  # mongo:
-  #   build: ./mongo
-  #   volumes: 
-  #     - mongo-datastore:/data/db
-  #   expose:
-  #     - 27017
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
-  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASS}
-  #     MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
+  mongo:
+    build: ./mongo
+    volumes: 
+      - mongo-datastore:/data/db
+    expose:
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASS}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
