@@ -19,7 +19,14 @@ function main() {
 }
 
 function connectToMongoDB() {
-    MongoConnection.connect(config.db.url, config.db.name);
+    const username = config.db.username;
+    const password = config.db.password;
+    const host = config.db.host;
+    const port = config.db.port;
+    const dbName = config.db.name;
+
+    const connectionString = `mongodb://${username}:${password}@${host}:${port}`;
+    MongoConnection.connect(connectionString, dbName);
 }
 
 function configureMiddleware() {
