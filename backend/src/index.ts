@@ -7,9 +7,7 @@ const app = express();
 const cityRoutes = require('./routes/city-routes');
 const parkingRoutes = require('./routes/parking-routes');
 
-const PORT = 3000;
-const DB_URI = "";
-const DB_NAME = "";
+const config = require('../config/config.json');
 
 main();
 
@@ -21,7 +19,7 @@ function main() {
 }
 
 function connectToMongoDB() {
-    MongoConnection.connect(DB_URI, DB_NAME);
+    MongoConnection.connect(config.db.url, config.db.name);
 }
 
 function configureMiddleware() {
@@ -35,7 +33,7 @@ function configureRoutes() {
 }
 
 function startServer() {
-    app.listen(PORT, () => {
-        console.log("Listening on port " + PORT);
+    app.listen(config.server.port, () => {
+        console.log("Listening on port " + config.server.port);
     });
 }
