@@ -1,0 +1,10 @@
+<div class="component-content">
+  <form #userlogin="ngForm" (ngSubmit) = "onSubmit(userlogin.value)">
+    <label class="form-label" >Email: <input type="email" name="email" ngModel/></label>
+    <label class="form-label" >Password: <input type="password" name="password" ngModel/></label>
+    <input type="submit" value="{{ isSignup ? 'Sign up' : 'Sign in' }}" />
+  </form>
+  <a routerLink="{{ isSignup ? '/signin' : '/signup'}}">
+    {{ isSignup ? "Already have an account? Sign in!" : "Don't have an account? Sign up!" }}
+  </a>
+</div>
