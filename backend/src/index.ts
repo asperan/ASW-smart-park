@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { MongoConnection } from './common/mongo-client';
 import { mainModule } from 'node:process';
+import { setSignupRoutes } from './routes/signup-routes';
 
 const app = express();
 const cityRoutes = require('./routes/city-routes');
@@ -37,6 +38,7 @@ function configureMiddleware() {
 function configureRoutes() {
     app.use('/api/city', cityRoutes);
     app.use('/api/parking', parkingRoutes);
+    setSignupRoutes(app);
 }
 
 function startServer() {
