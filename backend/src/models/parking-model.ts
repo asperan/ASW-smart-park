@@ -28,10 +28,6 @@ const parkings = [
     new Parking(4, 1, 100, 100, new Coordinates(44.143680, 12.247764))
 ]
 
-function findParkingsByCityId(cityId: number): Array<Parking> {
+export function findParkingsByCityId(cityId: number): Array<Parking> {
     return parkings;
-}
-
-module.exports = {
-    findParkingsByCityId
 }
