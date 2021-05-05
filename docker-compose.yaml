@@ -21,6 +21,8 @@ services:
     - "3000:3000" # For debug purpose only
     depends_on:
       - mongo
+    environment:
+      HASHING_KEY: ${BACKEND_HASHING_KEY}
 
   mongo:
     build: ./mongo
