@@ -1,15 +1,10 @@
-import { City } from "../models/city-model";
+import { CityModel } from "../models/city-model";
 
-export class CityDto {
-    id: number;
-    name: string;
+export type CityDto = {
+    id: number,
+    name: string
+};
 
-    constructor(id: number, name: string) {
-        this.id = id;
-        this.name = name;
-    }
-
-    static fromModel(city: City): CityDto {
-        return new CityDto(city.id, city.name);
-    }
+export function DtoFromModel(city: CityModel): CityDto {
+    return { id: city.id, name: city.name };
 }
