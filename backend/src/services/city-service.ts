@@ -1,21 +1,13 @@
-import { City } from "../models/city-model";
+import * as cityModel from "../models/city-model";
 
-const cityModel = require("../models/city-model");
-
-function suggestCityByPartialName(name: String): Array<City> {
+export function suggestCityByPartialName(name: String): Array<cityModel.City> {
     return cityModel.findCitiesByPartialName(name);
 }
 
-function getCityById(cityId: number): City {
+export function getCityById(cityId: number): cityModel.City {
     return cityModel.findCityById(cityId);
 }
 
-function getAllCities(): Array<City> {
+export function getAllCities(): Array<cityModel.City> {
     return cityModel.findAllCities();
-}
-
-module.exports = {
-    suggestCityByPartialName,
-    getCityById,
-    getAllCities
 }

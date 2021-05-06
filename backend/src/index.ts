@@ -1,11 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { MongoConnection } from './common/mongo-client';
-import { mainModule } from 'node:process';
+import { initMongoClient } from './common/mongo-client';
+import cityRoutes from "./routes/city-routes";
+import parkingRoutes from "./routes/parking-routes";
 
 const app = express();
-const cityRoutes = require('./routes/city-routes');
-const parkingRoutes = require('./routes/parking-routes');
 
 const config = require('../config/config.json');
 
@@ -26,7 +25,7 @@ function connectToMongoDB() {
     const dbName = config.db.name;
 
     const connectionString = `mongodb://${username}:${password}@${host}:${port}`;
-    MongoConnection.connect(connectionString, dbName);
+    initMongoClient(connectionString, dbName);
 }
 
 function configureMiddleware() {

@@ -2,7 +2,7 @@ import { Coordinates } from "../data/Coordinates";
 
 const R = 6371; // Radius of the earth in km
 
-function getDistanceFromLatLonInKm(coordinates1: Coordinates, coordinates2: Coordinates) {
+export function getDistanceFromLatLonInKm(coordinates1: Coordinates, coordinates2: Coordinates) {
     const lat1 = coordinates1.latitude;
     const lon1 = coordinates1.longitude
     const lat2 = coordinates2.latitude;
@@ -23,8 +23,4 @@ function getDistanceFromLatLonInKm(coordinates1: Coordinates, coordinates2: Coor
 
 function degreesToRadiants(deg: number) {
     return deg * (Math.PI / 180);
-}
-
-module.exports = {
-    getDistanceFromLatLonInKm
 }

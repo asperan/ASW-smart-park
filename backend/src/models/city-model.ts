@@ -38,27 +38,21 @@ const CITIES = {
     )
 }
 
-function findAllCities(): Array<City> {
+export function findAllCities(): Array<City> {
     return [
         CITIES.Cesena,
         CITIES.Rimini
     ];
 }
 
-function findCityById(id: number): City {
+export function findCityById(id: number): City {
     return CITIES.Cesena;
 }
 
-function findCitiesByPartialName(name: String): Array<City> {
+export function findCitiesByPartialName(name: String): Array<City> {
     if (name.startsWith("C")) {
         return [CITIES.Cesena];
     } else {
         return [CITIES.Rimini];
     }
-}
-
-module.exports = {
-    findAllCities,
-    findCityById,
-    findCitiesByPartialName
 }
