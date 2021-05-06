@@ -1,5 +1,5 @@
 import express from 'express';
-import * as cityController from "../controllers//city-controller";
+import * as cityController from "../controllers/city-controller";
 
 const routes = express.Router();
 
