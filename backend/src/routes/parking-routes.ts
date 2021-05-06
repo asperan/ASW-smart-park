@@ -1,7 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../common/validation';
-import { Coordinates } from '../data/Coordinates';
 import * as parkingController from "../controllers/parking-controller";
 
 const routes = express.Router();
@@ -28,7 +27,7 @@ routes.get(
         const longitude = req.body.longitude;
         const radiusKm = req.body.radiusKM;
 
-        const parkings = parkingController.getParkingInCityIdWithinRadiusFromPoint(cityId, new Coordinates(latitude, longitude), radiusKm);
+        const parkings = parkingController.getParkingInCityIdWithinRadiusFromPoint(cityId, { latitude: latitude, longitude: longitude }, radiusKm);
         res.json(parkings);
     });
 
