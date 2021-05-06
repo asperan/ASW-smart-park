@@ -1,28 +1,32 @@
 import express from 'express';
 import cors from 'cors';
 import { initMongoClient } from './common/mongo-client';
+import { loadConfig, getConfig } from './common/config'
 import cityRoutes from "./routes/city-routes";
 import parkingRoutes from "./routes/parking-routes";
 
 const app = express();
 
-const config = require('../config/config.json');
-
 main();
 
 function main() {
+    initConfig();
     connectToMongoDB();
     configureMiddleware();
     configureRoutes();
     startServer();
 }
 
+function initConfig() {
+    loadConfig();
+}
+
 function connectToMongoDB() {
-    const username = config.db.username;
-    const password = config.db.password;
-    const host = config.db.host;
-    const port = config.db.port;
-    const dbName = config.db.name;
+    const username = getConfig().db.username;
+    const password = getConfig().db.password;
+    const host = getConfig().db.host;
+    const port = getConfig().db.port;
+    const dbName = getConfig().db.name;
 
     const connectionString = `mongodb://${username}:${password}@${host}:${port}`;
     initMongoClient(connectionString, dbName);
@@ -39,7 +43,7 @@ function configureRoutes() {
 }
 
 function startServer() {
-    app.listen(config.server.port, () => {
-        console.log("Listening on port " + config.server.port);
+    app.listen(getConfig().server.port, () => {
+        console.log("Listening on port " + getConfig().server.port);
     });
 }
