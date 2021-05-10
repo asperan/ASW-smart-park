@@ -1,4 +1,5 @@
 <div class="component-content">
+  <div class="error-banner" *ngIf="signError > 0">{{ errorMessage }}</div>
   <form #userlogin="ngForm" (ngSubmit) = "onSubmit(userlogin.value)">
     <label class="form-label" >Email: <input type="email" name="email" ngModel/></label>
     <label class="form-label" >Password: <input type="password" name="password" ngModel/></label>
