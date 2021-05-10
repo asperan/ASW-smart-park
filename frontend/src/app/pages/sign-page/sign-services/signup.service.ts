@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import UserCredentials from "./user-credentials";
 
 @Injectable({
@@ -10,8 +9,8 @@ export class SignupService {
 
   constructor(private http: HttpClient) { }
 
-  requestSignup(credentials: UserCredentials): Observable<Object> {
-    return this.http.post("http://localhost:3000/api/auth/signup", JSON.stringify(credentials));
+  requestSignup(credentials: UserCredentials): Promise<any> {
+    return this.http.post("http://localhost:3000/api/auth/signup", JSON.stringify(credentials), {responseType: "json"}).toPromise();
   }
 
 }
