@@ -10,13 +10,10 @@ class MongoWrapper {
     }
 }
 
-let client: MongoWrapper;
+export let mongoClient: MongoWrapper;
 
 export function initMongoClient(uri: string, dbName: string): void {
-    client = new MongoWrapper(uri, dbName);
+    mongoClient = new MongoWrapper(uri, dbName);
 }
 
-// Db-related functions:
-//
-// insertUser
-// ...
+

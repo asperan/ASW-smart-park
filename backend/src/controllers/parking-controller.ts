@@ -1,16 +1,33 @@
-import { Coordinates } from "../data/Coordinates";
-import { ParkingDto } from "../dto/parking-dto";
-import { Parking } from "../models/parking-model";
+
+import { ParkingEntity } from "../repositories/parkings-repository";
+import { Coordinates } from "../services/geo-service";
 import * as parkingService from "../services/parking-service";
 
-export function getParkingInCity(cityId: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityId(cityId).map((p: Parking) => ParkingDto.fromModel(p));
+export async function getParkingInCity(cityId: number): Promise<any[]> {
+    return parkingService.findAvailableParkingByCityId(cityId).then((parkings: ParkingEntity[]) => {
+        return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
+    });
 }
 
-export function getParkingInCityIdWithinRadiusFromPoint(cityId: number, center: Coordinates, radiusKm: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityIdWithinRadiusFromPoint(cityId, center, radiusKm).map((p: Parking) => ParkingDto.fromModel(p));
+export async function getParkingInCityIdWithinRadiusFromPoint(cityId: number, center: Coordinates, radiusKm: number): Promise<any[]> {
+    return parkingService.findAvailableParkingByCityIdWithinRadiusFromPoint(cityId, center, radiusKm).then((parkings: ParkingEntity[]) => {
+        return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
+    });
 }
 
-export function getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, radiusKm: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId, radiusKm).map((p: Parking) => ParkingDto.fromModel(p));
+export async function getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, radiusKm: number): Promise<any[]> {
+    return parkingService.findAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId, radiusKm).then((parkings: ParkingEntity[]) => {
+        return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
+    });
+}
+
+function makeDtoFromParking(parking: ParkingEntity) {
+    return {
+        id: parking.id,
+        cityId: parking.cityId,
+        maxOccupancy: parking.maxOccupancy,
+        currentOccupancy: parking.currentOccupancy,
+        longitute: parking.longitude,
+        latitude: parking.latitude
+    };
 }

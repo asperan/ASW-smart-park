@@ -1,6 +1,10 @@
-import { Coordinates } from "../data/Coordinates";
-
 const R = 6371; // Radius of the earth in km
+
+export type Coordinates = {
+    longitude: number,
+    latitude: number,
+}
+
 
 export function getDistanceFromLatLonInKm(coordinates1: Coordinates, coordinates2: Coordinates) {
     const lat1 = coordinates1.latitude;

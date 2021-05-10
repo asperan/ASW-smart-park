@@ -1,19 +1,24 @@
 import { validateNotNull } from "../common/validation";
-import { Coordinates } from "../data/Coordinates";
-import * as parkingModel from "../models/parking-model";
-import * as cityModel from "../models/city-model";
 import * as geoService from "./geo-service";
+import * as parkingsRepository from "../repositories/parkings-repository";
+import * as citiesRepository from "../repositories/cities-repository";
 
-export function findAvailableParkingByCityId(cityId: number): Array<parkingModel.Parking> {
-    return parkingModel.findParkingsByCityId(cityId);
+export async function findAvailableParkingByCityId(cityId: number): Promise<parkingsRepository.ParkingEntity[]> {
+    return await parkingsRepository.findParkingsByCityId(cityId);
 }
 
-export function findAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, radiusKm: number): Array<parkingModel.Parking> {
-    const city = cityModel.findCityById(cityId);
+export async function findAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, radiusKm: number): Promise<parkingsRepository.ParkingEntity[]> {
+    const city = await citiesRepository.getCityById(cityId);
     validateNotNull(city, `City ${cityId} Not Found`);
-    return parkingModel.findParkingsByCityId(cityId).filter((p: parkingModel.Parking) => geoService.getDistanceFromLatLonInKm(city.coordinates, p.coordinates) <= radiusKm);
+    const parkings = await parkingsRepository.findParkingsByCityId(cityId);
+    return parkings.filter((p: parkingsRepository.ParkingEntity) => isPointInRadius({ longitude: city.longitude, latitude: city.latitude }, { longitude: p.longitude, latitude: p.latitude }, radiusKm));
 }
 
-export function findAvailableParkingByCityIdWithinRadiusFromPoint(cityId: number, center: Coordinates, radiusKm: number): Array<parkingModel.Parking> {
-    return parkingModel.findParkingsByCityId(cityId).filter((p: parkingModel.Parking) => geoService.getDistanceFromLatLonInKm(center, p.coordinates) <= radiusKm);
+export async function findAvailableParkingByCityIdWithinRadiusFromPoint(cityId: number, center: geoService.Coordinates, radiusKm: number): Promise<parkingsRepository.ParkingEntity[]> {
+    const parkings = await parkingsRepository.findParkingsByCityId(cityId);
+    return parkings.filter((p: parkingsRepository.ParkingEntity) => isPointInRadius(center, { longitude: p.longitude, latitude: p.latitude }, radiusKm));
+}
+
+function isPointInRadius(center: geoService.Coordinates, point: geoService.Coordinates, radiusKm: number) {
+    return geoService.getDistanceFromLatLonInKm(center, point) <= radiusKm;
 }

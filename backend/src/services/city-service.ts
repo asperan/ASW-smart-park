@@ -1,13 +1,13 @@
-import * as cityModel from "../models/city-model";
+import * as citiesRepository  from "../repositories/cities-repository";
 
-export function suggestCityByPartialName(name: String): Array<cityModel.City> {
-    return cityModel.findCitiesByPartialName(name);
+export async function getAllCities(): Promise<citiesRepository.CityEntity[]>  {
+    return citiesRepository.getAllCities();
 }
 
-export function getCityById(cityId: number): cityModel.City {
-    return cityModel.findCityById(cityId);
+export async function suggestCityByPartialName(name: String): Promise<citiesRepository.CityEntity[]> {
+    return citiesRepository.suggestCityByPartialName(name);
 }
 
-export function getAllCities(): Array<cityModel.City> {
-    return cityModel.findAllCities();
+export async function getCityById(cityId: number): Promise<citiesRepository.CityEntity> {
+    return citiesRepository.getCityById(cityId);
 }
