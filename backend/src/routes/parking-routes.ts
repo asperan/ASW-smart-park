@@ -1,15 +1,15 @@
 import express from 'express';
-import { body, validationResult} from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../common/validation';
 import { Coordinates } from '../data/Coordinates';
+import * as parkingController from "../controllers/parking-controller";
 
-const parkingController = require('../controllers/parking-controller');
-const routes = require('express').Router();
+const routes = express.Router();
 
 routes.get(
     '/all/:cityId/',
     (req: express.Request, res: express.Response) => {
-        const cityId = req.params.cityId;
+        const cityId = Number.parseInt(req.params.cityId);
         const parkings = parkingController.getParkingInCity(cityId);
         res.json(parkings);
     });
@@ -32,18 +32,19 @@ routes.get(
         res.json(parkings);
     });
 
-    routes.get(
-        '/radius-center/',
-        body("cityId").exists(),
-        body("radiusKM").exists(),
-        (req: express.Request, res: express.Response) => {
-            validateExpressArgumentsNoErrorsElseReturnBadArguments(req, res);
+routes.get(
+    '/radius-center/',
+    body("cityId").exists(),
+    body("radiusKM").exists(),
+    (req: express.Request, res: express.Response) => {
+        validateExpressArgumentsNoErrorsElseReturnBadArguments(req, res);
 
-            const cityId = req.body.cityId;
-            const radiusKm = req.body.radiusKM;
-    
-            const parkings = parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId, radiusKm);
-            res.json(parkings);
-        });
+        const cityId = req.body.cityId;
+        const radiusKm = req.body.radiusKM;
 
-module.exports = routes;
+        const parkings = parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId, radiusKm);
+        res.json(parkings);
+    }
+);
+
+export default routes;

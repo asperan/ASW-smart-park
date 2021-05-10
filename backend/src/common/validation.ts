@@ -10,7 +10,6 @@ export function validateNotNull(object: any, message: string) {
 export function validateExpressArgumentsNoErrorsElseReturnBadArguments(req: express.Request, res: express.Response) {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        res.status(400);
-        res.json(errors.mapped());
+        res.status(400).json(errors.mapped());
     }
 }
