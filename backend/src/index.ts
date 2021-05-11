@@ -35,7 +35,7 @@ function connectToMongoDB() {
 
 function configureMiddleware() {
     app.use(express.json());
-    app.use(cors());
+    app.use(cors({allowedHeaders: ["x-access-token"]}));
 }
 
 function configureRoutes() {
