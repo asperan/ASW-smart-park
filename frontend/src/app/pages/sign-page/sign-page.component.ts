@@ -4,6 +4,7 @@ import { SignupService } from './sign-services/signup.service';
 import { SigninService } from "./sign-services/signin.service";
 import UserCredentials from './sign-services/user-credentials';
 import * as SignErrors from "./sign-errors";
+import { setToken } from "../../access-token/token-manager";
 
 @Component({
   selector: 'app-sign-page',
@@ -56,7 +57,9 @@ export class SignPageComponent implements OnInit {
       if (data.code > 0) {
         this.onRequestError(data);
       } else {
+        setToken(data.access_token);
         // TODO:
+        // Use getToken to retrieve the token and set it in 'x-access-token' header when needed
         // Redirect to user page
       }
     });
