@@ -27,3 +27,8 @@ export async function isUserAlreadyPresent(email: string): Promise<boolean> {
 export async function insertUser(email: string, salt: string, hashedPassword: string): Promise<InsertOneWriteOpResult<any>> {
     return await client.db.collection("users").insertOne({email: email, password: hashedPassword, salt: salt});
 }
+
+export async function checkUserPassword(email: string, password: string): Promise<boolean> {
+    
+    return false;
+}
