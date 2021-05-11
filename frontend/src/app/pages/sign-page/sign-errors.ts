@@ -16,7 +16,16 @@ export const enum InError {
 export const errorMessages: Array<string> = [
   "",
   "The server encountered an error. Please try again in a while.",
-  "Your password is not considered secure by our standards. The password must have: minimum eight characters, at least one upper case English letter, one lower case English letter, one number and one special character.",
+  `Check the inserted email and password:<br/>
+  Your email is not well formatted.<br/>
+  OR<br/>
+  Your password is not considered secure by our standards.<br/>
+  The password must have: <br/>
+  * minimum eight characters<br/>
+  * at least one upper case English letter<br/>
+  * one lower case English letter<br/>
+  * one number and one special character<br/>
+  `,
   "The inserted email is already taken. Please use another email to sign up.",
   "The inserted credentials do not match to an existing user/password entry. Please check the inserted email and password.",
 ];
