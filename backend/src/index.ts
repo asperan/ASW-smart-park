@@ -5,6 +5,7 @@ import { loadConfig, getConfig } from './common/config'
 import cityRoutes from "./routes/city-routes";
 import parkingRoutes from "./routes/parking-routes";
 import { setSignupRoutes } from "./routes/signup-routes";
+import { setSigninRoutes } from './routes/signin-routes';
 
 const app = express();
 
@@ -42,6 +43,7 @@ function configureRoutes() {
     app.use('/api/city', cityRoutes);
     app.use('/api/parking', parkingRoutes);
     setSignupRoutes(app);
+    setSigninRoutes(app);
 }
 
 function startServer() {
