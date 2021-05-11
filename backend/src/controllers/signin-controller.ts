@@ -1,12 +1,10 @@
 import express from "express";
-import { isUserAlreadyPresent } from "../common/mongo-client";
+import { checkUserPassword } from "../common/mongo-client";
 
 export function signinUser(request : express.Request, response: express.Response) {
   const userEmail = request.body.email;
   const userPassword = request.body.password;
-  // TODO: abstract user presence check
-  // checkUserPassword(userEmail, userPassword).then(ok => ...)
-  isUserAlreadyPresent(userEmail).then(ok => {
+  checkUserPassword(userEmail, userPassword).then(ok => {
     if(ok) {
       response.status(500).json({code: 1, message: "Not implemented."});
       // TODO:
