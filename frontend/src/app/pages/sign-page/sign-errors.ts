@@ -3,14 +3,14 @@ export const enum None {
   None = 0
 }
 export const enum Common {
-  ServerError = 1   // Server error -> other problems
+  ServerError = 1         // Server error -> other problems
 }
 export const enum UpError {
-  PasswordNotSecure = 2,  // Bad request -> password is not secure
-  EmailAlreadyUsed = 3,       // Bad request -> email is already used
+  BadFormat = 2,          // Bad request -> email or password have bad format
+  EmailAlreadyUsed = 3,   // Bad request -> email is already used
 }
 export const enum InError {
-  BadCredentials = 4,   // Bad request -> credentials are not matching
+  BadCredentials = 4,     // Bad request -> credentials are not matching
 }
 
 export const errorMessages: Array<string> = [

@@ -10,7 +10,7 @@ export class SigninService {
   constructor(private http: HttpClient) { }
 
   requestSignin(credentials: UserCredentials): Promise<any> {
-    return this.http.post("http://localhost:3000/api/auth/signin", JSON.stringify(credentials), {responseType: "json"}).toPromise();
+    return this.http.post("http://localhost:3000/api/auth/signin", credentials, {responseType: "json"}).toPromise();
   }
 
 }
