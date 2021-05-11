@@ -22,7 +22,7 @@ export class SignPageComponent implements OnInit {
     private router: Router, 
     private signupService: SignupService,
     private signinService: SigninService) { 
-      this.signError = SignErrors.Common.ServerError;
+      this.signError = SignErrors.None.None;
       this.errorMessage = SignErrors.errorMessages[this.signError];
     }
 
@@ -42,27 +42,19 @@ export class SignPageComponent implements OnInit {
   private onSubmitSignup(userCredentials: UserCredentials): void {
     const router = this.router;
     this.signupService.requestSignup(userCredentials).then(data => {
-      if (data.code > 0) {
-        this.onRequestError(data);
-      } else {
-        alert("You are subscribed! You will be redirected to sing in page where you can log in.");
-        router.navigate(['signin']);
-      }
-    });
+      alert("You are subscribed! You will be redirected to sing in page where you can log in.");
+      router.navigate(['signin']);
+    }, reason => this.onRequestError(reason.error));
   }
 
   private onSubmitSignin(userCredentials: UserCredentials): void {
     const router = this.router;
     this.signinService.requestSignin(userCredentials).then(data => {
-      if (data.code > 0) {
-        this.onRequestError(data);
-      } else {
-        setToken(data.access_token);
-        // TODO:
-        // Use getToken to retrieve the token and set it in 'x-access-token' header when needed
-        // Redirect to user page
-      }
-    });
+      setToken(data.access_token);
+      // TODO:
+      // Use getToken to retrieve the token and set it in 'x-access-token' header when needed
+      // Redirect to user page
+    }, reason => this.onRequestError(reason.error));
   }
 
   private onRequestError(error: any) {
