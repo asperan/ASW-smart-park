@@ -6,7 +6,7 @@ class MongoWrapper {
 
     constructor(uri: string, dbName: string) {
         const connectionOptions = { useNewUrlParser: true, useUnifiedTopology: true }
-        MongoClient.connect(uri + "/" + dbName, connectionOptions).then(client => this.db = client.db());
+        MongoClient.connect(uri, connectionOptions).then(client => this.db = client.db(dbName));
     }
 }
 
