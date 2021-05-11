@@ -1,12 +1,30 @@
 import express from "express";
+import { insertUser, isUserAlreadyPresent } from "../common/mongo-client";
+import { generateNewSalt, hashPassword } from "../common/user-auth";
 
 export function signupUser(request: express.Request, response: express.Response) {
-  if (checkEmailFormat(request.body.email)
-    && checkPasswordFormat(request.body.format)
+  const userEmail = request.body.email;
+  const userPassword = request.body.password;
+  if (checkEmailFormat(userEmail)
+    && checkPasswordFormat(userPassword)
   ) {
-    // Check if user is not present, generate salt and insert new user with hashed password
+    isUserAlreadyPresent(userEmail).then(value => {
+      if (value) {
+        response.status(400).json({code: 3, message: "The inserted email is already taken."});
+      } else {
+        const userSalt = generateNewSalt();
+        const hashedPassword = hashPassword(userPassword, userSalt);
+        insertUser(userEmail, userSalt, hashedPassword).then(insertResult => {
+          if (insertResult.result.ok) {
+            response.status(200).json({code: 0, message: "User signed up correctly."});
+          } else {
+            response.status(500).json({code: 1, message: "Failed to insert new user."});
+          }
+        });
+      }
+    })
   } else {
-    response.status(400).json({message: "Email or password have not the correct format."});
+    response.status(400).json({code: 2, message: "Email or password have not the correct format."});
   }
 }
 
