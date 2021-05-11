@@ -15,3 +15,10 @@ The phases are, in order:
 1. Populate phase (Code: `01`)
 
 The order code is just a number used to order the execution of scripts which may be dependent from another script.
+
+# Mongo Shell Login
+
+To login in the mongo shell as `admin`, run:
+```
+mongo -u admin -p admin --authenticationDatabase admin smartPark
+```
