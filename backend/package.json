@@ -17,12 +17,14 @@
     "crypto-random-string": "3.3.1",
     "express": "^4.17.1",
     "express-validator": "^6.10.1",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
     "@types/crypto-js": "^4.0.1",
     "@types/express": "^4.17.11",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/mongodb": "^3.6.12",
     "@types/node": "^14.14.41",
     "ts-node": "^9.1.1",
