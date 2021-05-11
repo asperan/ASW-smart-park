@@ -1,31 +1,22 @@
-import MongoClient from "mongodb";
+import MongoClient, { Db } from "mongodb";
 
 class MongoWrapper {
 
-    db: any;
+    db!: Db;
 
-    constructor() {
-
-    }
-
-    async connect(uri: string, dbName: string) {
-        await new Promise((resolve, reject) => {
-            MongoClient.connect(
-                uri,
-                { useNewUrlParser: true, useUnifiedTopology: true },
-                (error: any, client: any) => {
-                    if (error) {
-                        reject(error)
-                    }
-
-                    console.log("Connected successfully to Mongodb");
-
-                    this.db = client.db(dbName);
-                    resolve(this.db);
-                }
-            );
-        }).catch((error) => { throw error});
+    constructor(uri: string, dbName: string) {
+        const connectionOptions = { useNewUrlParser: true, useUnifiedTopology: true }
+        MongoClient.connect(uri + "/" + dbName, connectionOptions).then(client => this.db = client.db());
     }
 }
 
-export let MongoConnection = new MongoWrapper();
+let client: MongoWrapper;
+
+export function initMongoClient(uri: string, dbName: string): void {
+    client = new MongoWrapper(uri, dbName);
+}
+
+// Db-related functions:
+//
+// insertUser
+// ...

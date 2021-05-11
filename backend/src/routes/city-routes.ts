@@ -1,7 +1,7 @@
 import express from 'express';
+import * as cityController from "../controllers//city-controller";
 
-const cityController = require('../controllers/city-controller');
-const routes = require('express').Router();
+const routes = express.Router();
 
 routes.get(
   '/suggest/:partialName',
@@ -9,6 +9,7 @@ routes.get(
     const partialName = req.params.partialName;
     const suggestedCities = cityController.suggestCity(partialName);
     res.json(suggestedCities);
-  });
+  }
+);
 
-module.exports = routes;
+export default routes;
