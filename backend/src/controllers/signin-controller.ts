@@ -8,7 +8,6 @@ export function signinUser(request : express.Request, response: express.Response
     if(ok) {
       response.status(500).json({code: 1, message: "Not implemented."});
       // TODO:
-      // Check password
       // Create jwt token
       // Return JWT token
     } else {
