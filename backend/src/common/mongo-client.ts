@@ -1,4 +1,5 @@
 import MongoClient, { Db, InsertOneWriteOpResult } from "mongodb";
+import { hashPassword } from "./user-auth";
 
 class MongoWrapper {
 
@@ -29,6 +30,13 @@ export async function insertUser(email: string, salt: string, hashedPassword: st
 }
 
 export async function checkUserPassword(email: string, password: string): Promise<boolean> {
-    
-    return false;
+    const user = await client.db.collection("users").findOne({email: email});
+    if (user) {
+        const correctHashedPassword = user.password;
+        const userSalt = user.salt;
+        const insertedPasswordHash = hashPassword(password, userSalt);
+        return correctHashedPassword === insertedPasswordHash;
+    } else {
+        return false;
+    }
 }
