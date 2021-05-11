@@ -1,4 +1,4 @@
-import MongoClient, { Db } from "mongodb";
+import MongoClient, { Db, InsertOneWriteOpResult } from "mongodb";
 
 class MongoWrapper {
 
@@ -20,3 +20,10 @@ export function initMongoClient(uri: string, dbName: string): void {
 //
 // insertUser
 // ...
+export async function isUserAlreadyPresent(email: string): Promise<boolean> {
+    return await client.db.collection("users").countDocuments({email: email}) > 0;
+}
+
+export async function insertUser(email: string, salt: string, hashedPassword: string): Promise<InsertOneWriteOpResult<any>> {
+    return await client.db.collection("users").insertOne({email: email, password: hashedPassword, salt: salt});
+}
