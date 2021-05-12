@@ -18,7 +18,6 @@ db.createCollection("cities", {
         },
         parkings: {
           bsonType: "array",
-          uniqueItems: true,
           items: {
             bsonType: "object",
             required: ["capacity", "occupancy", "longitude", "latitude"],
