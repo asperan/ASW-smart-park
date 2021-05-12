@@ -23,6 +23,7 @@ services:
       - mongo
     environment:
       HASHING_KEY: ${BACKEND_HASHING_KEY}
+      JWT_SIGN_SECRET: ${JWT_SIGN_SECRET}
 
   mongo:
     build: ./mongo
