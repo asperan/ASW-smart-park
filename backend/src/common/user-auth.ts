@@ -11,11 +11,11 @@ export function hashPassword(password: string, salt: string): string {
 
 export function generateNewSalt(): string {
   const length = 16;
-  return cryptoRandomString({length: length});
+  return cryptoRandomString({ length: length });
 }
 
 export function generateNewJwt(email: string): string {
-  return jwt.sign({userEmail: email}, jwtSecret);
+  return jwt.sign({ userEmail: email }, jwtSecret);
 }
 
 export function isJwtCorrect(token: string): { ok: boolean, email?: string } {
