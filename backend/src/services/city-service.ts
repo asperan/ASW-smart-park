@@ -8,6 +8,6 @@ export async function suggestCityByPartialName(name: String): Promise<citiesRepo
     return citiesRepository.suggestCityByPartialName(name);
 }
 
-export async function getCityById(cityId: number): Promise<citiesRepository.CityEntity> {
-    return citiesRepository.getCityById(cityId);
+export async function getCityById(name: String): Promise<citiesRepository.CityEntity> {
+    return citiesRepository.getCityByName(name);
 }

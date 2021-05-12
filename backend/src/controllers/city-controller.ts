@@ -15,7 +15,7 @@ export async function allCities() {
 
 function makeDtoFromCity(city: CityEntity) {
     return {
-        id: city.id,
+        name: city.name,
         longitude: city.longitude,
         latitude: city.latitude
     }
