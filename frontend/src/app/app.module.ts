@@ -6,12 +6,14 @@ import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignPageComponent } from './pages/sign-page/sign-page.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignPageComponent
+    SignPageComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
