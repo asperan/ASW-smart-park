@@ -7,9 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPageComponent implements OnInit {
 
-  constructor() { }
+  selectedTab: SubComponent;
+  SubComponent = SubComponent;
+
+  constructor() {
+    this.selectedTab = SubComponent.MyVehicles;
+  }
 
   ngOnInit(): void {
   }
 
+  selectTab(tab: SubComponent): void {
+    this.selectedTab = tab;
+    console.log("Tab switched");
+  }
+
 }
+
+enum SubComponent {
+  MyVehicles,
+  PaymentHistory,
+  Statistics
+};
