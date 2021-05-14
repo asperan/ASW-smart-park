@@ -1,9 +1,20 @@
-let token = "";
+import { Injectable } from "@angular/core";
 
-export function setToken(newToken: string): void {
-  token = newToken;
-}
+@Injectable({
+  providedIn: "root",
+})
+export class TokenManagerService {
+  token: string
 
-export function getToken(): string {
-  return token;
+  constructor() {
+    this.token = "";
+  }
+
+  setToken(newToken: string): void {
+    this.token = newToken;
+  }
+
+  getToken(): string {
+    return this.token;
+  }
 }
