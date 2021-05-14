@@ -4,7 +4,7 @@ import { SignupService } from './sign-services/signup.service';
 import { SigninService } from "./sign-services/signin.service";
 import UserCredentials from './sign-services/user-credentials';
 import * as SignErrors from "./sign-errors";
-import { setToken } from "../../access-token/token-manager";
+import { TokenManagerService } from "../../access-token/token-manager";
 
 @Component({
   selector: 'app-sign-page',
@@ -21,7 +21,8 @@ export class SignPageComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private signupService: SignupService,
-    private signinService: SigninService) { 
+    private signinService: SigninService,
+    private tokenManagerService: TokenManagerService) { 
       this.signError = SignErrors.None.None;
       this.errorMessage = SignErrors.errorMessages[this.signError];
     }
@@ -50,10 +51,8 @@ export class SignPageComponent implements OnInit {
   private onSubmitSignin(userCredentials: UserCredentials): void {
     const router = this.router;
     this.signinService.requestSignin(userCredentials).then(data => {
-      setToken(data.access_token);
-      // TODO:
-      // Use getToken to retrieve the token and set it in 'x-access-token' header when needed
-      // Redirect to user page
+      this.tokenManagerService.setToken(data.access_token);
+      router.navigate(["userpage"]);
     }, reason => this.onRequestError(reason.error));
   }
 
