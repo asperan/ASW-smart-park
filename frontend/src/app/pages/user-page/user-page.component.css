@@ -13,3 +13,7 @@
   border-bottom-width: medium;
   border-bottom: medium solid red;
 }
+
+.email-text {
+  text-decoration: underline;
+}
