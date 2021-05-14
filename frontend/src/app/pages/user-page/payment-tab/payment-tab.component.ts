@@ -11,6 +11,8 @@ export class PaymentTabComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Payment tab init");
+    // TODO:
+    // Get payments user infos
   }
 
 }

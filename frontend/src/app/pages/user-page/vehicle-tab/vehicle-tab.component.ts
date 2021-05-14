@@ -11,6 +11,8 @@ export class VehicleTabComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Vehicle tab init");
+    // TODO:
+    // Get vehicle user infos
   }
 
 }

@@ -11,6 +11,8 @@ export class StatisticsTabComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Statistics tab init");
+    // TODO:
+    // Get statistics user infos
   }
 
 }
