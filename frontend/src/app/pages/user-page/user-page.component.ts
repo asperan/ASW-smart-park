@@ -19,7 +19,6 @@ export class UserPageComponent implements OnInit {
 
   selectTab(tab: SubComponent): void {
     this.selectedTab = tab;
-    console.log("Tab switched");
   }
 
 }
