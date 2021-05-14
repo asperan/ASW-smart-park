@@ -19,7 +19,8 @@ export class UserPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.basicInfoService.requestBasicInfos().then(data => this.userEmail = data.email);
+    // TODO: On failure go to signin page
+    this.basicInfoService.requestBasicInfos().then(data => this.userEmail = data.email, reason => console.log(reason.message));
   }
 
   selectTab(tab: SubComponent): void {
