@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { initMongoClient } from './common/mongo-client';
-import { loadConfig, getConfig } from './common/config'
+import { initMongoClient } from './services/mongo-client';
+import { loadConfig, getConfig } from './services/config'
 import cityRoutes from "./routes/city-routes";
 import parkingRoutes from "./routes/parking-routes";
 

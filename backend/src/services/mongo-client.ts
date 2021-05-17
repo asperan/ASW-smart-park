@@ -2,17 +2,15 @@ import MongoClient, { Db, Decimal128 } from "mongodb";
 
 class MongoWrapper {
 
-    dbName!: string;
     db!: Db;
 
     constructor(uri: string, dbName: string) {
-        this.dbName = dbName;
         const connectionOptions = { useNewUrlParser: true, useUnifiedTopology: true }
-        MongoClient.connect(uri, connectionOptions).then(client => this.onConnection(client));
+        MongoClient.connect(uri, connectionOptions).then(client => this.onConnection(client, dbName));
     }
 
-    onConnection(client: MongoClient.MongoClient) {
-        this.db = client.db(this.dbName);
+    onConnection(client: MongoClient.MongoClient, dbName: string) {
+        this.db = client.db(dbName);
     }
 }
 
