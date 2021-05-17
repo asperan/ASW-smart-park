@@ -1,4 +1,4 @@
-import { mongoClient } from "../common/mongo-client";
+import { mongoClient } from "../services/mongo-client";
 
 export type CityEntity = {
     name: String,

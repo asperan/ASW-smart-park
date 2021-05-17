@@ -1,17 +1,16 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../common/validation';
+import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../services/validation';
 import * as parkingController from "../controllers/parking-controller";
 
 const routes = express.Router();
 
 routes.get(
     '/all/:cityName/',
-    (req: express.Request, res: express.Response) => {
+    async (req: express.Request, res: express.Response) => {
         const cityName = req.params.cityName;
-        parkingController.getParkingInCity(cityName).then(parkings => {
-            res.json(parkings);
-        });
+        const parkings = await parkingController.getParkingInCity(cityName);
+        res.json(parkings);
     });
 
 routes.get(
@@ -20,7 +19,7 @@ routes.get(
     body("latitude").exists(),
     body("longitude").exists(),
     body("radiusKM").exists(),
-    (req: express.Request, res: express.Response) => {
+    async (req: express.Request, res: express.Response) => {
         validateExpressArgumentsNoErrorsElseReturnBadArguments(req, res);
 
         const city = req.body.city;
@@ -29,24 +28,22 @@ routes.get(
         const radiusKm = req.body.radiusKM;
 
         const point = {latitude: latitude, longitude: longitude};
-        parkingController.getParkingInCityIdWithinRadiusFromPoint(city, point, radiusKm).then(parkings => {
-            res.json(parkings);
-        });
+        const parkings = await parkingController.getParkingInCityIdWithinRadiusFromPoint(city, point, radiusKm);
+        res.json(parkings);
     });
 
 routes.get(
     '/radius-center/',
     body("city").exists(),
     body("radiusKM").exists(),
-    (req: express.Request, res: express.Response) => {
+    async (req: express.Request, res: express.Response) => {
         validateExpressArgumentsNoErrorsElseReturnBadArguments(req, res);
 
         const city = req.body.city;
         const radiusKm = req.body.radiusKM;
 
-        parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(city, radiusKm).then(parkings => {
-            res.json(parkings);
-        });
+        const parkings = await parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(city, radiusKm);
+        res.json(parkings);
         
     }
 );

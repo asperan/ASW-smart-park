@@ -5,21 +5,19 @@ const routes = express.Router();
 
 routes.get(
   '/suggest/:partialName',
-  (req: express.Request, res: express.Response) => {
+  async (req: express.Request, res: express.Response) => {
     const partialName = req.params.partialName;
-    cityController.suggestCity(partialName).then(cities => {
-      res.json(cities);
-    });
+    const cities = await cityController.suggestCity(partialName);
+    res.json(cities);
   }
 );
 
 routes.get(
   '/all',
-  (req: express.Request, res: express.Response) => {
+  async (req: express.Request, res: express.Response) => {
     const partialName = req.params.partialName;
-    cityController.allCities().then(cities => {
-      res.json(cities);
-    });
+    const cities = await cityController.allCities();
+    res.json(cities);
   }
 );
 
