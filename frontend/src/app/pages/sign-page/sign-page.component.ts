@@ -52,7 +52,8 @@ export class SignPageComponent implements OnInit {
     const router = this.router;
     this.signinService.requestSignin(userCredentials).then(data => {
       this.tokenManagerService.setToken(data.access_token);
-      router.navigate(["userpage"]);
+      // TODO: enable in userpage branch
+      // router.navigate(["userpage"]);
     }, reason => this.onRequestError(reason.error));
   }
 
