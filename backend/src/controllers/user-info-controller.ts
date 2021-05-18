@@ -1,5 +1,5 @@
 import express from "express";
-import { isJwtCorrect } from "../common/user-auth";
+import { isJwtCorrect } from "../services/user-auth";
 
 export function getBasicUserInfo(request: express.Request, response: express.Response) {
   const accessToken = request.header("x-access-token");
