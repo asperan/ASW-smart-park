@@ -1,6 +1,6 @@
 import express from "express";
-import { insertUser, isUserAlreadyPresent } from "../common/mongo-client";
-import { generateNewSalt, hashPassword } from "../common/user-auth";
+import * as userService from "../services/user-service";
+import * as userAuth from "../services/user-auth";
 
 export function signupUser(request: express.Request, response: express.Response) {
   const userEmail = request.body.email;
@@ -8,13 +8,13 @@ export function signupUser(request: express.Request, response: express.Response)
   if (checkEmailFormat(userEmail)
     && checkPasswordFormat(userPassword)
   ) {
-    isUserAlreadyPresent(userEmail).then(value => {
+    userService.isUserAlreadyPresent(userEmail).then(value => {
       if (value) {
         response.status(400).json({code: 3, message: "The inserted email is already taken."});
       } else {
-        const userSalt = generateNewSalt();
-        const hashedPassword = hashPassword(userPassword, userSalt);
-        insertUser(userEmail, userSalt, hashedPassword).then(insertResult => {
+        const userSalt = userAuth.generateNewSalt();
+        const hashedPassword = userAuth.hashPassword(userPassword, userSalt);
+        userService.insertUser(userEmail, userSalt, hashedPassword).then(insertResult => {
           if (insertResult.result.ok) {
             response.status(200).json({code: 0, message: "User signed up correctly."});
           } else {
