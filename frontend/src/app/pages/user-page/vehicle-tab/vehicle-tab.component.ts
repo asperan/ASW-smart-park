@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { VehicleInfoService } from '../user-services/vehicle-info.service';
 
 @Component({
   selector: 'app-vehicle-tab',
@@ -7,12 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehicleTabComponent implements OnInit {
 
-  constructor() { }
+  userVehicles: Array<{vehicleId: string, name: string}>;
+
+  constructor(private vehicleInfoService: VehicleInfoService) { 
+    this.userVehicles = [];
+  }
 
   ngOnInit(): void {
-    console.log("Vehicle tab init");
-    // TODO:
-    // Get vehicle user infos
+    this.vehicleInfoService.requestVehicleInfos().then(data => {
+      this.userVehicles = data.linkedVehicles;
+    });
   }
 
 }
