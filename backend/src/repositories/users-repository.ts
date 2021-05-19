@@ -6,7 +6,7 @@ export async function isUserAlreadyPresent(email: string): Promise<boolean> {
   return await mongoClient.db.collection("users").countDocuments({email: email}) > 0;
 }
 
-export async function insertUser(email: string, salt: string, hashedPassword: string): Promise<InsertOneWriteOpResult<any>> {
+export async function insertNewUser(email: string, salt: string, hashedPassword: string): Promise<InsertOneWriteOpResult<any>> {
   return await mongoClient.db.collection("users").insertOne({email: email, password: hashedPassword, salt: salt});
 }
 
