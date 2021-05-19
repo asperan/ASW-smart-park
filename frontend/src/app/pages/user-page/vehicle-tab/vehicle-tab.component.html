@@ -1,1 +1,2 @@
-<p>vehicle-tab works!</p>
+<p *ngIf="userVehicles.length == 0">Nessun veicolo associato.</p>
+<div *ngFor="let vehicle of userVehicles">{{vehicle.name}}</div>
