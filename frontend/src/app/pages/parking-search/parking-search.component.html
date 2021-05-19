@@ -1,11 +1,16 @@
-<nav class="navbar navbar-light bg-light">
-  <div>
-    <fa-icon [icon]="faUser"></fa-icon>
-  </div>
-  <div>
-    <input type="text">
+<nav class="navbar navbar-light bg-light search-nav">
+  <div class="row">
+    <div class="col-lg">
+      <fa-icon [icon]="faUser" class="circle-icon"></fa-icon>
+      <fa-icon [icon]="faSearch"></fa-icon>
+      <input type="text" class="search-bar" placeholder="Search City...">
+    </div>
   </div>
 </nav>
 
 
-<div id="map"></div>
+<div class="map-container">
+  <div class="map-frame">
+    <div id="map"></div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 
 @Component({
@@ -10,6 +10,7 @@ import * as L from 'leaflet';
 export class ParkingSearchComponent implements AfterViewInit {
 
   faUser = faUser;
+  faSearch = faSearch;
 
   private map: any;
 
@@ -22,7 +23,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 41.890572, 12.494314],
-      zoom: 3
+      zoom: 13
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
