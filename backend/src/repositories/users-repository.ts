@@ -21,3 +21,7 @@ export async function checkUserPassword(email: string, password: string): Promis
       return false;
   }
 }
+
+export async function getUserLinkedVehicles(email: string): Promise<any> {
+  return await mongoClient.db.collection("users").findOne({email: email}, {projection: {linkedVehicles: 1, _id: 0}});
+}
