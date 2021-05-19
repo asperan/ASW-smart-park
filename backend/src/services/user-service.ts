@@ -12,3 +12,7 @@ export async function insertNewUser(email: string, salt: string, hashedPassword:
 export async function checkUserPassword(email: string, password: string): Promise<boolean> {
   return userRepository.checkUserPassword(email, password);
 }
+
+export async function getVehicleUserInfo(email:string) {
+  return userRepository.getUserLinkedVehicles(email);
+}
