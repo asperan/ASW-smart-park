@@ -15,6 +15,24 @@ db.createCollection("users", {
         salt: {
           bsonType: "string",
           description: "must be a string and is required"
+        },
+        linkedVehicles: {
+          bsonType: "array",
+          description: "the list of linked vehicles, it is required",
+          items: {
+            bsonType: "object",
+            required: ["vehicleId", "name"],
+            properties: {
+              vehicleId: {
+                bsonType: "string",
+                description: "the id of the vehicle"
+              },
+              name: {
+                bsonType: "string",
+                description: "the user-given name of the vehicle"
+              }
+            }
+          }
         }
       }
     }
