@@ -21,7 +21,7 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [ 39.8282, -98.5795 ],
+      center: [ 41.890572, 12.494314],
       zoom: 3
     });
 
