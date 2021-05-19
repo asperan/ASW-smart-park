@@ -1,16 +1,28 @@
-import { Coordinates } from "../data/Coordinates";
-import { ParkingDto } from "../dto/parking-dto";
-import { Parking } from "../models/parking-model";
+
+import { ParkingEntity } from "../repositories/cities-repository";
+import { Coordinates } from "../services/geo-service";
 import * as parkingService from "../services/parking-service";
 
-export function getParkingInCity(cityId: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityId(cityId).map((p: Parking) => ParkingDto.fromModel(p));
+export async function getParkingInCity(name: string): Promise<any[]> {
+    const parkings = await parkingService.findAvailableParkingByCityId(name)
+    return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
 }
 
-export function getParkingInCityIdWithinRadiusFromPoint(cityId: number, center: Coordinates, radiusKm: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityIdWithinRadiusFromPoint(cityId, center, radiusKm).map((p: Parking) => ParkingDto.fromModel(p));
+export async function getParkingInCityIdWithinRadiusFromPoint(name: string, center: Coordinates, radiusKm: number): Promise<any[]> {
+    const parkings = await parkingService.findAvailableParkingByCityIdWithinRadiusFromPoint(name, center, radiusKm);
+    return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
 }
 
-export function getAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId: number, radiusKm: number): Array<ParkingDto> {
-    return parkingService.findAvailableParkingByCityIdWithinRadiusFromCityCenter(cityId, radiusKm).map((p: Parking) => ParkingDto.fromModel(p));
+export async function getAvailableParkingByCityIdWithinRadiusFromCityCenter(name: string, radiusKm: number): Promise<any[]> {
+    const parkings = await parkingService.findAvailableParkingByCityIdWithinRadiusFromCityCenter(name, radiusKm);
+    return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
+}
+
+function makeDtoFromParking(parking: ParkingEntity) {
+    return {
+        capacity: parking.capacity,
+        occupancy: parking.occupancy,
+        longitude: parking.longitude,
+        latitude: parking.latitude
+    };
 }
