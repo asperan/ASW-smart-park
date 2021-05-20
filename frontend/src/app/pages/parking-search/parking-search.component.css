@@ -9,16 +9,36 @@
 
 .map-frame {
     border: 2px solid lightgrey;
-    height: 95%;
+    height: 85%;
 }
 
 #map {
     height: 100%;
 }
 
+.locate-button {
+    position: absolute;
+    top     : 70%;
+    right   : 5%;
+    padding : 10px;
+    z-index : 400;
+}
+
 .search-nav {
     border-bottom: solid;
-    border-color: lightgrey;
+    border-color : lightgrey;
+}
+
+.search-nav-contents {
+    margin-top   : 2%;
+    margin-bottom: 2%;
+    margin-left  : 4%;
+    margin-right : 4%;
+}
+
+.search-nav-element {
+    margin-left : 4%;
+    margin-right: 4%;
 }
 
 .circle-icon {
@@ -31,4 +51,14 @@
 }
 
 
-.search-bar {}
+.slider-container {
+    position   : absolute;
+    top        : 88%;
+    width      : 80%;
+    margin-left: 10%;
+}
+
+.slider-label {
+    margin-left : 5%;
+    margin-right: 5%;
+}
