@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BasicInfoService } from './user-services/basic-info.service';
 
 @Component({
@@ -13,20 +14,23 @@ export class UserPageComponent implements OnInit {
 
   userEmail: string;
 
-  constructor(private basicInfoService: BasicInfoService) {
+  constructor(private basicInfoService: BasicInfoService, private router: Router) {
     this.selectedTab = SubComponent.MyVehicles;
     this.userEmail = "";
   }
 
   ngOnInit(): void {
-    // TODO: On failure go to signin page
-    this.basicInfoService.requestBasicInfos().then(data => this.userEmail = data.email, reason => console.log(reason.message));
+    this.basicInfoService.requestBasicInfos().then(data => this.userEmail = data.email, reason => this.onFailedRequest(reason));
   }
 
   selectTab(tab: SubComponent): void {
     this.selectedTab = tab;
   }
 
+  onFailedRequest(reason: any): void {
+    alert("An authentication error occurred while retrieving your informations:" + reason.error.message + "\nYou will be redirected to the sign in page.");
+    this.router.navigate(['signin']);
+  }
 }
 
 enum SubComponent {
