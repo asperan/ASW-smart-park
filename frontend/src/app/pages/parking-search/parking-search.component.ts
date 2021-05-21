@@ -68,8 +68,9 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.updateMarkers();
   }
 
-  onSearchCityChange(value: string) {
+  onSearchCityChange(value: City) {
     this.selectedCity = value;
+    this.cityCenterLocation = new L.LatLng(value.latitude, value.longitude);
   }
 
   private initCities() {
