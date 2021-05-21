@@ -1,8 +1,12 @@
 <nav class="navbar navbar-light bg-light search-nav">
-  <div class="d-flex justify-content-left search-nav-contents">
-      <fa-icon [icon]="faUser" class="circle-icon search-nav-element"></fa-icon>
-      <fa-icon [icon]="faSearch" class="search-nav-element"></fa-icon>
-      <input type="text" class="search-bar" placeholder="Search City...">
+  <div [formGroup]="searchGroup" class="d-flex justify-content-left search-nav-contents">
+    <fa-icon [icon]="faUser" class="circle-icon search-nav-element"></fa-icon>
+    <fa-icon [icon]="faSearch" class="search-nav-element"></fa-icon>
+    <!-- <input type="text" class="search-bar" placeholder="Search City..." #citiesSearch (input)="onSearchCityChange(citiesSearch.value)"> -->
+    <select #citySelect class="form-control" (change)="onSearchCityChange(citySelect.value)" formControlName="cityName">
+      <option value="" disabled>Choose your city</option>
+      <option *ngFor="let city of availableCities" [ngValue]="city">{{city.name}}</option>
+   </select>
   </div>
 </nav>
 
@@ -11,6 +15,7 @@
   <div class="map-frame">
     <div id="map"></div>
     <button id="refreshButton" class="locate-button" (click)="locatePosition()">o</button>
+    <button id="cityCenterButton" class="city-center-button" (click)="locateCityCenter()">C</button>
   </div>
 </div>
 
@@ -22,5 +27,6 @@
     <span class="slider-label">5km</span>
     <span class="slider-label">10km</span>
   </div>
-  <input type="range" min="1" max="5" step="1" value="3" class="form-range" #searchRange (input)="onRangeChange(searchRange.value)">
+  <input type="range" min="1" max="5" step="1" value="2" class="form-range" #searchRange
+    (input)="onRangeChange(searchRange.value)">
 </div>

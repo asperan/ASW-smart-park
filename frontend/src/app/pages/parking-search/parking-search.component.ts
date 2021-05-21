@@ -1,6 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { faCircle, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder } from '@angular/forms';
+import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
+import { City, ParkingSearchService } from 'src/app/services/parking-search.service';
 
 @Component({
   selector: 'app-parking-search',
@@ -9,18 +11,21 @@ import * as L from 'leaflet';
 })
 export class ParkingSearchComponent implements AfterViewInit {
 
-  // TODO add button to geolocate
-  // TODO fix marker not showing
-  // TODO add range slider
-  // TODO bind backend
+  //TODO add "no parkings found in your search area in 'Cesena', please expand your search area or search from city center by pressing [icon]"
 
   faUser = faUser;
   faSearch = faSearch;
+
+  availableCities: City[] = [];
+  selectedCity: City | undefined;
+
+  private locationSearchEnabled: boolean = false;
 
   private currentLocationMarker: L.Marker<any> | undefined;
   private searchRadiusMarker: L.Circle<any> | undefined;
 
   private searchLocation: L.LatLngExpression | undefined;
+  private cityCenterLocation: L.LatLngExpression | undefined;
   private searchRange = 1000;
 
   private navIcon = L.icon({
@@ -28,21 +33,32 @@ export class ParkingSearchComponent implements AfterViewInit {
     iconSize: [35, 20]
   });
 
+  searchGroup = this.fb.group({
+    cityName: ['']
+  })
+
   private map: any;
 
-  constructor() {
+  constructor(public fb: FormBuilder, private parkingSearchService: ParkingSearchService) {
   }
 
   ngAfterViewInit(): void {
+    this.initCities();
     this.initMap();
   }
 
   locatePosition() {
+    this.locationSearchEnabled = true;
     this.map.locate({ setView: true, maxZoom: 16 });
   }
 
+  locateCityCenter() {
+    this.locationSearchEnabled = false;
+    // Search city center in DB, place markers and center view.
+  }
+
   onRangeChange(value: string) {
-    switch(value) {
+    switch (value) {
       case "1": this.searchRange = 250; break;
       case "2": this.searchRange = 500; break;
       case "3": this.searchRange = 1000; break;
@@ -52,6 +68,16 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.updateMarkers();
   }
 
+  onSearchCityChange(value: string) {
+    this.selectedCity = value;
+  }
+
+  private initCities() {
+    this.parkingSearchService.getAllCities().subscribe((cities: City[]) => {
+      this.availableCities = cities;
+    }, (err) => console.log(err))
+  }
+
   private initMap(): void {
     this.map = L.map('map', {
       zoom: 13
@@ -59,7 +85,7 @@ export class ParkingSearchComponent implements AfterViewInit {
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
-      minZoom: 3,
+      minZoom: 12,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
@@ -78,18 +104,22 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   private updateMarkers() {
-    if(this.searchLocation) {
+    if (this.searchLocation) {
       this.clearMarkers();
       this.currentLocationMarker = L.marker(this.searchLocation, { icon: this.navIcon }).addTo(this.map);
-      this.searchRadiusMarker = L.circle(this.searchLocation, this.searchRange, {color: "blue", opacity:.5, fill: false}).addTo(this.map);
+      if (this.locationSearchEnabled) {
+        this.searchRadiusMarker = L.circle(this.searchLocation, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
+      } else if (this.cityCenterLocation) {
+        this.searchRadiusMarker = L.circle(this.cityCenterLocation, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
+      }
     }
   }
 
   private clearMarkers() {
-    if(this.currentLocationMarker) {
+    if (this.currentLocationMarker) {
       this.map.removeLayer(this.currentLocationMarker);
     }
-    if(this.searchRadiusMarker) {
+    if (this.searchRadiusMarker) {
       this.map.removeLayer(this.searchRadiusMarker);
     }
   }
