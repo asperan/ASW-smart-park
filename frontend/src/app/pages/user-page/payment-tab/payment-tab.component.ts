@@ -5,7 +5,7 @@ type PaymentObject = {
   userEmail: string,
   parkingId: string,
   date: Date,
-  amount: Number,
+  amount: number,
   pending: boolean,
 };
 
@@ -23,7 +23,7 @@ export class PaymentTabComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paymentService.requestPaymentInfos().then(data => {this.userPayments = data; console.log(this.userPayments);});
+    this.paymentService.requestPaymentInfos().then(data => this.userPayments = data);
   }
 
 }
