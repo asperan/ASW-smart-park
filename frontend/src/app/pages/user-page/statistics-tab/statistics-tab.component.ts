@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { UserStatisticsService } from '../user-services/statistics.service';
+
+type UserStatistic = {
+  name: string,
+  value: string
+};
 
 @Component({
   selector: 'app-statistics-tab',
@@ -7,12 +13,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticsTabComponent implements OnInit {
 
-  constructor() { }
+  userStatistics!: UserStatistic[];
+
+  constructor(private userStatisticsService: UserStatisticsService) { 
+    this.userStatistics = [];
+  }
 
   ngOnInit(): void {
-    console.log("Statistics tab init");
-    // TODO:
-    // Get statistics user infos
+    this.userStatisticsService.requestUserStatistics().then(data => this.userStatistics = data);
   }
 
 }
