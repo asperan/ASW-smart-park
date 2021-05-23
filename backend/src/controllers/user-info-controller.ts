@@ -29,3 +29,17 @@ export function getVehicleUserInfo(request: express.Request, response: express.R
     response.status(400).json({ code: 2, message: "JWT not sent." });
   }
 }
+
+export function getUserPaymentsInfo(request: express.Request, response: express.Response) {
+  const accessToken = request.header("x-access-token");
+  if (accessToken) {
+    const result = isJwtCorrect(accessToken);
+    if (result.ok && result.email) {
+      userService.getUserPaymentsInfo(result.email).then(data => response.status(200).json(data));
+    } else {
+      response.status(400).json({ code: 1, message: "Bad JWT." });
+    }
+  } else {
+    response.status(400).json({ code: 2, message: "JWT not sent." });
+  }
+}
