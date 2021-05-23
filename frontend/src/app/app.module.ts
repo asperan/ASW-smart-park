@@ -10,6 +10,7 @@ import { UserPageComponent } from './pages/user-page/user-page.component';
 import { VehicleTabComponent } from './pages/user-page/vehicle-tab/vehicle-tab.component';
 import { PaymentTabComponent } from './pages/user-page/payment-tab/payment-tab.component';
 import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statistics-tab.component';
+import { NgStorageModule } from 'ng-storage-local';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statist
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
