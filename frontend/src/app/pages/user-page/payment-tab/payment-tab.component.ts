@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { PaymentInfoService } from "../user-services/payment-info.service";
+
+type PaymentObject = {
+  userEmail: string,
+  parkingId: string,
+  date: Date,
+  amount: Number,
+  pending: boolean,
+};
 
 @Component({
   selector: 'app-payment-tab',
@@ -7,12 +16,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentTabComponent implements OnInit {
 
-  constructor() { }
+  userPayments!: Array<PaymentObject>;
+
+  constructor(private paymentService: PaymentInfoService ) {
+    this.userPayments = [];
+  }
 
   ngOnInit(): void {
-    console.log("Payment tab init");
-    // TODO:
-    // Get payments user infos
+    this.paymentService.requestPaymentInfos().then(data => {this.userPayments = data; console.log(this.userPayments);});
   }
 
 }
