@@ -25,3 +25,7 @@ export async function checkUserPassword(email: string, password: string): Promis
 export async function getUserLinkedVehicles(email: string): Promise<any> {
   return await mongoClient.db.collection("users").findOne({email: email}, {projection: {linkedVehicles: 1, _id: 0}});
 }
+
+export async function getUserPayments(email: string): Promise<any[]> {
+  return await mongoClient.db.collection("payments").find({ userEmail: email }).sort("date", -1).toArray();
+}
