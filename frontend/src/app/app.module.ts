@@ -11,6 +11,7 @@ import { VehicleTabComponent } from './pages/user-page/vehicle-tab/vehicle-tab.c
 import { PaymentTabComponent } from './pages/user-page/payment-tab/payment-tab.component';
 import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statistics-tab.component';
 import { NgStorageModule } from 'ng-storage-local';
+import { PricePipe } from './pipes/prices.pipe';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NgStorageModule } from 'ng-storage-local';
     UserPageComponent,
     VehicleTabComponent,
     PaymentTabComponent,
-    StatisticsTabComponent
+    StatisticsTabComponent,
+    PricePipe,
   ],
   imports: [
     BrowserModule,
