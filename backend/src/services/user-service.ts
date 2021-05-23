@@ -16,3 +16,7 @@ export async function checkUserPassword(email: string, password: string): Promis
 export async function getVehicleUserInfo(email:string) {
   return userRepository.getUserLinkedVehicles(email);
 }
+
+export async function getUserPaymentsInfo(email: string) {
+  return userRepository.getUserPayments(email);
+}
