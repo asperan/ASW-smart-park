@@ -1,1 +1,4 @@
-<p>statistics-tab works!</p>
+<p *ngIf="userStatistics.length === 0">No statistics to show.</p>
+<div class="statListElement" *ngFor="let stat of userStatistics">
+  {{ stat.name }}: {{ stat.value }}
+</div>
