@@ -1,20 +1,26 @@
 import { Injectable } from "@angular/core";
+import { GetStorageConflig, NgStorage, StorageConfig, StorageTypeUnit } from "ng-storage-local";
+
+const tokenStoragePrototype = {
+  storageType: StorageTypeUnit.STRING,
+  storageKey: "SMART_PARK_ACCESS_TOKEN",
+}
 
 @Injectable({
   providedIn: "root",
 })
 export class TokenManagerService {
-  token: string
 
-  constructor() {
-    this.token = "";
-  }
+  constructor(private ngStorage: NgStorage) { }
 
   setToken(newToken: string): void {
-    this.token = newToken;
+    const tokenStorage: StorageConfig = Object.create(tokenStoragePrototype, {storageData: {value: newToken}} );
+    this.ngStorage.setSessionStorage(tokenStorage);
   }
 
-  getToken(): string {
-    return this.token;
+  async getToken(): Promise<string> {
+    const tokenGetter: GetStorageConflig = Object.create(tokenStoragePrototype);
+    const token = await this.ngStorage.getSessionStorage(tokenGetter);
+    return token.error ? "" : token;
   }
 }
