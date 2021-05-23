@@ -8,7 +8,7 @@ import { TokenManagerService } from "src/app/access-token/token-manager";
 export class BasicInfoService {
   constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) {}
 
-  requestBasicInfos(): Promise<any> {
-    return this.http.post("http://localhost:3000/api/user-info/basic", {}, {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
+  async requestBasicInfos(): Promise<any> {
+    return this.http.post("http://localhost:3000/api/user-info/basic", {}, {headers: {"x-access-token": await this.tokenManagerService.getToken()}}).toPromise();
   }
 }
