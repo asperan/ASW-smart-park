@@ -90,7 +90,7 @@ svg.material-icons:not(:last-child) {
 .card {
   border-radius: 4px;
   border: 1px solid #eee;
-  background-color: #fafafa;
+  background-color: #ffafa;
   height: 40px;
   width: 200px;
   margin: 0 8px 16px;
@@ -216,6 +216,34 @@ a:hover {
 .circle-link:hover {
   transform: translateY(-0.25rem);
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
+header a, a:visited {
+    display: inline-flex;
+    vertical-align: top;
+    margin: 10px 10px;
+    color: white;
+}
+
+header img {
+  margin: 0 16px;
+}
+
+header a p {
+    align-self: center;
 }
 
 footer {
