@@ -8,12 +8,12 @@ const routes = express.Router();
 routes.get(
     '/all/:cityName/',
     async (req: express.Request, res: express.Response) => {
-        const cityName = req.params.cityName;
+        const cityName = req.params.city;
         const parkings = await parkingController.getParkingInCity(cityName);
         res.json(parkings);
     });
 
-routes.get(
+routes.post(
     '/radius/',
     body("city").exists(),
     body("latitude").exists(),
@@ -32,7 +32,7 @@ routes.get(
         res.json(parkings);
     });
 
-routes.get(
+routes.post(
     '/radius-center/',
     body("city").exists(),
     body("radiusKM").exists(),

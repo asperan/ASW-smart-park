@@ -1,11 +1,11 @@
 <nav class="navbar navbar-light bg-light search-nav">
-  <div [formGroup]="searchGroup" class="d-flex justify-content-left search-nav-contents">
+  <div class="d-flex justify-content-center">
     <fa-icon [icon]="faUser" class="circle-icon search-nav-element"></fa-icon>
     <fa-icon [icon]="faSearch" class="search-nav-element"></fa-icon>
     <!-- <input type="text" class="search-bar" placeholder="Search City..." #citiesSearch (input)="onSearchCityChange(citiesSearch.value)"> -->
-    <select #citySelect class="form-control" (change)="onSearchCityChange(citySelect.value)" formControlName="cityName">
+    <select #citySelect class="form-control city-search" (change)="onSearchCityChange(citySelect.value)">
       <option value="" disabled>Choose your city</option>
-      <option *ngFor="let city of availableCities" [ngValue]="city">{{city.name}}</option>
+      <option *ngFor="let city of availableCities" [ngValue]="city.name">{{city.name}}</option>
    </select>
   </div>
 </nav>
@@ -14,8 +14,12 @@
 <div class="map-container">
   <div class="map-frame">
     <div id="map"></div>
-    <button id="refreshButton" class="locate-button" (click)="locatePosition()">o</button>
-    <button id="cityCenterButton" class="city-center-button" (click)="locateCityCenter()">C</button>
+    <div class="map-control-buttons">
+      <button class="map-control-button" (click)="locatePosition()">LC</button>
+      <button class="map-control-button" (click)="locateCityCenter()">CC</button>
+      <button class="map-control-button" (click)="currentLocationMode()">LM</button>
+      <button class="map-control-button" (click)="cityCenterMode()">CM</button>
+    </div>
   </div>
 </div>
 
@@ -27,6 +31,6 @@
     <span class="slider-label">5km</span>
     <span class="slider-label">10km</span>
   </div>
-  <input type="range" min="1" max="5" step="1" value="2" class="form-range" #searchRange
+  <input type="range" min="1" max="5" step="1" value="3" class="form-range" #searchRange
     (input)="onRangeChange(searchRange.value)">
 </div>

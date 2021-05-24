@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
-import { City, ParkingSearchService } from 'src/app/services/parking-search.service';
+import { City, Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
 
 @Component({
   selector: 'app-parking-search',
@@ -11,35 +11,50 @@ import { City, ParkingSearchService } from 'src/app/services/parking-search.serv
 })
 export class ParkingSearchComponent implements AfterViewInit {
 
-  //TODO add "no parkings found in your search area in 'Cesena', please expand your search area or search from city center by pressing [icon]"
+  // TODO add "no parkings found in your search area in 'Cesena', please expand your search area or search from city center by pressing [icon]"
+  // TODO maybe auto-select city based on location?
 
   faUser = faUser;
   faSearch = faSearch;
 
   availableCities: City[] = [];
   selectedCity: City | undefined;
+  availableParkings: Parking[] = [];
 
   private locationSearchEnabled: boolean = false;
 
   private currentLocationMarker: L.Marker<any> | undefined;
   private searchRadiusMarker: L.Circle<any> | undefined;
+  private cityCenterMarker: L.Marker<any> | undefined;
+  private parkingsMarkers: L.Marker<any>[] = [];
 
   private searchLocation: L.LatLngExpression | undefined;
-  private cityCenterLocation: L.LatLngExpression | undefined;
   private searchRange = 1000;
 
   private navIcon = L.icon({
     iconUrl: '/assets/images/nav-icon.png',
     iconSize: [35, 20]
   });
-
-  searchGroup = this.fb.group({
-    cityName: ['']
-  })
+  private cityCenterIcon = L.icon({
+    iconUrl: '/assets/images/city-center.png',
+    iconSize: [35, 35]
+  });
+  private blueMarkerIcon = L.icon({
+    iconUrl: '/assets/images/marker-blue.png',
+    iconSize: [25, 35]
+  });
+  private yellowMarkerIcon = L.icon({
+    iconUrl: '/assets/images/marker-yellow.png',
+    iconSize: [25, 35]
+  });
+  private redMarkerIcon = L.icon({
+    iconUrl: '/assets/images/marker-red.png',
+    iconSize: [25, 35]
+  });
 
   private map: any;
 
-  constructor(public fb: FormBuilder, private parkingSearchService: ParkingSearchService) {
+  constructor(private parkingSearchService: ParkingSearchService) {
   }
 
   ngAfterViewInit(): void {
@@ -48,13 +63,26 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   locatePosition() {
-    this.locationSearchEnabled = true;
     this.map.locate({ setView: true, maxZoom: 16 });
+    this.updateMarkers();
   }
 
   locateCityCenter() {
+    if (this.selectedCity) {
+      this.searchLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
+      this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
+      this.updateMarkers();
+    }
+  }
+
+  currentLocationMode() {
+    this.locationSearchEnabled = true;
+    this.locatePosition();
+  }
+
+  cityCenterMode() {
     this.locationSearchEnabled = false;
-    // Search city center in DB, place markers and center view.
+    this.locateCityCenter();
   }
 
   onRangeChange(value: string) {
@@ -68,9 +96,14 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.updateMarkers();
   }
 
-  onSearchCityChange(value: City) {
-    this.selectedCity = value;
-    this.cityCenterLocation = new L.LatLng(value.latitude, value.longitude);
+  onSearchCityChange(value: string) {
+    this.selectedCity = this.availableCities.find((city: City) => city.name == value);
+    if (!this.selectedCity) {
+      console.error("Could not retrieve the selected city: " + value);
+    } else {
+      this.updateMarkers();
+      this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
+    }
   }
 
   private initCities() {
@@ -101,19 +134,82 @@ export class ParkingSearchComponent implements AfterViewInit {
       alert("Ooops, couldn't get your current position! Please re-try or select a city ;)");
     });
 
+    this.locationSearchEnabled = true;
     this.locatePosition();
   }
 
   private updateMarkers() {
     if (this.searchLocation) {
       this.clearMarkers();
+      this.updateCurrentLocationMarkers();
+      this.updateCityCenterMarkers();
+      this.updateParkingMarkers();
+    }
+  }
+
+  private updateCurrentLocationMarkers() {
+    if (this.searchLocation && this.locationSearchEnabled) {
       this.currentLocationMarker = L.marker(this.searchLocation, { icon: this.navIcon }).addTo(this.map);
-      if (this.locationSearchEnabled) {
-        this.searchRadiusMarker = L.circle(this.searchLocation, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
-      } else if (this.cityCenterLocation) {
-        this.searchRadiusMarker = L.circle(this.cityCenterLocation, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
+      this.searchRadiusMarker = L.circle(this.searchLocation, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
+    }
+  }
+
+  private updateCityCenterMarkers() {
+    if (this.selectedCity) {
+      const center = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
+      this.cityCenterMarker = L.marker(center, { icon: this.cityCenterIcon }).addTo(this.map);
+      if (!this.locationSearchEnabled) {
+        this.searchRadiusMarker = L.circle(center, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
       }
     }
+  }
+
+  private updateParkingMarkers() {
+    if (this.locationSearchEnabled) {
+      this.updateLocationModeParkings();
+    } else {
+      this.updateCityCenterModeParkings();
+    }
+  }
+
+  private updateLocationModeParkings() {
+    if (this.selectedCity) {
+      this.parkingSearchService.getParkingsInRadiusPoint(this.selectedCity.name, this.selectedCity.longitude, this.selectedCity.latitude, this.searchRange / 1000).subscribe((data) => {
+        this.availableParkings = data;
+        this.displayParkings();
+      }, (error) => {
+        console.error(error);
+      });
+    }
+  }
+
+  private updateCityCenterModeParkings() {
+    if (this.selectedCity) {
+      this.parkingSearchService.getParkingsInRadiusCityCenter(this.selectedCity.name, this.searchRange / 1000).subscribe((data) => {
+        this.availableParkings = data;
+        this.displayParkings();
+      }, (error) => {
+        console.error(error);
+      });
+    }
+  }
+
+  private displayParkings() {
+    this.availableParkings.forEach(parking => {
+      let options;
+      if(parking.occupancy == parking.capacity) {
+        options = { icon: this.redMarkerIcon };
+      } else if (parking.occupancy / parking.capacity * 100 >= 75) {
+        options = { icon: this.yellowMarkerIcon };
+      } else {
+        options = { icon: this.blueMarkerIcon };
+      }
+      const availableSpots = parking.capacity - parking.occupancy;
+      const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
+      .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-warning popup-button">Check Parking</button><div>')
+      .addTo(this.map)
+      this.parkingsMarkers.push(marker);
+    });
   }
 
   private clearMarkers() {
@@ -122,6 +218,17 @@ export class ParkingSearchComponent implements AfterViewInit {
     }
     if (this.searchRadiusMarker) {
       this.map.removeLayer(this.searchRadiusMarker);
+    }
+    if (this.cityCenterIcon) {
+      this.map.removeLayer(this.cityCenterIcon);
+    }
+    if (this.cityCenterMarker) {
+      this.map.removeLayer(this.cityCenterMarker);
+    }
+    if(this.parkingsMarkers.length) {
+      this.parkingsMarkers.forEach(marker => {
+        this.map.removeLayer(marker);
+      });
     }
   }
 

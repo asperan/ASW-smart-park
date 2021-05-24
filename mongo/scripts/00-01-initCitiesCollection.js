@@ -20,8 +20,12 @@ db.createCollection("cities", {
           bsonType: "array",
           items: {
             bsonType: "object",
-            required: ["capacity", "occupancy", "longitude", "latitude"],
+            required: ["id", "capacity", "occupancy", "longitude", "latitude"],
             properties: {
+              id: {
+                bsonType: "int",
+                description: "Unique parking ID",
+              },
               capacity: {
                 bsonType: "int",
                 description: "Maximum number of parked cars allowed",

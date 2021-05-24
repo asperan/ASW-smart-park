@@ -16,7 +16,7 @@
     height: 100%;
 }
 
-.locate-button {
+.map-control-buttons {
     position: absolute;
     top     : 70%;
     right   : 5%;
@@ -24,12 +24,8 @@
     z-index : 400;
 }
 
-.cityCenterButton {
-    position: absolute;
-    top     : 70%;
-    right   : 2%;
-    padding : 10px;
-    z-index : 400;
+.map-control-button {
+    
 }
 
 .search-nav {
@@ -69,4 +65,8 @@
 .slider-label {
     margin-left : 5%;
     margin-right: 5%;
+}
+
+.popup-text {
+    text-align: center;
 }

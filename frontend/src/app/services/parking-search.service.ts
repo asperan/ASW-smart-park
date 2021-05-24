@@ -24,11 +24,21 @@ export class ParkingSearchService {
   }
 
   getParkingsInRadiusCityCenter(cityName: string, radiusKm: number) {
-
+    const request = {
+      "city": cityName,
+      "radiusKM": radiusKm
+    }
+    return this.http.post<Parking[]>(this.parkingsUrl + "/radius-center/", request);
   }
 
   getParkingsInRadiusPoint(cityName: string, longitude: number, latitude: number, radiusKm: number) {
-
+    const request = {
+      "city": cityName,
+      "radiusKM": radiusKm,
+      "longitude": longitude,
+      "latitude": latitude
+    }
+    return this.http.post<Parking[]>(this.parkingsUrl + "/radius/", request);
   }
 
 }
