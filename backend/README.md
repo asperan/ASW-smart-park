@@ -13,3 +13,16 @@ If a resource needs authorization, check the given JWT in the `x-access-token` h
 
 ### Run backend
 `npm start`
+
+### Query examples
+#### GET
+All queries about a user private information requires their access token, which is given after signing in, to be set in `x-access-token` header.
+
+#### POST
+* `/api/auth/signup`: `{email: <email>, password: <password> }`
+* `/api/auth/signin`: `{email: <email>, password: <password> }`
+* `/api/user-info/vehicles`: `{vehicleId: <vehicleId>, vehicleName: <vehicleName>}`
+* `/api/user-info/payments`: `{parkingId: <parkingId>, date: <date-as-unix-timestamp>, amount: <amount-in-cents>}`
+
+#### PUT
+* `/api/user-info/payments`: `{parkingId: <parkingId>, date: <date-as-unix-timestamp>}`
