@@ -30,6 +30,10 @@ export async function isVehicleLinked(email: string, vehicleId: string): Promise
   return (await mongoClient.db.collection("users").findOne({email: email, "linkedVehicles.vehicleId": vehicleId})) != null;
 }
 
+export async function linkVehicle(email: string, vehicleId: string, vehicleName: string): Promise<boolean> {
+  return (await mongoClient.db.collection("users").findOneAndUpdate({email: email}, {$push: {linkedVehicles: {vehicleId: vehicleId, name: vehicleName}}})).ok === 1;
+}
+
 export async function getUserPayments(email: string): Promise<any[]> {
   return await mongoClient.db.collection("payments").find({ userEmail: email }).sort("date", -1).toArray();
 }
