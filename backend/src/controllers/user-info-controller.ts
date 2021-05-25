@@ -6,7 +6,7 @@ export function getBasicUserInfo(request: express.Request, response: express.Res
   const accessToken = request.header("x-access-token");
   if (accessToken) {
     const result = isJwtCorrect(accessToken);
-    if (result.ok) {
+    if (result.ok && result.email) {
       response.status(200).json({ code: 0, email: result.email });
     } else {
       response.status(400).json({ code: 1, message: "Bad JWT." });
