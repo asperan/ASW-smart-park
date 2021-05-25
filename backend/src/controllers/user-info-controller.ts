@@ -1,6 +1,7 @@
 import express from "express";
 import { isJwtCorrect } from "../services/user-auth";
 import * as userService from "../services/user-service";
+import * as paymentService from "../services/payment-service";
 
 export function getBasicUserInfo(request: express.Request, response: express.Response) {
   checkAccessToken(request, response,
@@ -32,6 +33,24 @@ export function postUserVehicle(request: express.Request, response: express.Resp
 export function getUserPaymentsInfo(request: express.Request, response: express.Response) {
   checkAccessToken(request, response,
     (email: string) => userService.getUserPaymentsInfo(email).then(data => response.status(200).json(data)));
+}
+
+export function addUserPayment(request: express.Request, response: express.Response) {
+  checkAccessToken(request, response, 
+    (email: string) => paymentService.addPayment(email, request.body.parkingId, request.body.date, request.body.amount)
+    .then(ok => {
+      if (ok) { response.status(200).json({code: 0, message: "Pending payment added."}); } 
+      else { response.status(400).json({code: 1, message: "Failed to create a new pending payment."}); }
+    }));
+}
+
+export function resolvePendingPayment(request: express.Request, response: express.Response) {
+  checkAccessToken(request, response, 
+    (email: string) => paymentService.resolvePendingPayment(email, request.body.parkingId, request.body.date)
+    .then(ok => {
+      if (ok) { response.status(200).json({code: 0, message: "Pending payment resolved."}); } 
+      else { response.status(400).json({code: 1, message: "Failed to resolve the selected payment."}); }
+    }));
 }
 
 export function getUserStatistics(request: express.Request, response: express.Response) {
