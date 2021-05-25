@@ -9,6 +9,6 @@ export class BasicInfoService {
   constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) {}
 
   async requestBasicInfos(): Promise<any> {
-    return this.http.post("http://localhost:3000/api/user-info/basic", {}, {headers: {"x-access-token": await this.tokenManagerService.getToken()}}).toPromise();
+    return this.http.get("http://localhost:3000/api/user-info/basic", {headers: {"x-access-token": await this.tokenManagerService.getToken()}}).toPromise();
   }
 }
