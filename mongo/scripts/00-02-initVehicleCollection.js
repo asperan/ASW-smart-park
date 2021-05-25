@@ -20,3 +20,5 @@ db.createCollection("vehicles", {
     }
   }
 });
+
+db.vehicles.createIndex({ id: 1 });
