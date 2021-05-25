@@ -28,7 +28,7 @@ export class UserPageComponent implements OnInit {
   }
 
   onFailedRequest(reason: any): void {
-    alert("An authentication error occurred while retrieving your informations:" + reason.error.message + "\nYou will be redirected to the sign in page.");
+    alert("An authentication error occurred while retrieving your informations: " + reason.error.message + "\nYou will be redirected to the sign in page.");
     this.router.navigate(['signin']);
   }
 }
