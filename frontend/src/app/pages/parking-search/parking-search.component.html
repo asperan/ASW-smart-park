@@ -15,16 +15,16 @@
   <div class="map-frame">
     <div id="map"></div>
     <div class="map-control-button-location-mode">
-      <button class="map-control-button" (click)="currentLocationMode()">LM</button>
+      <button class="map-control-button" (click)="currentLocationMode()"><fa-icon [icon]="faCar"></fa-icon></button>
     </div>
     <div class="map-control-button-city-mode">
-      <button class="map-control-button" [ngClass]="{'button-marked': currentLocationUnavailable}" (click)="cityCenterMode()">CM</button>
+      <button class="map-control-button" [ngClass]="{'button-marked': currentLocationUnavailable}" (click)="cityCenterMode()"><fa-icon [icon]="faCity"></fa-icon></button>
     </div>
     <div class="map-control-buttons-locate-current">
-      <button class="map-control-button" (click)="locatePosition()">LC</button>
+      <button class="map-control-button" (click)="locatePosition()"><fa-icon [icon]="faSearchLocation"></fa-icon></button>
     </div>
     <div class="map-control-buttons-locate-city">
-      <button class="map-control-button" (click)="locateCityCenter()">CC</button>
+      <button class="map-control-button" (click)="locateCityCenter()"><fa-icon [icon]="faHome"></fa-icon></button>
     </div>
   </div>
 </div>

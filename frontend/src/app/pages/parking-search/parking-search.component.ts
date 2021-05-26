@@ -1,6 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCar, faCity, faHome, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 import { City, Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
 
@@ -17,6 +16,10 @@ export class ParkingSearchComponent implements AfterViewInit {
   // font awsome icons
   faUser = faUser;
   faSearch = faSearch;
+  faCity = faCity;
+  faCar = faCar;
+  faSearchLocation = faSearchLocation;
+  faHome = faHome;
 
   // cities & parkings
   availableCities: City[] = [];

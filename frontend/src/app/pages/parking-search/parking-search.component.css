@@ -74,7 +74,13 @@
     z-index : 400;
 }
 
-.map-control-button {}
+.map-control-button {
+    color:white;
+    border-color: lightgrey;
+    border-radius: 20%;
+    width: 40px;
+    background-color: #fc6c90;
+}
 
 .button-marked {
     border-color: tomato;
