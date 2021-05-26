@@ -1,0 +1,34 @@
+.icon-container {
+  position: relative;
+  height: 100%;
+}
+
+.notification-icon {
+  height: 95%;
+  margin: 2.5%;
+}
+
+.notification-count {
+  z-index: 1;
+  background-color: #CC0000;
+  color: whitesmoke;
+  margin: 0;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.round-borders {
+  border-radius: 100%;
+}
+
+.position-absolute-tr {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.text-centered {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
