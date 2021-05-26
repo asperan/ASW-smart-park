@@ -262,6 +262,9 @@ svg#clouds {
   width: 1920px;
 }
 
+.toolbar > notification-icon {
+  height: 100%;
+}
 
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
