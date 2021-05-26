@@ -7,6 +7,7 @@ import parkingRoutes from "./routes/parking-routes";
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserInfoRoutes } from './routes/user-info-routes';
+import { setNotificationRoutes } from './routes/notification-routes';
 
 const app = express();
 
@@ -46,6 +47,7 @@ function configureRoutes() {
     setSignupRoutes(app);
     setSigninRoutes(app);
     setUserInfoRoutes(app);
+    setNotificationRoutes(app);
 }
 
 function startServer() {
