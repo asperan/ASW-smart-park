@@ -7,7 +7,7 @@ export async function isUserAlreadyPresent(email: string): Promise<boolean> {
 }
 
 export async function insertNewUser(email: string, salt: string, hashedPassword: string): Promise<InsertOneWriteOpResult<any>> {
-  return await mongoClient.db.collection("users").insertOne({email: email, password: hashedPassword, salt: salt, linkedVehicles: new Array<any>()});
+  return await mongoClient.db.collection("users").insertOne({email: email, password: hashedPassword, salt: salt, lastNotificationCheck: new Date().valueOf() ,linkedVehicles: new Array<any>()});
 }
 
 export async function checkUserPassword(email: string, password: string): Promise<boolean> {
@@ -20,6 +20,10 @@ export async function checkUserPassword(email: string, password: string): Promis
   } else {
       return false;
   }
+}
+
+export async function getLastNotificationCheck(email:string): Promise<any> {
+  return (await mongoClient.db.collection("users").findOne({email: email}, { projection: {lastNotificationCheck: 1, _id: 0}})).lastNotificationCheck;
 }
 
 export async function getUserLinkedVehicles(email: string): Promise<any> {
