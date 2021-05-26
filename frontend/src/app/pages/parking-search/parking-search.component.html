@@ -11,15 +11,28 @@
 </nav>
 
 
-<div class="map-container">
+<div class="map-container" [ngClass]="{'dimmed': currentLocationUnavailable}">
   <div class="map-frame">
     <div id="map"></div>
-    <div class="map-control-buttons">
-      <button class="map-control-button" (click)="locatePosition()">LC</button>
-      <button class="map-control-button" (click)="locateCityCenter()">CC</button>
+    <div class="map-control-button-location-mode">
       <button class="map-control-button" (click)="currentLocationMode()">LM</button>
-      <button class="map-control-button" (click)="cityCenterMode()">CM</button>
     </div>
+    <div class="map-control-button-city-mode">
+      <button class="map-control-button" [ngClass]="{'button-marked': currentLocationUnavailable}" (click)="cityCenterMode()">CM</button>
+    </div>
+    <div class="map-control-buttons-locate-current">
+      <button class="map-control-button" (click)="locatePosition()">LC</button>
+    </div>
+    <div class="map-control-buttons-locate-city">
+      <button class="map-control-button" (click)="locateCityCenter()">CC</button>
+    </div>
+  </div>
+</div>
+
+<div id="cannot-find-location-dialogue" *ngIf="currentLocationUnavailable">
+  <div class="d-flex justify-content-center">
+      Looks like we cannot find your current location :(
+      Try using city center search mode instead!
   </div>
 </div>
 

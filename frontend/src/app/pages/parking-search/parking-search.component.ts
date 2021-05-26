@@ -14,23 +14,32 @@ export class ParkingSearchComponent implements AfterViewInit {
   // TODO add "no parkings found in your search area in 'Cesena', please expand your search area or search from city center by pressing [icon]"
   // TODO maybe auto-select city based on location?
 
+  // font awsome icons
   faUser = faUser;
   faSearch = faSearch;
 
+  // cities & parkings
   availableCities: City[] = [];
-  selectedCity: City | undefined;
-  availableParkings: Parking[] = [];
+  private selectedCity: City | undefined;
+  private availableParkings: Parking[] = [];
 
-  private locationSearchEnabled: boolean = false;
+  // searchModes: false = current location, true = city center
+  private currentLocationSearchEnabled: boolean = false;
+  // current location unavailable
+  currentLocationUnavailable:boolean = false;
 
-  private currentLocationMarker: L.Marker<any> | undefined;
-  private searchRadiusMarker: L.Circle<any> | undefined;
-  private cityCenterMarker: L.Marker<any> | undefined;
-  private parkingsMarkers: L.Marker<any>[] = [];
-
-  private searchLocation: L.LatLngExpression | undefined;
+  // locations
+  private currentLocation: L.LatLng| undefined;
+  private selectedCityLocation: L.LatLng | undefined;
   private searchRange = 1000;
 
+  // markers
+    private currentLocationMarker: L.Marker<any> | undefined;
+    private searchRadiusMarker: L.Circle<any> | undefined;
+    private cityCenterMarker: L.Marker<any> | undefined;
+    private parkingsMarkers: L.Marker<any>[] = [];
+
+  // marker icons
   private navIcon = L.icon({
     iconUrl: '/assets/images/nav-icon.png',
     iconSize: [35, 20]
@@ -64,24 +73,24 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   locatePosition() {
     this.map.locate({ setView: true, maxZoom: 16 });
-    this.updateMarkers();
+    this.updateGraphics();
   }
 
   locateCityCenter() {
     if (this.selectedCity) {
-      this.searchLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
       this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
-      this.updateMarkers();
+      this.updateGraphics();
     }
   }
 
   currentLocationMode() {
-    this.locationSearchEnabled = true;
+    this.currentLocationSearchEnabled = true;
     this.locatePosition();
   }
 
   cityCenterMode() {
-    this.locationSearchEnabled = false;
+    this.currentLocationUnavailable = false;
+    this.currentLocationSearchEnabled = false;
     this.locateCityCenter();
   }
 
@@ -93,7 +102,7 @@ export class ParkingSearchComponent implements AfterViewInit {
       case "4": this.searchRange = 5000; break;
       case "5": this.searchRange = 10000; break;
     }
-    this.updateMarkers();
+    this.updateGraphics();
   }
 
   onSearchCityChange(value: string) {
@@ -101,7 +110,8 @@ export class ParkingSearchComponent implements AfterViewInit {
     if (!this.selectedCity) {
       console.error("Could not retrieve the selected city: " + value);
     } else {
-      this.updateMarkers();
+      this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
+      this.updateGraphics();
       this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
     }
   }
@@ -109,6 +119,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   private initCities() {
     this.parkingSearchService.getAllCities().subscribe((cities: City[]) => {
       this.availableCities = cities;
+      this.initDefaultCity();
     }, (err) => console.log(err))
   }
 
@@ -125,56 +136,69 @@ export class ParkingSearchComponent implements AfterViewInit {
 
     tiles.addTo(this.map);
 
-    this.map.on('locationfound', (e: { accuracy: any; latlng: L.LatLngExpression; }) => {
-      this.searchLocation = e.latlng;
-      this.updateMarkers();
+    this.map.on('locationfound', (e: { accuracy: any; latlng: L.LatLng; }) => {
+      this.currentLocationUnavailable = false;
+      this.currentLocation = e.latlng;
+      this.updateGraphics();
     });
 
     this.map.on('locationerror', (e: { message: any; }) => {
-      alert("Ooops, couldn't get your current position! Please re-try or select a city ;)");
+      if(this.currentLocationSearchEnabled) {
+        this.currentLocationUnavailable = true;
+      }
     });
 
-    this.locationSearchEnabled = true;
+    this.currentLocationSearchEnabled = true;
     this.locatePosition();
   }
 
-  private updateMarkers() {
-    if (this.searchLocation) {
-      this.clearMarkers();
-      this.updateCurrentLocationMarkers();
-      this.updateCityCenterMarkers();
-      this.updateParkingMarkers();
+  private initDefaultCity() {
+    const defaultCityName = 'cesena';
+    this.selectedCity = this.availableCities.find((city: City) => city.name == defaultCityName);
+    if(this.selectedCity) {
+      this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
     }
   }
 
+  private updateGraphics() {
+    this.clearMarkers();
+    this.updateCurrentLocationMarkers();
+    this.updateCityCenterMarkers();
+    this.updateSearchRadiusMarkers();
+    this.updateParkingMarkers();
+  }
+
   private updateCurrentLocationMarkers() {
-    if (this.searchLocation && this.locationSearchEnabled) {
-      this.currentLocationMarker = L.marker(this.searchLocation, { icon: this.navIcon }).addTo(this.map);
-      this.searchRadiusMarker = L.circle(this.searchLocation, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
+    if (this.currentLocation) {
+      this.currentLocationMarker = L.marker(this.currentLocation, { icon: this.navIcon }).addTo(this.map);
     }
   }
 
   private updateCityCenterMarkers() {
-    if (this.selectedCity) {
-      const center = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
-      this.cityCenterMarker = L.marker(center, { icon: this.cityCenterIcon }).addTo(this.map);
-      if (!this.locationSearchEnabled) {
-        this.searchRadiusMarker = L.circle(center, this.searchRange, { color: "blue", opacity: .5, fill: false }).addTo(this.map);
-      }
+    if (this.selectedCityLocation) {
+      this.cityCenterMarker = L.marker(this.selectedCityLocation, { icon: this.cityCenterIcon }).addTo(this.map);
+    }
+  }
+
+  private updateSearchRadiusMarkers() {
+    if (this.currentLocationSearchEnabled && this.currentLocation) {
+      this.searchRadiusMarker = L.circle(this.currentLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
+    } else if(this.selectedCityLocation){
+      this.searchRadiusMarker = L.circle(this.selectedCityLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
     }
   }
 
   private updateParkingMarkers() {
-    if (this.locationSearchEnabled) {
-      this.updateLocationModeParkings();
+    if (this.currentLocationSearchEnabled) {
+      this.updateCurrentLocationModeParkings();
     } else {
       this.updateCityCenterModeParkings();
     }
   }
 
-  private updateLocationModeParkings() {
-    if (this.selectedCity) {
-      this.parkingSearchService.getParkingsInRadiusPoint(this.selectedCity.name, this.selectedCity.longitude, this.selectedCity.latitude, this.searchRange / 1000).subscribe((data) => {
+  private updateCurrentLocationModeParkings() {
+    if (this.selectedCity && this.currentLocation) {
+      this.parkingSearchService.getParkingsInRadiusPoint(this.selectedCity.name, this.currentLocation.lat, this.currentLocation.lng, this.searchRange / 1000).subscribe((data) => {
         this.availableParkings = data;
         this.displayParkings();
       }, (error) => {
@@ -197,7 +221,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   private displayParkings() {
     this.availableParkings.forEach(parking => {
       let options;
-      if(parking.occupancy == parking.capacity) {
+      if (parking.occupancy == parking.capacity) {
         options = { icon: this.redMarkerIcon };
       } else if (parking.occupancy / parking.capacity * 100 >= 75) {
         options = { icon: this.yellowMarkerIcon };
@@ -206,8 +230,8 @@ export class ParkingSearchComponent implements AfterViewInit {
       }
       const availableSpots = parking.capacity - parking.occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-      .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-warning popup-button">Check Parking</button><div>')
-      .addTo(this.map)
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-warning popup-button">Check Parking</button><div>')
+        .addTo(this.map)
       this.parkingsMarkers.push(marker);
     });
   }
@@ -225,7 +249,7 @@ export class ParkingSearchComponent implements AfterViewInit {
     if (this.cityCenterMarker) {
       this.map.removeLayer(this.cityCenterMarker);
     }
-    if(this.parkingsMarkers.length) {
+    if (this.parkingsMarkers.length) {
       this.parkingsMarkers.forEach(marker => {
         this.map.removeLayer(marker);
       });
