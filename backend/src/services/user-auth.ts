@@ -1,6 +1,7 @@
 import CryptoJs from "crypto-js";
 import cryptoRandomString from "crypto-random-string";
 import jwt from "jsonwebtoken";
+import express from "express";
 
 const hashSecretKey = process.env.HASHING_KEY || "";
 const jwtSecret = process.env.JWT_SIGN_SECRET || "";
@@ -24,5 +25,19 @@ export function isJwtCorrect(token: string): { ok: boolean, email?: string } {
     return { ok: true, email: decoded.userEmail };
   } catch (error: any) {
     return { ok: false };
+  }
+}
+
+export function checkAccessToken(request: express.Request, response: express.Response, callback: (email: string) => any) {
+  const accessToken = request.header("x-access-token");
+  if (accessToken) {
+    const result = isJwtCorrect(accessToken);
+    if (result.ok && result.email) {
+      callback(result.email);
+    } else {
+      response.status(400).json({ code: 1, message: "Bad JWT." });
+    }
+  } else {
+    response.status(400).json({ code: 2, message: "JWT not sent." });
   }
 }
