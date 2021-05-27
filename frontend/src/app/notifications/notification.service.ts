@@ -16,4 +16,8 @@ export class NotificationService {
   async getUserNotificationSummary() {
     return this.http.get("http://localhost:3000/api/notifications", { headers: { "x-access-token": await this.tokenManagerService.getToken() } }).toPromise();
   }
+
+  async getAllUserNotifications() {
+    return this.http.get("http://localhost:3000/api/notifications/all", { headers: { "x-access-token": await this.tokenManagerService.getToken() } }).toPromise();
+  }
 }
