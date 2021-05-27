@@ -42,3 +42,7 @@ export async function getUserPaymentsInfo(email: string) {
 export async function getUserStatistics(email: string): Promise<any> {
   return [{ name: "FirstStat", value: "1" }, { name: "Most payed", value: "150,00" }];
 }
+
+export async function updateLastNotificationCheck(email: string, date: Date) {
+  return userRepository.updateLastNotificationCheck(email, date);
+}
