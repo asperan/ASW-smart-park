@@ -6,7 +6,7 @@ import cityRoutes from "./routes/city-routes";
 import parkingRoutes from "./routes/parking-routes";
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
-import { setUserRoutes } from './routes/user-info-routes';
+import { setUserRoutes } from './routes/user-routes';
 import { setNotificationRoutes } from './routes/notification-routes';
 
 const app = express();
