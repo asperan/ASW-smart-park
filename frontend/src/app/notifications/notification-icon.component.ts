@@ -3,8 +3,8 @@ import { NotificationService } from "./notification.service";
 
 @Component({
   selector: "notification-icon",
-  templateUrl: "./notifications.component.html",
-  styleUrls: ["./notifications.component.css"],
+  templateUrl: "./notification-icon.component.html",
+  styleUrls: ["./notification-icon.component.css"],
 })
 export class NotificationIconComponent {
   notificationCount!: number;
