@@ -10,9 +10,6 @@ import { City, Parking, ParkingSearchService } from 'src/app/services/parking-se
 })
 export class ParkingSearchComponent implements AfterViewInit {
 
-  // TODO add "no parkings found in your search area in 'Cesena', please expand your search area or search from city center by pressing [icon]"
-  // TODO maybe auto-select city based on location?
-
   // font awsome icons
   faUser = faUser;
   faSearch = faSearch;

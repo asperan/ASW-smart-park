@@ -1,10 +1,10 @@
 #cannot-find-location-dialogue {
     position  : absolute;
-    top: 40%;
+    top       : 40%;
     left      : 2%;
     right     : 2%;
     z-index   : 1001;
-    color: white;
+    color     : white;
     text-align: center;
 }
 
@@ -75,10 +75,10 @@
 }
 
 .map-control-button {
-    color:white;
-    border-color: lightgrey;
-    border-radius: 20%;
-    width: 40px;
+    color           : white;
+    border-color    : lightgrey;
+    border-radius   : 20%;
+    width           : 40px;
     background-color: #fc6c90;
 }
 
@@ -87,9 +87,15 @@
     border-width: 4px;
 }
 
+.search-container {
+    width: 100%;
+}
+
 .search-nav {
     border-bottom: solid;
     border-color : lightgrey;
+    text-align   : center;
+    width        : 100%;
 }
 
 .search-nav-contents {
@@ -99,9 +105,13 @@
     margin-right : 4%;
 }
 
-.search-nav-element {
-    margin-left : 4%;
-    margin-right: 4%;
+.user-icon {
+    margin-left: 2%;
+    width      : 18%;
+}
+
+.search-icon {
+    padding: 10px;
 }
 
 .circle-icon {
@@ -113,6 +123,9 @@
     border-width : 2px;
 }
 
+.city-search {
+    margin-right: 5%;
+}
 
 .slider-container {
     position   : absolute;
@@ -132,4 +145,49 @@
 
 .popup-button {
     border-bottom: 10%;
+}
+
+/*Desktop*/
+@media screen and (min-width: 768px) {
+
+    .search-container {
+        margin-right: 78%;
+    }
+
+    .map-control-button-location-mode {
+        position: absolute;
+        top     : 70%;
+        left    : 4%;
+        padding : 10px;
+        z-index : 400;
+    }
+    
+    .map-control-button-city-mode {
+        position: absolute;
+        top     : 70%;
+        left    : 8%;
+        padding : 10px;
+        z-index : 1002;
+    }
+    
+    .map-control-buttons-locate-current {
+        position: absolute;
+        top     : 70%;
+        left    : 12%;
+        padding : 10px;
+        z-index : 400;
+    }
+    
+    .map-control-buttons-locate-city {
+        position: absolute;
+        top     : 70%;
+        left    : 16%;
+        padding : 10px;
+        z-index : 400;
+    }
+
+    .slider-label {
+        margin-left : 11%;
+        margin-right: 11%;
+    }
 }
