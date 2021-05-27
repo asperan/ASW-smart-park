@@ -3,7 +3,6 @@
   <div class="d-flex justify-content-center search-container">
     <fa-icon [icon]="faUser" class="circle-icon search-nav-element user-icon"></fa-icon>
     <fa-icon [icon]="faSearch" class="search-nav-element search-icon"></fa-icon>
-    <!-- <input type="text" class="search-bar" placeholder="Search City..." #citiesSearch (input)="onSearchCityChange(citiesSearch.value)"> -->
     <select #citySelect class="form-control city-search" (change)="onSearchCityChange(citySelect.value)">
       <option value="" disabled>Choose your city</option>
       <option *ngFor="let city of availableCities" [ngValue]="city.name">{{city.name}}</option>

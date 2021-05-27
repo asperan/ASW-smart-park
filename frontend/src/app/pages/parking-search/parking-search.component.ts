@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
-import { City, Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
+import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/services/parking-search.service';
 
 @Component({
   selector: 'app-parking-search',
@@ -21,24 +21,27 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   // cities & parkings
   availableCities: City[] = [];
+  parkingSpots: ParkingSpot[] = [];
   private selectedCity: City | undefined;
+  private selectedParkingId: number | undefined;
   private availableParkings: Parking[] = [];
 
   // searchModes: false = current location, true = city center
   private currentLocationSearchEnabled: boolean = false;
   // current location unavailable
-  currentLocationUnavailable:boolean = false;
+  currentLocationUnavailable: boolean = false;
 
   // locations
-  private currentLocation: L.LatLng| undefined;
+  private currentLocation: L.LatLng | undefined;
   private selectedCityLocation: L.LatLng | undefined;
   private searchRange = 1000;
 
   // markers
-    private currentLocationMarker: L.Marker<any> | undefined;
-    private searchRadiusMarker: L.Circle<any> | undefined;
-    private cityCenterMarker: L.Marker<any> | undefined;
-    private parkingsMarkers: L.Marker<any>[] = [];
+  private currentLocationMarker: L.Marker<any> | undefined;
+  private searchRadiusMarker: L.Circle<any> | undefined;
+  private cityCenterMarker: L.Marker<any> | undefined;
+  private parkingsMarkers: L.Marker<any>[] = [];
+  private parkingsSpotsMarkers: L.Marker<any>[] = [];
 
   // marker icons
   private navIcon = L.icon({
@@ -61,6 +64,15 @@ export class ParkingSearchComponent implements AfterViewInit {
     iconUrl: '/assets/images/marker-red.png',
     iconSize: [25, 35]
   });
+  private parkingGreen = L.icon({
+    iconUrl: '/assets/images/park-green.png',
+    iconSize: [20, 20]
+  });
+  private parkingRed = L.icon({
+    iconUrl: '/assets/images/park-red.png',
+    iconSize: [20, 20]
+  });
+
 
   private map: any;
 
@@ -121,7 +133,7 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.parkingSearchService.getAllCities().subscribe((cities: City[]) => {
       this.availableCities = cities;
       this.initDefaultCity();
-    }, (err) => console.log(err))
+    }, (err) => console.error(err))
   }
 
   private initMap(): void {
@@ -130,8 +142,8 @@ export class ParkingSearchComponent implements AfterViewInit {
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 12,
+      maxZoom: 20,
+      minZoom: 14,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
@@ -144,19 +156,21 @@ export class ParkingSearchComponent implements AfterViewInit {
     });
 
     this.map.on('locationerror', (e: { message: any; }) => {
-      if(this.currentLocationSearchEnabled) {
+      if (this.currentLocationSearchEnabled) {
         this.currentLocationUnavailable = true;
       }
     });
 
     this.currentLocationSearchEnabled = true;
     this.locatePosition();
+
+    setInterval(this.updateParkingsStatus, 10000);
   }
 
   private initDefaultCity() {
     const defaultCityName = 'cesena';
     this.selectedCity = this.availableCities.find((city: City) => city.name == defaultCityName);
-    if(this.selectedCity) {
+    if (this.selectedCity) {
       this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
     }
   }
@@ -167,6 +181,7 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.updateCityCenterMarkers();
     this.updateSearchRadiusMarkers();
     this.updateParkingMarkers();
+    this.updateParkingSpotsMarkers();
   }
 
   private updateCurrentLocationMarkers() {
@@ -182,10 +197,10 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   private updateSearchRadiusMarkers() {
-    if(this.searchRange != 100000) {
+    if (this.searchRange != 100000) {
       if (this.currentLocationSearchEnabled && this.currentLocation) {
         this.searchRadiusMarker = L.circle(this.currentLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
-      } else if(this.selectedCityLocation){
+      } else if (this.selectedCityLocation) {
         this.searchRadiusMarker = L.circle(this.selectedCityLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
       }
     }
@@ -233,10 +248,32 @@ export class ParkingSearchComponent implements AfterViewInit {
       }
       const availableSpots = parking.capacity - parking.occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-warning popup-button">Check Parking</button><div>')
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-warning popup-button">Park Here</button><div>')
+        .addEventListener("click", e => {
+          this.selectedParkingId = parking.id;
+          this.parkingSpots = parking.parkingSpots;
+          this.clearParkingSpots();
+          this.updateParkingSpotsMarkers();
+        })
         .addTo(this.map)
       this.parkingsMarkers.push(marker);
     });
+  }
+
+  private updateParkingSpotsMarkers() {
+    if (this.parkingSpots) {
+      this.parkingSpots.forEach((spot: ParkingSpot) => {
+        let options;
+        if (spot.occupied) {
+          options = { icon: this.parkingRed };
+        } else {
+          options = { icon: this.parkingGreen };
+        }
+        const marker = L.marker(new L.LatLng(spot.latitude, spot.longitude), options)
+          .addTo(this.map);
+        this.parkingsSpotsMarkers.push(marker);
+      });
+    }
   }
 
   private clearMarkers() {
@@ -255,6 +292,25 @@ export class ParkingSearchComponent implements AfterViewInit {
     if (this.parkingsMarkers.length) {
       this.parkingsMarkers.forEach(marker => {
         this.map.removeLayer(marker);
+      });
+    }
+    this.clearParkingSpots();
+  }
+
+  private clearParkingSpots() {
+    if (this.parkingsSpotsMarkers) {
+      this.parkingsSpotsMarkers.forEach(marker => {
+        this.map.removeLayer(marker);
+      });
+    }
+  }
+
+  private updateParkingsStatus() {
+    if(this.selectedCity && this.selectedParkingId) {
+      this.parkingSearchService.getParkingByParkingId(this.selectedCity.name, this.selectedParkingId)
+      .subscribe((data: Parking) => {
+        this.parkingSpots = data.parkingSpots;
+        this.updateParkingSpotsMarkers();
       });
     }
   }

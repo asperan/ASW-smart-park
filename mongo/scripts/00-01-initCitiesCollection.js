@@ -41,6 +41,28 @@ db.createCollection("cities", {
               latitude: {
                 bsonType: "decimal",
                 description: "geographical longitude in Decimal degrees (DD) format, required"
+              },
+              parkingSpots: {
+                bsonType: "array",
+                required: ["id", "occupied", "longitude", "latitude"],
+                items: {
+                  id: {
+                    bsonType: "int",
+                    description: "parking spot ID unique to its parent",
+                  },
+                  occupied: {
+                    bsonType: "bool",
+                    description: "true if parking spot is occupied, false otherwise"
+                  },
+                  longitude: {
+                    bsonType: "decimal",
+                    description: "geographical longitude in Decimal degrees (DD) format, required"
+                  },
+                  latitude: {
+                    bsonType: "decimal",
+                    description: "geographical longitude in Decimal degrees (DD) format, required"
+                  }
+                }
               }
             }
           }

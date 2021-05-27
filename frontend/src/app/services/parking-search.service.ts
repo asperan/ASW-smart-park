@@ -41,6 +41,11 @@ export class ParkingSearchService {
     return this.http.post<Parking[]>(this.parkingsUrl + "/radius/", request);
   }
 
+  getParkingByParkingId(cityName: string, parkingId: number) {
+    const url = this.citiesUrl + "/spots/" + cityName + "/" + parkingId;
+    return this.http.get<Parking>(url);
+  }
+
 }
 
 export type City = {
@@ -51,8 +56,17 @@ export type City = {
 }
 
 export type Parking = {
+  id: number,
   capacity: number,
   occupancy: number,
+  longitude: number,
+  latitude: number,
+  parkingSpots: ParkingSpot[]
+}
+
+export type ParkingSpot = {
+  id: number,
+  occupied: boolean,
   longitude: number,
   latitude: number
 }
