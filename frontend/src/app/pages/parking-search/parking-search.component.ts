@@ -97,14 +97,22 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   currentLocationMode() {
+    this.resetSpots();
     this.currentLocationSearchEnabled = true;
     this.locatePosition();
   }
 
   cityCenterMode() {
+    this.resetSpots();
     this.currentLocationUnavailable = false;
     this.currentLocationSearchEnabled = false;
     this.locateCityCenter();
+  }
+
+  private resetSpots() {
+    this.parkingSpots = [];
+    this.selectedParkingId = undefined;
+    this.clearParkingSpots();
   }
 
   onRangeChange(value: string) {
@@ -298,7 +306,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   private clearParkingSpots() {
-    if (this.parkingsSpotsMarkers) {
+    if (this.parkingsSpotsMarkers.length) {
       this.parkingsSpotsMarkers.forEach(marker => {
         this.map.removeLayer(marker);
       });
