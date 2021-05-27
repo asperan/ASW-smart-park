@@ -1,5 +1,5 @@
 import express from "express";
-import { addUserPayment, getBasicUserInfo, getUserPaymentsInfo, getUserStatistics, getVehicleUserInfo, postUserVehicle, resolvePendingPayment } from "../controllers/user-info-controller";
+import { addUserPayment, getBasicUserInfo, getUserPaymentsInfo, getUserStatistics, getVehicleUserInfo, postUserVehicle, resolvePendingPayment } from "../controllers/user-controller";
 
 export function setUserInfoRoutes(app: express.Application): void {
   app.get("/api/user-info/basic", getBasicUserInfo);
