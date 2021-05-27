@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { faCar, faCity, faHome, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 import { City, Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
 
@@ -17,6 +17,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   faCar = faCar;
   faSearchLocation = faSearchLocation;
   faHome = faHome;
+  faInfinity = faInfinity;
 
   // cities & parkings
   availableCities: City[] = [];
@@ -96,11 +97,11 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   onRangeChange(value: string) {
     switch (value) {
-      case "1": this.searchRange = 250; break;
-      case "2": this.searchRange = 500; break;
-      case "3": this.searchRange = 1000; break;
-      case "4": this.searchRange = 5000; break;
-      case "5": this.searchRange = 10000; break;
+      case "1": this.searchRange = 500; break;
+      case "2": this.searchRange = 1000; break;
+      case "3": this.searchRange = 5000; break;
+      case "4": this.searchRange = 10000; break;
+      case "5": this.searchRange = 100000; break;
     }
     this.updateGraphics();
   }
@@ -181,10 +182,12 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   private updateSearchRadiusMarkers() {
-    if (this.currentLocationSearchEnabled && this.currentLocation) {
-      this.searchRadiusMarker = L.circle(this.currentLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
-    } else if(this.selectedCityLocation){
-      this.searchRadiusMarker = L.circle(this.selectedCityLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
+    if(this.searchRange != 100000) {
+      if (this.currentLocationSearchEnabled && this.currentLocation) {
+        this.searchRadiusMarker = L.circle(this.currentLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
+      } else if(this.selectedCityLocation){
+        this.searchRadiusMarker = L.circle(this.selectedCityLocation, this.searchRange, { color: "#ff2c61", opacity: .5, fill: false }).addTo(this.map);
+      }
     }
   }
 

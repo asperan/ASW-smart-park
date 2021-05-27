@@ -39,12 +39,12 @@
 
 <div class="slider-container">
   <div class="d-flex justify-content-center">
-    <span class="slider-label">250m</span>
     <span class="slider-label">500m</span>
     <span class="slider-label">1km</span>
     <span class="slider-label">5km</span>
     <span class="slider-label">10km</span>
+    <span class="slider-label"><fa-icon [icon]="faInfinity"></fa-icon></span>
   </div>
-  <input type="range" min="1" max="5" step="1" value="3" class="form-range" #searchRange
+  <input type="range" min="1" max="5" step="1" value="2" class="form-range" #searchRange
     (input)="onRangeChange(searchRange.value)">
 </div>
