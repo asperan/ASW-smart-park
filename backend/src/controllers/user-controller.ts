@@ -57,3 +57,12 @@ export function getUserStatistics(request: express.Request, response: express.Re
   checkAccessToken(request, response,
     (email: string) => userService.getUserStatistics(email).then(data => response.status(200).json(data)));
 }
+
+export function updateLastNotificationCheck(request: express.Request, response: express.Response) {
+  checkAccessToken(request, response, 
+    (email: string) => userService.updateLastNotificationCheck(email, new Date(request.body.date))
+    .then(ok => {
+      if (ok) { response.status(200).json({code: 0, message: "Date updated."}); }
+      else { response.status(400).json({code: 1, message: "Failed to update the date."}); }
+  }));
+}

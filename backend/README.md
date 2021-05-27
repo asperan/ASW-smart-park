@@ -23,6 +23,7 @@ All queries about a user private information requires their access token, which 
 * `/api/auth/signin`: `{email: <email>, password: <password> }`
 * `/api/user/info-vehicles`: `{vehicleId: <vehicleId>, vehicleName: <vehicleName>}`
 * `/api/user/info-payments`: `{parkingId: <parkingId>, date: <date-as-unix-timestamp>, amount: <amount-in-cents>}`
+* `/api/user/update-last-notification-check`: `{ date: <date-as-unix-timestamp>}`
 
 #### PUT
 * `/api/user/info-payments`: `{parkingId: <parkingId>, date: <date-as-unix-timestamp>}`
