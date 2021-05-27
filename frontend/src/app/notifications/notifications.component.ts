@@ -13,6 +13,7 @@ export class NotificationIconComponent {
   constructor(private notificationService: NotificationService) {
     this.notificationCount = 0;
     this.updateNotificationCount = this.updateNotificationCount.bind(this);
+    this.updateNotificationCount();
   }
 
   ngOnInit() {
