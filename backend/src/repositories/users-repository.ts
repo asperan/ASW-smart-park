@@ -26,6 +26,10 @@ export async function getLastNotificationCheck(email:string): Promise<any> {
   return (await mongoClient.db.collection("users").findOne({email: email}, { projection: {lastNotificationCheck: 1, _id: 0}})).lastNotificationCheck;
 }
 
+export async function updateLastNotificationCheck(email: string, date: Date): Promise<boolean> {
+  return (await mongoClient.db.collection("users").findOneAndUpdate({email: email}, {$set: {lastNotificationCheck: date}})).ok === 1;
+}
+
 export async function getUserLinkedVehicles(email: string): Promise<any> {
   return await mongoClient.db.collection("users").findOne({email: email}, {projection: {linkedVehicles: 1, _id: 0}});
 }
