@@ -9,6 +9,6 @@ export class UserStatisticsService {
   constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) {}
 
   async requestUserStatistics(): Promise<any> {
-    return this.http.get("http://localhost:3000/api/user-info/stats", {headers: {"x-access-token": await this.tokenManagerService.getToken()}}).toPromise();
+    return this.http.get("http://localhost:3000/api/user/info-stats", {headers: {"x-access-token": await this.tokenManagerService.getToken()}}).toPromise();
   }
 }
