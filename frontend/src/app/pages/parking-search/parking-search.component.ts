@@ -85,7 +85,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   locatePosition() {
-    this.map.locate({ setView: true, maxZoom: 16 });
+    this.map.locate({ setView: true, watch: true, maxZoom: 16 });
     this.updateGraphics();
   }
 
