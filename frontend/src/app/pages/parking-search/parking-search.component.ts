@@ -163,7 +163,6 @@ export class ParkingSearchComponent implements AfterViewInit {
       this.currentLocationUnavailable = false;
       this.currentLocation = e.latlng;
       this.updateGraphics();
-      console.log("loc: " + JSON.stringify(this.currentLocation));
     });
 
     this.map.on('locationerror', (e: { message: any; }) => {
