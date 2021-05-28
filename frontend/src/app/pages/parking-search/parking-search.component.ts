@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
-import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/services/parking-search.service';
+import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-service/parking-search.service';
 
 @Component({
   selector: 'app-parking-search',
