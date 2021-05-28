@@ -14,7 +14,7 @@ export function signupUser(request: express.Request, response: express.Response)
       } else {
         const userSalt = userAuth.generateNewSalt();
         const hashedPassword = userAuth.hashPassword(userPassword, userSalt);
-        userService.insertUser(userEmail, userSalt, hashedPassword).then(insertResult => {
+        userService.insertNewUser(userEmail, userSalt, hashedPassword).then(insertResult => {
           if (insertResult.result.ok) {
             response.status(200).json({code: 0, message: "User signed up correctly."});
           } else {
