@@ -1,0 +1,49 @@
+
+<nav class="navbar navbar-light bg-light search-nav">
+  <div class="d-flex justify-content-center search-container">
+    <fa-icon [icon]="faUser" class="circle-icon search-nav-element user-icon"></fa-icon>
+    <fa-icon [icon]="faSearch" class="search-nav-element search-icon"></fa-icon>
+    <select #citySelect class="form-control city-search" (change)="onSearchCityChange(citySelect.value)">
+      <option value="" disabled>Choose your city</option>
+      <option *ngFor="let city of availableCities" [ngValue]="city.name">{{city.name}}</option>
+   </select>
+  </div>
+</nav>
+
+
+<div class="map-container" [ngClass]="{'dimmed': currentLocationUnavailable}">
+  <div class="map-frame">
+    <div id="map"></div>
+    <div class="map-control-button-location-mode">
+      <button class="map-control-button" (click)="currentLocationMode()" title="Search From Current Location"><fa-icon [icon]="faCar"></fa-icon></button>
+    </div>
+    <div class="map-control-button-city-mode">
+      <button class="map-control-button" [ngClass]="{'button-marked': currentLocationUnavailable}" (click)="cityCenterMode()" title="Search From City Center"><fa-icon [icon]="faCity"></fa-icon></button>
+    </div>
+    <div class="map-control-buttons-locate-current">
+      <button class="map-control-button" (click)="locatePosition()"><fa-icon [icon]="faSearchLocation" title="Find My Location"></fa-icon></button>
+    </div>
+    <div class="map-control-buttons-locate-city">
+      <button class="map-control-button" (click)="locateCityCenter()"><fa-icon [icon]="faHome" title="Find City Center"></fa-icon></button>
+    </div>
+  </div>
+</div>
+
+<div id="cannot-find-location-dialogue" *ngIf="currentLocationUnavailable">
+  <div class="d-flex justify-content-center">
+      Looks like we cannot find your current location :(
+      Try using city center search mode instead!
+  </div>
+</div>
+
+<div class="slider-container">
+  <div class="d-flex justify-content-center">
+    <span class="slider-label">500m</span>
+    <span class="slider-label">1km</span>
+    <span class="slider-label">5km</span>
+    <span class="slider-label">10km</span>
+    <span class="slider-label"><fa-icon [icon]="faInfinity"></fa-icon></span>
+  </div>
+  <input type="range" min="1" max="5" step="1" value="2" class="form-range" #searchRange
+    (input)="onRangeChange(searchRange.value)">
+</div>

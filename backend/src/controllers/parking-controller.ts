@@ -1,5 +1,5 @@
 
-import { ParkingEntity } from "../repositories/cities-repository";
+import { ParkingEntity, ParkingSpotEntity } from "../repositories/cities-repository";
 import { Coordinates } from "../services/geo-service";
 import * as parkingService from "../services/parking-service";
 
@@ -18,11 +18,18 @@ export async function getAvailableParkingByCityIdWithinRadiusFromCityCenter(name
     return parkings.map((parking: ParkingEntity) => makeDtoFromParking(parking));
 }
 
+export async function getParkingSpotsByParkingId(cityName: string, parkingId: number) {
+    const parking = await parkingService.findParkingByCityAndParkingId(cityName, parkingId);
+    return makeDtoFromParking(parking);
+}
+
 function makeDtoFromParking(parking: ParkingEntity) {
     return {
+        id: parking.id,
         capacity: parking.capacity,
         occupancy: parking.occupancy,
         longitude: parking.longitude,
-        latitude: parking.latitude
+        latitude: parking.latitude,
+        parkingSpots: parking.parkingSpots
     };
 }
