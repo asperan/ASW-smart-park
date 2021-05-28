@@ -3,7 +3,7 @@ import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser }
 import * as L from 'leaflet';
 import { interval } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-service/parking-search.service';
+import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-services/parking-search.service';
 
 @Component({
   selector: 'app-parking-search',
@@ -262,7 +262,7 @@ export class ParkingSearchComponent implements AfterViewInit {
       }
       const availableSpots = parking.capacity - parking.occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-warning popup-button">Park Here</button><div>')
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button">More Info</button><div>')
         .addEventListener("click", e => {
           this.selectedParkingId = parking.id;
           this.parkingSpots = parking.parkingSpots;
