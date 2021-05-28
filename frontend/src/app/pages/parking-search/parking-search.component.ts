@@ -1,6 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
+import { interval } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-service/parking-search.service';
 
 @Component({
@@ -85,7 +87,7 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   locatePosition() {
-    this.map.locate({ setView: true, watch: true, maxZoom: 16 });
+    this.map.locate({ setView: true, maxZoom: 16 });
     this.updateGraphics();
   }
 
@@ -161,6 +163,7 @@ export class ParkingSearchComponent implements AfterViewInit {
       this.currentLocationUnavailable = false;
       this.currentLocation = e.latlng;
       this.updateGraphics();
+      console.log("loc: " + JSON.stringify(this.currentLocation));
     });
 
     this.map.on('locationerror', (e: { message: any; }) => {
@@ -172,7 +175,11 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.currentLocationSearchEnabled = true;
     this.locatePosition();
 
-    setInterval(this.updateParkingsStatus, 10000);
+    interval(8000)
+    .subscribe(() => {
+      this.updateParkingsStatus();
+      this.nonBlockingLocatePosition();
+    });
   }
 
   private initDefaultCity() {
@@ -321,6 +328,10 @@ export class ParkingSearchComponent implements AfterViewInit {
         this.updateParkingSpotsMarkers();
       });
     }
+  }
+
+  private nonBlockingLocatePosition() {
+    this.map.locate({ setView: false, maxZoom: 16, enableHighAccuracy: true });
   }
 
 }
