@@ -2,18 +2,26 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../services/validation';
 import * as parkingController from "../controllers/parking-controller";
+import { make500ErrorResponse } from '../services/response-utils';
 
 const routes = express.Router();
+
+// TODO improve error handling with different codes
 
 routes.get(
     '/all/:cityName/',
     async (req: express.Request, res: express.Response) => {
         const cityName = req.params.cityName;
-        const parkings = await parkingController.getParkingInCity(cityName);
-        res.json(parkings);
+
+        try {
+            const parkings = await parkingController.getParkingInCity(cityName);
+            res.json(parkings);
+        } catch (err) {
+            make500ErrorResponse(res, err);
+        }
     });
 
-routes.get(
+routes.post(
     '/radius/',
     body("city").exists(),
     body("latitude").exists(),
@@ -27,12 +35,17 @@ routes.get(
         const longitude = req.body.longitude;
         const radiusKm = req.body.radiusKM;
 
-        const point = {latitude: latitude, longitude: longitude};
-        const parkings = await parkingController.getParkingInCityIdWithinRadiusFromPoint(city, point, radiusKm);
-        res.json(parkings);
+        const point = { latitude: latitude, longitude: longitude };
+
+        try {
+            const parkings = await parkingController.getParkingInCityIdWithinRadiusFromPoint(city, point, radiusKm);
+            res.json(parkings);
+        } catch (err) {
+            make500ErrorResponse(res, err);
+        }
     });
 
-routes.get(
+routes.post(
     '/radius-center/',
     body("city").exists(),
     body("radiusKM").exists(),
@@ -42,10 +55,26 @@ routes.get(
         const city = req.body.city;
         const radiusKm = req.body.radiusKM;
 
-        const parkings = await parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(city, radiusKm);
-        res.json(parkings);
-        
+        try {
+            const parkings = await parkingController.getAvailableParkingByCityIdWithinRadiusFromCityCenter(city, radiusKm);
+            res.json(parkings);
+        } catch (err) {
+            make500ErrorResponse(res, err);
+        }
     }
 );
+
+routes.get(
+    '/spots/:cityName/:id',
+    async (req: express.Request, res: express.Response) => {
+        const cityName = req.params.cityName;
+        const parkingId = req.params.id;
+        try {
+            const parkingSpots = await parkingController.getParkingSpotsByParkingId(cityName, Number(parkingId));
+            res.json(parkingSpots);
+        } catch (err) {
+            make500ErrorResponse(res, err);
+        }
+    });
 
 export default routes;

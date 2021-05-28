@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from "@angular/forms";
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ParkingSearchComponent } from './pages/parking-search/parking-search.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignPageComponent } from './pages/sign-page/sign-page.component';
@@ -13,10 +14,10 @@ import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statist
 import { NgStorageModule } from 'ng-storage-local';
 import { PricePipe } from './pipes/prices.pipe';
 
-
 @NgModule({
   declarations: [
     AppComponent,
+    ParkingSearchComponent,
     SignPageComponent,
     UserPageComponent,
     VehicleTabComponent,
@@ -28,6 +29,9 @@ import { PricePipe } from './pipes/prices.pipe';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    FontAwesomeModule,
     AppRoutingModule,
     NgStorageModule
   ],

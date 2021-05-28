@@ -24,3 +24,15 @@ export async function findAvailableParkingByCityIdWithinRadiusFromPoint(name: St
         return geoService.isPointInRadius(center, point, radiusKm)
     });
 }
+
+export async function findParkingByCityAndParkingId(cityName: string, parkingId: number): Promise<ParkingEntity> {
+    const city = await citiesRepository.getCityByName(cityName);
+    const parking = city.parkings.filter((parking: ParkingEntity) => {
+        return parking.id == parkingId;
+    });
+    if(parking) {
+        return parking[0]
+    } else {
+        throw "Parking not found";
+    }
+}

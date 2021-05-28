@@ -1,3 +1,4 @@
+import { type } from "node:os";
 import { mongoClient } from "../services/mongo-client";
 
 export type CityEntity = {
@@ -8,8 +9,17 @@ export type CityEntity = {
 }
 
 export type ParkingEntity = {
+    id: number,
     capacity: number,
     occupancy: number,
+    longitude: number,
+    latitude: number,
+    parkingSpots: ParkingSpotEntity[]
+}
+
+export type ParkingSpotEntity = {
+    id: number,
+    occupied: boolean,
     longitude: number,
     latitude: number
 }
@@ -25,10 +35,21 @@ function formCityEntity(res: any): CityEntity {
 
 function formParkingEntity(res: any): ParkingEntity {
     return {
+        id: res.id,
         capacity: res.capacity,
         occupancy: res.occupancy,
         longitude: Number(res.longitude),
-        latitude: Number(res.latitude)
+        latitude: Number(res.latitude),
+        parkingSpots: res.parkingSpots.map((parkingSpot:any) => formParkingSpotEntity(parkingSpot))
+    }
+}
+
+function formParkingSpotEntity(res: any): ParkingSpotEntity {
+    return {
+        id: res.id,
+        occupied: res.occupied,
+        longitude: Number(res.longitude),
+        latitude: Number(res.latitude),
     }
 }
 
