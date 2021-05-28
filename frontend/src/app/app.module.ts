@@ -2,18 +2,28 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { ParkingSearchComponent } from './pages/parking-search/parking-search.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ParkingSearchComponent } from './pages/parking-search/parking-search.component';
-
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { SignPageComponent } from './pages/sign-page/sign-page.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import { VehicleTabComponent } from './pages/user-page/vehicle-tab/vehicle-tab.component';
+import { PaymentTabComponent } from './pages/user-page/payment-tab/payment-tab.component';
+import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statistics-tab.component';
+import { NgStorageModule } from 'ng-storage-local';
+import { PricePipe } from './pipes/prices.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ParkingSearchComponent
+    ParkingSearchComponent,
+    SignPageComponent,
+    UserPageComponent,
+    VehicleTabComponent,
+    PaymentTabComponent,
+    StatisticsTabComponent,
+    PricePipe,
   ],
   imports: [
     BrowserModule,
@@ -21,7 +31,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AppRoutingModule,
+    NgStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
