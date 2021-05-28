@@ -177,7 +177,6 @@ export class ParkingSearchComponent implements AfterViewInit {
     interval(8000)
     .subscribe(() => {
       this.updateParkingsStatus();
-      this.nonBlockingLocatePosition();
     });
   }
 
@@ -327,10 +326,6 @@ export class ParkingSearchComponent implements AfterViewInit {
         this.updateParkingSpotsMarkers();
       });
     }
-  }
-
-  private nonBlockingLocatePosition() {
-    this.map.locate({ setView: false, maxZoom: 16, enableHighAccuracy: true });
   }
 
 }
