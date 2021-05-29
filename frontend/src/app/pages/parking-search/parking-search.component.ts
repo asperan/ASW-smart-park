@@ -2,8 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 import { interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
 import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-services/parking-search.service';
+import { SharedSelectedCityService } from 'src/app/services/shared-selected-city.service';
 
 @Component({
   selector: 'app-parking-search',
@@ -13,8 +13,6 @@ import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/
 export class ParkingSearchComponent implements AfterViewInit {
 
   // font awsome icons
-  faUser = faUser;
-  faSearch = faSearch;
   faCity = faCity;
   faCar = faCar;
   faSearchLocation = faSearchLocation;
@@ -22,7 +20,6 @@ export class ParkingSearchComponent implements AfterViewInit {
   faInfinity = faInfinity;
 
   // cities & parkings
-  availableCities: City[] = [];
   parkingSpots: ParkingSpot[] = [];
   private selectedCity: City | undefined;
   private selectedParkingId: number | undefined;
@@ -78,11 +75,11 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private map: any;
 
-  constructor(private parkingSearchService: ParkingSearchService) {
+  constructor(private parkingSearchService: ParkingSearchService, private sharedService: SharedSelectedCityService) {
   }
 
   ngAfterViewInit(): void {
-    this.initCities();
+    this.initCitiesSelect();
     this.initMap();
   }
 
@@ -128,23 +125,17 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.updateGraphics();
   }
 
-  onSearchCityChange(value: string) {
-    this.selectedCity = this.availableCities.find((city: City) => city.name == value);
-    if (!this.selectedCity) {
-      console.error("Could not retrieve the selected city: " + value);
-    } else {
+  private initCitiesSelect() {
+    this.sharedService.sharedParkingSearchSelectedCity.subscribe((city: City) => {
+      const shouldPan = this.selectedCity != undefined;
+      this.selectedCity = city;
       this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
       this.updateGraphics();
-      this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
-    }
-  }
-
-  private initCities() {
-    this.parkingSearchService.getAllCities().subscribe((cities: City[]) => {
-      this.availableCities = cities;
-      this.initDefaultCity();
-    }, (err) => console.error(err))
-  }
+      if(shouldPan) {
+        this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
+      }
+  });
+}
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -178,14 +169,6 @@ export class ParkingSearchComponent implements AfterViewInit {
     .subscribe(() => {
       this.updateParkingsStatus();
     });
-  }
-
-  private initDefaultCity() {
-    const defaultCityName = 'cesena';
-    this.selectedCity = this.availableCities.find((city: City) => city.name == defaultCityName);
-    if (this.selectedCity) {
-      this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
-    }
   }
 
   private updateGraphics() {

@@ -13,6 +13,7 @@ import { PaymentTabComponent } from './pages/user-page/payment-tab/payment-tab.c
 import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statistics-tab.component';
 import { NgStorageModule } from 'ng-storage-local';
 import { PricePipe } from './pipes/prices.pipe';
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { PricePipe } from './pipes/prices.pipe';
     PaymentTabComponent,
     StatisticsTabComponent,
     PricePipe,
+    SearchbarComponent,
   ],
   imports: [
     BrowserModule,
