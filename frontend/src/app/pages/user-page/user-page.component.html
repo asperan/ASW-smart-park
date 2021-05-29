@@ -1,7 +1,7 @@
+<div class="toolbar" role="banner">
+    <a routerLink="/signin">Sign in</a>
+</div>
 <div class="content">
-    <div class="toolbar" role="banner">
-        <a routerLink="/signin">Sign in</a>
-    </div>
     <p>Email: <span class="email-text">{{ userEmail }}</span></p>
     <button class="tab" [ngClass]="selectedTab == SubComponent.MyVehicles ? 'active-tab' : ''" (click)="selectTab(SubComponent.MyVehicles)">I miei veicoli</button>
     <button class="tab" [ngClass]="selectedTab == SubComponent.PaymentHistory ? 'active-tab' : ''" (click)="selectTab(SubComponent.PaymentHistory)">Storico pagamenti</button>
