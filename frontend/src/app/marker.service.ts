@@ -15,13 +15,10 @@ export class MarkerService {
 
   makeCapitalMarkers(map: L.Map): void {
       this.http.get(this.capitals).subscribe((res: any) => {
-      for (const c of res.features) {
-        const lon = c.geometry.coordinates[0];
-        const lat = c.geometry.coordinates[1];
-        const marker = L.marker([lat, lon]);
-        marker.bindPopup(this.popupService.makeCapitalPopup(c.properties));
-        marker.addTo(map);
-      }
+      const parkingInfo = ['Colosseo', 15, 57, '09-18', 150, '00-24', 0]
+      const marker = L.marker([41.89049, 12.4942]);
+      marker.bindPopup(this.popupService.makeCapitalPopup(parkingInfo));
+      marker.addTo(map);
     });
   }
 }
