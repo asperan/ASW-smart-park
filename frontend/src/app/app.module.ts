@@ -8,6 +8,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MapComponent } from './map/map.component';
 import { MarkerService } from './marker.service';
+import { PopupService } from './popup.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MarkerService } from './marker.service';
   ],
   providers: [
       MarkerService,
+      PopupService
   ],
   bootstrap: [AppComponent]
 })
