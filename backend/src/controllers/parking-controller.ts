@@ -30,6 +30,18 @@ function makeDtoFromParking(parking: ParkingEntity) {
         occupancy: parking.occupancy,
         longitude: parking.longitude,
         latitude: parking.latitude,
-        parkingSpots: parking.parkingSpots
+        parkingSpots: parking.parkingSpots.map(s => makeDtoFromParkingSpot(s)),
+        detail: parking.detail,
+        pricing: parking.pricing
     };
 }
+
+function makeDtoFromParkingSpot(s: ParkingSpotEntity): any {
+    return {
+        occupied: s.occupied,
+        paidFor: s.paidFor,
+        longitude: s.longitude,
+        latitude: s.latitude
+    }
+}
+

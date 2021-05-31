@@ -65,8 +65,8 @@ export type Parking = {
 }
 
 export type ParkingSpot = {
-  id: number,
   occupied: boolean,
+  paidFor: boolean,
   longitude: number,
   latitude: number
 }

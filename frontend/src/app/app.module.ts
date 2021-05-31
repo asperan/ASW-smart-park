@@ -14,6 +14,7 @@ import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statist
 import { NgStorageModule } from 'ng-storage-local';
 import { PricePipe } from './pipes/prices.pipe';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
     StatisticsTabComponent,
     PricePipe,
     SearchbarComponent,
+    ParkingDetailComponent,
   ],
   imports: [
     BrowserModule,

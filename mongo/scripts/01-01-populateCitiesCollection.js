@@ -9,28 +9,41 @@ db.cities.insertMany([{
                 "longitude": NumberDecimal("12.236731"),
                 "latitude": NumberDecimal("44.147660"),
                 "parkingSpots": [{
-                        "id": NumberInt(1),
+                        "uid": NumberInt(1),
                         "occupied": true,
+                        "paidFor": true,
                         "latitude": NumberDecimal("44.147612"),
                         "longitude": NumberDecimal("12.236550"),
                     },
                     {
-                        "id": NumberInt(2),
+                        "uid": NumberInt(2),
                         "occupied": false,
+                        "paidFor": true,
                         "latitude": NumberDecimal("44.147564"),
                         "longitude": NumberDecimal("12.236589"),
                     }, {
-                        "id": NumberInt(3),
+                        "uid": NumberInt(3),
                         "occupied": false,
+                        "paidFor": false,
                         "latitude": NumberDecimal("44.147508"),
                         "longitude": NumberDecimal("12.236632"),
                     }, {
-                        "id": NumberInt(4),
+                        "uid": NumberInt(4),
                         "occupied": true,
+                        "paidFor": false,
                         "latitude": NumberDecimal("44.147432"),
                         "longitude": NumberDecimal("12.236699"),
                     }
-                ]
+                ],
+                "detail": {
+                    "name": "placeholder",
+                    "address": "placeholder",
+                    "type": "placeholder"
+                },
+                "pricing": [{
+                    "days": "1111100",
+                    "hours": "00000000111111111110000"
+                }]
             },
             {
                 "id": NumberInt(2),
@@ -40,7 +53,16 @@ db.cities.insertMany([{
                 "latitude": NumberDecimal("44.144281"),
                 "parkingSpots": [
 
-                ]
+                ],
+                "detail": {
+                    "name": "placeholder",
+                    "address": "placeholder",
+                    "type": "placeholder"
+                },
+                "pricing": [{
+                    "days": "1111100",
+                    "hours": "00000000111111111110000"
+                }]
             },
             {
                 "id": NumberInt(4),
@@ -50,7 +72,16 @@ db.cities.insertMany([{
                 "latitude": NumberDecimal("44.143680"),
                 "parkingSpots": [
 
-                ]
+                ],
+                "detail": {
+                    "name": "placeholder",
+                    "address": "placeholder",
+                    "type": "placeholder"
+                },
+                "pricing": [{
+                    "days": "1111100",
+                    "hours": "00000000111111111110000"
+                }]
             }
         ]
     },
