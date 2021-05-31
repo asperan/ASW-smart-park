@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MapComponent } from './map/map.component';
+import { MarkerService } from './marker.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { MapComponent } from './map/map.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+      MarkerService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
