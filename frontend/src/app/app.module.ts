@@ -14,6 +14,7 @@ import { StatisticsTabComponent } from './pages/user-page/statistics-tab/statist
 import { NgStorageModule } from 'ng-storage-local';
 import { PricePipe } from './pipes/prices.pipe';
 import { NotificationIconComponent } from "./notifications/notification-icon/notification-icon.component";
+import { NotificationPageComponent } from "./notifications/notification-page/notification-page.component";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NotificationIconComponent } from "./notifications/notification-icon/not
     StatisticsTabComponent,
     PricePipe,
     NotificationIconComponent,
+    NotificationPageComponent,
   ],
   imports: [
     BrowserModule,
