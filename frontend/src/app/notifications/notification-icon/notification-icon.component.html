@@ -1,6 +1,6 @@
 <div class="icon-container">
   <!-- Attribution: https://www.flaticon.com/authors/pixel-perfect from https://www.flaticon.com/ -->
-  <img class="notification-icon" src="assets/notification-bell.svg"/>
+  <img class="notification-icon" src="assets/notification-bell.svg" (click)="onIconClicked()"/>
   <span *ngIf="notificationCount > 0" class="notification-count position-absolute-tr text-centered round-borders">
     {{ notificationCount > 9 ? "9+" : notificationCount}}
   </span>

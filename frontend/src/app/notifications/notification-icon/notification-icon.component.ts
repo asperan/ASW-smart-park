@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { NotificationService } from "../notification.service";
 
 @Component({
@@ -10,7 +11,7 @@ export class NotificationIconComponent {
   notificationCount!: number;
   updateInterval!: any;
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: NotificationService, private router: Router) {
     this.notificationCount = 0;
     this.updateNotificationCount = this.updateNotificationCount.bind(this);
     this.updateNotificationCount();
@@ -27,5 +28,9 @@ export class NotificationIconComponent {
 
   private updateNotificationCount() {
     this.notificationService.getUnreadNotificationCount().then((data: any) => this.notificationCount = data.count);
+  }
+
+  onIconClicked() {
+    this.router.navigate(["notifications"]);
   }
 }
