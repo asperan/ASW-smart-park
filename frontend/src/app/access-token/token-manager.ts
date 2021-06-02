@@ -20,7 +20,13 @@ export class TokenManagerService {
 
   async getToken(): Promise<string> {
     const tokenGetter: GetStorageConflig = Object.create(tokenStoragePrototype);
-    const token = await this.ngStorage.getSessionStorage(tokenGetter);
-    return token.error ? "" : token;
+    let token;
+    try {
+      token = await this.ngStorage.getSessionStorage(tokenGetter);  
+    } catch (error: any) {
+      token = "";
+    } finally {
+      return token.error ? "" : token;
+    }
   }
 }
