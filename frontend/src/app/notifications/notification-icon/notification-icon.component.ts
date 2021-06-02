@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { TokenManagerService } from "src/app/access-token/token-manager";
 import { NotificationService } from "../notification.service";
 
 @Component({
@@ -11,7 +12,7 @@ export class NotificationIconComponent {
   notificationCount!: number;
   updateInterval!: any;
 
-  constructor(private notificationService: NotificationService, private router: Router) {
+  constructor(private notificationService: NotificationService, private tokenManagerService: TokenManagerService, private router: Router) {
     this.notificationCount = 0;
     this.updateNotificationCount = this.updateNotificationCount.bind(this);
     this.updateNotificationCount();
@@ -27,7 +28,11 @@ export class NotificationIconComponent {
   }
 
   private updateNotificationCount() {
-    this.notificationService.getUnreadNotificationCount().then((data: any) => this.notificationCount = data.count);
+    this.tokenManagerService.getToken().then(token => {
+      if (token.length > 0) {
+        this.notificationService.getUnreadNotificationCount().then((data: any) => this.notificationCount = data.count);
+      }
+    });
   }
 
   onIconClicked() {
