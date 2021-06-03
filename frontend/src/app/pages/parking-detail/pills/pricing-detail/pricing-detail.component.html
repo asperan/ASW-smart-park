@@ -6,7 +6,7 @@
       <div *ngIf="pricing.price != 0.0">
         <div *ngFor="let rate of pricing.rates">
           <div class="price-range" *ngIf="rate.isPaid">
-            <p>{{ rate.range }} : {{ pricing.price }} EUR</p>
+            <p>{{ rate.range }} : {{ pricing.price }} EUR x Hour</p>
           </div>
           <div class="price-range" *ngIf="!rate.isPaid">
             <p>{{ rate.range }} : Free</p>
