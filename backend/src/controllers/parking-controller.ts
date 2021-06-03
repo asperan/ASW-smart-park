@@ -1,5 +1,5 @@
 
-import { ParkingEntity, ParkingSpotEntity } from "../repositories/cities-repository";
+import { ParkingEntity, ParkingPricingEntity, ParkingSpotEntity } from "../repositories/cities-repository";
 import { Coordinates } from "../services/geo-service";
 import * as parkingService from "../services/parking-service";
 
@@ -32,7 +32,7 @@ function makeDtoFromParking(parking: ParkingEntity) {
         latitude: parking.latitude,
         parkingSpots: parking.parkingSpots.map(s => makeDtoFromParkingSpot(s)),
         detail: parking.detail,
-        pricing: parking.pricing
+        pricing: makeDtoFromPricing(parking.pricing)
     };
 }
 
@@ -42,6 +42,14 @@ function makeDtoFromParkingSpot(s: ParkingSpotEntity): any {
         paidFor: s.paidFor,
         longitude: s.longitude,
         latitude: s.latitude
+    }
+}
+
+function makeDtoFromPricing(p: ParkingPricingEntity): any {
+    return {
+        days: p.days,
+        hours: p.hours,
+        price: p.price
     }
 }
 

@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 import { interval } from 'rxjs';
-import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-services/parking-search.service';
+import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/services/parking-search.service';
 import { SharedSelectedCityService } from 'src/app/services/shared-selected-city.service';
 
 @Component({
@@ -309,7 +309,7 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private updateParkingsStatus() {
     if(this.selectedCity && this.selectedParkingId) {
-      this.parkingSearchService.getParkingByParkingId(this.selectedCity.name, this.selectedParkingId)
+      this.parkingSearchService.getParkingByCityNameAndParkingId(this.selectedCity.name, this.selectedParkingId)
       .subscribe((data: Parking) => {
         this.parkingSpots = data.parkingSpots;
         this.updateParkingSpotsMarkers();

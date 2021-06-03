@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { City, ParkingSearchService } from 'src/app/pages/parking-search/parking-search-services/parking-search.service';
+import { City, ParkingSearchService } from 'src/app/services/parking-search.service';
 import { SharedSelectedCityService } from 'src/app/services/shared-selected-city.service';
 
 @Component({

@@ -36,14 +36,16 @@ db.cities.insertMany([{
                     }
                 ],
                 "detail": {
-                    "name": "placeholder",
-                    "address": "placeholder",
-                    "type": "placeholder"
+                    "name": "Cesena",
+                    "address": "Via Riccardo Bacchelli, 47522 Cesena FC",
+                    "type": "Open Park",
+                    "imageUrl": "http://www.parkingroma.it/wp-content/uploads/2016/02/strisce-blu.jpg"
                 },
-                "pricing": [{
+                "pricing": {
                     "days": "1111100",
-                    "hours": "00000000111111111110000"
-                }]
+                    "hours": "000000001111111111110000",
+                    "price": NumberDecimal("1.20")
+                }
             },
             {
                 "id": NumberInt(2),
@@ -59,10 +61,11 @@ db.cities.insertMany([{
                     "address": "placeholder",
                     "type": "placeholder"
                 },
-                "pricing": [{
+                "pricing": {
                     "days": "1111100",
-                    "hours": "00000000111111111110000"
-                }]
+                    "hours": "000000001111111111110000",
+                    "price": NumberDecimal("1.20")
+                }
             },
             {
                 "id": NumberInt(4),
@@ -78,10 +81,11 @@ db.cities.insertMany([{
                     "address": "placeholder",
                     "type": "placeholder"
                 },
-                "pricing": [{
+                "pricing": {
                     "days": "1111100",
-                    "hours": "00000000111111111110000"
-                }]
+                    "hours": "000000001111111111110000",
+                    "price": NumberDecimal("1.20")
+                }
             }
         ]
     },

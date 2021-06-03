@@ -15,6 +15,7 @@ import { NgStorageModule } from 'ng-storage-local';
 import { PricePipe } from './pipes/prices.pipe';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
+import { PricingDetailComponent } from './pages/parking-detail/pills/pricing-detail/pricing-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.co
     PricePipe,
     SearchbarComponent,
     ParkingDetailComponent,
+    PricingDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,33 @@
-<p>parking-detail works!</p>
+<div class="info-box">
+  <div>
+    <h1>{{ parkingName }}</h1>
+  </div>
+
+  <div class="image-container">
+    <img [src]="imageUrl ? imageUrl : '/assets/images/placeholder.jpg'" class="image-container">
+  </div>
+
+  <div>
+    <h5>{{ parkingAddress }}</h5>
+    <p>{{ parkingType }}</p>
+    <p>
+      <fa-icon [icon]="faCar"></fa-icon> available - {{ parkingsAvailable }}
+    </p>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center detail-nav">
+  <ul class="nav nav-pills">
+    <li class="detail-nav-link" [ngClass]="{'active-nav-link': currentPill == 'pricing'}">
+      <button class="nav-link" (click)="setCurrentPill('pricing')">Pricing</button>
+    </li>
+    <li class="detail-nav-link" [ngClass]="{'active-nav-link': currentPill == 'statistics'}">
+      <button class="nav-link" (click)="setCurrentPill('statistics')">Statistics</button>
+    </li>
+    <li class="detail-nav-link" [ngClass]="{'active-nav-link': currentPill == 'support'}">
+      <button class="nav-link" (click)="setCurrentPill('support')">Support</button>
+    </li>
+  </ul>
+</div>
+
+<app-pricing-detail *ngIf="currentPill == 'pricing'" [pricings]=pricings></app-pricing-detail>

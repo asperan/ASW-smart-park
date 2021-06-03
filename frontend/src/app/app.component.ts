@@ -17,7 +17,6 @@ export class AppComponent {
       .subscribe((event: any) => {
         if(event instanceof NavigationEnd) {
           this.currentRoute = event.url;
-          console.log(event);
         }
       });
   }

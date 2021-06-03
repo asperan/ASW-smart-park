@@ -83,26 +83,28 @@ db.createCollection("cities", {
                   type: {
                     bsonType: "string",
                     description: "Parking type description, es. 'Road side', 'Covered', 'Free'"
+                  },
+                  imageUrl: {
+                    bsonType: "string",
+                    description: "A facoltative url to the thumbnal image"
                   }
                 }
               },
               pricing: {
-                bsonType: "array",
-                requred: ["days", "hours"],
+                bsonType: "object",
+                requred: ["days", "hours", "price"],
                 properties: {
-                  items: {
-                    bsonType: "object",
-                    required: [],
-                    properties: {
-                      days: {
-                        bsonType: "string",
-                        description: "Bit mask that describes in what days the pricing is applicable, es. Mon-Fri = 1111100"
-                      },
-                      hours: {
-                        bsonType: "string",
-                        description: "Bit mask that describes in what hours of the day (24) the pricing is applicable. es. 08-20 = 00000000111111111110000"
-                      }
-                    }
+                  days: {
+                    bsonType: "string",
+                    description: "Bit mask that describes in what days the pricing is applicable, es. Mon-Fri = 1111100"
+                  },
+                  hours: {
+                    bsonType: "string",
+                    description: "Bit mask that describes in what hours of the day (24) the pricing is applicable. es. 08-20 = 00000000111111111110000"
+                  },
+                  price: {
+                    bsonType: "decimal",
+                    description: "Price per hour"
                   }
                 }
               }
