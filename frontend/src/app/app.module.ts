@@ -16,6 +16,8 @@ import { PricePipe } from './pipes/prices.pipe';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
 import { PricingDetailComponent } from './pages/parking-detail/pills/pricing-detail/pricing-detail.component';
+import { SupportDetailComponent } from './pages/parking-detail/pills/support-detail/support-detail.component';
+import { ContactFormComponent } from './pages/contact-form/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { PricingDetailComponent } from './pages/parking-detail/pills/pricing-det
     SearchbarComponent,
     ParkingDetailComponent,
     PricingDetailComponent,
+    SupportDetailComponent,
+    ContactFormComponent,
   ],
   imports: [
     BrowserModule,
