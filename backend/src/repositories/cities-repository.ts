@@ -14,14 +14,29 @@ export type ParkingEntity = {
     occupancy: number,
     longitude: number,
     latitude: number,
-    parkingSpots: ParkingSpotEntity[]
+    parkingSpots: ParkingSpotEntity[],
+    detail: ParkingDetailEntity,
+    pricing: ParkingPricingEntity
 }
 
 export type ParkingSpotEntity = {
-    id: number,
+    uid: number,
     occupied: boolean,
+    paidFor: boolean,
     longitude: number,
     latitude: number
+}
+
+export type ParkingDetailEntity = {
+    name: string,
+    address: string,
+    type: string
+}
+
+export type ParkingPricingEntity = {
+    days: string,
+    hours: string,
+    price: number
 }
 
 function formCityEntity(res: any): CityEntity {
@@ -40,16 +55,27 @@ function formParkingEntity(res: any): ParkingEntity {
         occupancy: res.occupancy,
         longitude: Number(res.longitude),
         latitude: Number(res.latitude),
-        parkingSpots: res.parkingSpots.map((parkingSpot:any) => formParkingSpotEntity(parkingSpot))
+        parkingSpots: res.parkingSpots.map((parkingSpot:any) => formParkingSpotEntity(parkingSpot)),
+        detail: res.detail,
+        pricing: formPricingEntity(res.pricing)
     }
 }
 
 function formParkingSpotEntity(res: any): ParkingSpotEntity {
     return {
-        id: res.id,
+        uid: res.id,
         occupied: res.occupied,
+        paidFor: res.paidFor,
         longitude: Number(res.longitude),
         latitude: Number(res.latitude),
+    }
+}
+
+function formPricingEntity(res: any): ParkingPricingEntity {
+    return {
+        days: res.days,
+        hours: res.hours,
+        price: Number(res.price)
     }
 }
 

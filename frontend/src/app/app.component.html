@@ -1,6 +1,6 @@
 <div class="toolbar" role="banner">
   <a routerLink="/signin">Sign in</a>
-  <app-searchbar></app-searchbar>
+  <app-searchbar *ngIf='currentRoute == "/parking-search"'></app-searchbar>
 </div>
 <div class="content">
   <router-outlet></router-outlet>

@@ -4,6 +4,7 @@ import { ParkingSearchComponent } from './pages/parking-search/parking-search.co
 import { AppComponent } from './app.component';
 import { SignPageComponent } from './pages/sign-page/sign-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
+import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
 
 const routes: Routes = [
   {path: "", component: AppComponent}, 
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: "signup", component: SignPageComponent, data: {isSignup: true}},
   {path: "signin", component: SignPageComponent, data: {isSignup: false}},
   {path: "userpage", component: UserPageComponent},
+  {path: "parking/:cityName/:id", component: ParkingDetailComponent}
 ];
 
 @NgModule({
