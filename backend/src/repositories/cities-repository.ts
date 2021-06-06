@@ -1,4 +1,3 @@
-import { type } from "node:os";
 import { mongoClient } from "../services/mongo-client";
 
 export type CityEntity = {

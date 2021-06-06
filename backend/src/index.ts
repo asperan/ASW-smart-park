@@ -4,6 +4,7 @@ import { initMongoClient } from './services/mongo-client';
 import { loadConfig, getConfig } from './services/config'
 import cityRoutes from "./routes/city-routes";
 import parkingRoutes from "./routes/parking-routes";
+import messageRoutes from "./routes/message-routes"
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserInfoRoutes } from './routes/user-info-routes';
@@ -43,6 +44,7 @@ function configureMiddleware() {
 function configureRoutes() {
     app.use('/api/city', cityRoutes);
     app.use('/api/parking', parkingRoutes);
+    app.use('/api/messages', messageRoutes)
     setSignupRoutes(app);
     setSigninRoutes(app);
     setUserInfoRoutes(app);
