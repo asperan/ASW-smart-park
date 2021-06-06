@@ -8,3 +8,10 @@ export function make500ErrorResponse(res: express.Response, err: any) {
         err: err
     });
 }
+
+export function make400ErrorResponse(res: express.Response) {
+    res.status(400);
+    res.json({
+        message: "Bad Request",
+    });
+}
