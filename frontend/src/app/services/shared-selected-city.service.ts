@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { City } from '../pages/parking-search/parking-search-services/parking-search.service';
+import { City } from '../services/parking-search.service';
 
 @Injectable({
   providedIn: 'root'

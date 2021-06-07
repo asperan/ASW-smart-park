@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 import { interval } from 'rxjs';
-import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-services/parking-search.service';
+import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/services/parking-search.service';
 import { SharedSelectedCityService } from 'src/app/services/shared-selected-city.service';
 
 @Component({
@@ -69,6 +69,10 @@ export class ParkingSearchComponent implements AfterViewInit {
   });
   private parkingRed = L.icon({
     iconUrl: '/assets/images/park-red.png',
+    iconSize: [20, 20]
+  });
+  private parkingYellow = L.icon({
+    iconUrl: '/assets/images/park-yellow.png',
     iconSize: [20, 20]
   });
 
@@ -244,7 +248,7 @@ export class ParkingSearchComponent implements AfterViewInit {
       }
       const availableSpots = parking.capacity - parking.occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button">More Info</button><div>')
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" +  ' ">More Info</button><div>')
         .addEventListener("click", e => {
           this.selectedParkingId = parking.id;
           this.parkingSpots = parking.parkingSpots;
@@ -260,8 +264,10 @@ export class ParkingSearchComponent implements AfterViewInit {
     if (this.parkingSpots) {
       this.parkingSpots.forEach((spot: ParkingSpot) => {
         let options;
-        if (spot.occupied) {
+        if (spot.occupied && spot.paidFor) {
           options = { icon: this.parkingRed };
+        } else if(spot.occupied){
+          options = { icon: this.parkingYellow };
         } else {
           options = { icon: this.parkingGreen };
         }
@@ -303,7 +309,7 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private updateParkingsStatus() {
     if(this.selectedCity && this.selectedParkingId) {
-      this.parkingSearchService.getParkingByParkingId(this.selectedCity.name, this.selectedParkingId)
+      this.parkingSearchService.getParkingByCityNameAndParkingId(this.selectedCity.name, this.selectedParkingId)
       .subscribe((data: Parking) => {
         this.parkingSpots = data.parkingSpots;
         this.updateParkingSpotsMarkers();

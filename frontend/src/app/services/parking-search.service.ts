@@ -41,8 +41,8 @@ export class ParkingSearchService {
     return this.http.post<Parking[]>(this.parkingsUrl + "/radius/", request);
   }
 
-  getParkingByParkingId(cityName: string, parkingId: number) {
-    const url = this.citiesUrl + "/spots/" + cityName + "/" + parkingId;
+  getParkingByCityNameAndParkingId(cityName: string, parkingId: number) {
+    const url = this.parkingsUrl + "/spots/" + cityName + "/" + parkingId;
     return this.http.get<Parking>(url);
   }
 
@@ -62,11 +62,26 @@ export type Parking = {
   longitude: number,
   latitude: number,
   parkingSpots: ParkingSpot[]
+  detail: ParkingDetail,
+  pricing: ParkingPricing
 }
 
 export type ParkingSpot = {
-  id: number,
   occupied: boolean,
+  paidFor: boolean,
   longitude: number,
   latitude: number
+}
+
+export type ParkingDetail = {
+  name: string,
+  address: string,
+  type: string,
+  imageUrl: string
+}
+
+export type ParkingPricing = {
+  days: string,
+  hours: string,
+  price: number
 }

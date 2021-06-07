@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { SimpleService } from './simple-service.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,17 @@ import { SimpleService } from './simple-service.service';
 })
 export class AppComponent {
   title = 'smart-parking';
+  currentRoute: string;
 
-  constructor(private simpleService: SimpleService) {}
+  constructor(private router: Router) {
+    this.currentRoute = router.url;
+    router.events
+      .subscribe((event: any) => {
+        if(event instanceof NavigationEnd) {
+          this.currentRoute = event.url;
+        }
+      });
+  }
 
 
   ngOnInit() {
