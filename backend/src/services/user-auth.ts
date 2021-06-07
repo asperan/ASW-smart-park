@@ -1,5 +1,6 @@
 import CryptoJs from "crypto-js";
 import cryptoRandomString from "crypto-random-string";
+import express from "express";
 import jwt from "jsonwebtoken";
 
 const hashSecretKey = process.env.HASHING_KEY || "";

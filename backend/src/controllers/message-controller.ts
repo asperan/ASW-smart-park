@@ -1,3 +1,4 @@
+import express from "express";
 import * as messagesRepository from "../repositories/messages-repository";
 import { MessageEntity } from "../repositories/messages-repository";
 
@@ -11,7 +12,7 @@ export async function getAllUnsentMessages(): Promise<any[]> {
     return messages.map((m: MessageEntity) => makeDtoFromMessage(m));
 }
 
-export function insertMessage(message: MessageEntity) {
+export function insertMessage(message: MessageEntity, userEmail: string) {
     messagesRepository.insertMessage(message);
 }
 

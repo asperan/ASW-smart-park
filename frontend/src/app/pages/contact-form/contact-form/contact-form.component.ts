@@ -25,22 +25,15 @@ export class ContactFormComponent implements OnInit {
   }
 
   submitSupport() {
-    this.messagesService.addNewEmailMessage(this.makeEmail()).subscribe(
-      (res => {
-
-      }),
-      (err => {
-        console.error("Could not send new message: " + JSON.stringify(err));
-      })
-    );
-    this.isSubmitted = true;
+    this.messagesService.addNewEmailMessage(this.makeEmail());
   }
 
   makeEmail(): Message {
     return {
-      sender: "support-bot@noreply-smarkPark.com",
+      type: "email",
+      sender: "",
       receiver: "support@smartPark.com",
-      subject: "Support - " + this.requestType +" - " + "", // TODO ADD USER ID HERE
+      subject: "Support - " + this.requestType,
       body: this.requestText
     }
   }

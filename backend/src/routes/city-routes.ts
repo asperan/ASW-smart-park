@@ -1,5 +1,6 @@
 import express from 'express';
 import * as cityController from "../controllers/city-controller";
+import { validateAccessToken } from '../middleware/token-auth';
 import { make500ErrorResponse } from '../services/response-utils';
 
 const routes = express.Router();
@@ -8,6 +9,7 @@ const routes = express.Router();
 
 routes.get(
   '/suggest/:partialName',
+  validateAccessToken,
   async (req: express.Request, res: express.Response) => {
     const partialName = req.params.partialName;
     try {
@@ -21,6 +23,7 @@ routes.get(
 
 routes.get(
   '/all',
+  validateAccessToken,
   async (req: express.Request, res: express.Response) => {
     try {
       const cities = await cityController.allCities();

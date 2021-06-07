@@ -5,6 +5,7 @@ import { SigninService } from "./sign-services/signin.service";
 import UserCredentials from './sign-services/user-credentials';
 import * as SignErrors from "./sign-errors";
 import { TokenManagerService } from "../../access-token/token-manager";
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sign-page',
@@ -16,6 +17,8 @@ export class SignPageComponent implements OnInit {
   isSignup!: boolean;
   signError: SignErrors.SignError;
   errorMessage: string;
+
+  faUser = faUser;
 
   constructor(
     private route: ActivatedRoute, 
