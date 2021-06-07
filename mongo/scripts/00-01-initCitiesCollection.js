@@ -20,8 +20,12 @@ db.createCollection("cities", {
           bsonType: "array",
           items: {
             bsonType: "object",
-            required: ["capacity", "occupancy", "longitude", "latitude"],
+            required: ["id", "capacity", "occupancy", "longitude", "latitude"],
             properties: {
+              id: {
+                bsonType: "int",
+                description: "Unique parking ID",
+              },
               capacity: {
                 bsonType: "int",
                 description: "Maximum number of parked cars allowed",
@@ -37,6 +41,28 @@ db.createCollection("cities", {
               latitude: {
                 bsonType: "decimal",
                 description: "geographical longitude in Decimal degrees (DD) format, required"
+              },
+              parkingSpots: {
+                bsonType: "array",
+                required: ["id", "occupied", "longitude", "latitude"],
+                items: {
+                  id: {
+                    bsonType: "int",
+                    description: "parking spot ID unique to its parent",
+                  },
+                  occupied: {
+                    bsonType: "bool",
+                    description: "true if parking spot is occupied, false otherwise"
+                  },
+                  longitude: {
+                    bsonType: "decimal",
+                    description: "geographical longitude in Decimal degrees (DD) format, required"
+                  },
+                  latitude: {
+                    bsonType: "decimal",
+                    description: "geographical longitude in Decimal degrees (DD) format, required"
+                  }
+                }
               }
             }
           }

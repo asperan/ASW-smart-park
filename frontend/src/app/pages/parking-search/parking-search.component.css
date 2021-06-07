@@ -1,0 +1,193 @@
+#cannot-find-location-dialogue {
+    position  : absolute;
+    top       : 40%;
+    left      : 2%;
+    right     : 2%;
+    z-index   : 1001;
+    color     : white;
+    text-align: center;
+}
+
+.dimmed {
+    position: relative;
+}
+
+.dimmed:after {
+    content   : " ";
+    z-index   : 1000;
+    display   : block;
+    position  : absolute;
+    height    : 100%;
+    top       : 0;
+    left      : 0;
+    right     : 0;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.map-container {
+    position: absolute;
+    top     : 12%;
+    left    : 2px;
+    right   : 2px;
+    bottom  : 2px;
+    margin  : 2px;
+}
+
+.map-frame {
+    border: 2px solid lightgrey;
+    height: 85%;
+}
+
+#map {
+    height: 100%;
+}
+
+.map-control-button-location-mode {
+    position: absolute;
+    top     : 70%;
+    left    : 5%;
+    padding : 10px;
+    z-index : 400;
+}
+
+.map-control-button-city-mode {
+    position: absolute;
+    top     : 70%;
+    left    : 20%;
+    padding : 10px;
+    z-index : 1002;
+}
+
+.map-control-buttons-locate-current {
+    position: absolute;
+    top     : 70%;
+    right   : 20%;
+    padding : 10px;
+    z-index : 400;
+}
+
+.map-control-buttons-locate-city {
+    position: absolute;
+    top     : 70%;
+    right   : 5%;
+    padding : 10px;
+    z-index : 400;
+}
+
+.map-control-button {
+    color           : white;
+    border-color    : lightgrey;
+    border-radius   : 20%;
+    width           : 40px;
+    background-color: #fc6c90;
+}
+
+.button-marked {
+    border-color: tomato;
+    border-width: 4px;
+}
+
+.search-container {
+    width: 100%;
+}
+
+.search-nav {
+    border-bottom: solid;
+    border-color : lightgrey;
+    text-align   : center;
+    width        : 100%;
+}
+
+.search-nav-contents {
+    margin-top   : 2%;
+    margin-bottom: 2%;
+    margin-left  : 4%;
+    margin-right : 4%;
+}
+
+.user-icon {
+    margin-left: 2%;
+    width      : 18%;
+}
+
+.search-icon {
+    padding: 10px;
+}
+
+.circle-icon {
+    background   : white;
+    padding      : 10px;
+    border-radius: 50%;
+    border-color : lightgrey;
+    border-style : solid;
+    border-width : 2px;
+}
+
+.city-search {
+    margin-right: 5%;
+}
+
+.slider-container {
+    position: absolute;
+    top     : 88%;
+    left    : 10%;
+    width   : 80%;
+}
+
+.slider-label {
+    margin-left : 5%;
+    margin-right: 5%;
+}
+
+.popup-text {
+    text-align: center;
+}
+
+.popup-button {
+    border-bottom: 10%;
+}
+
+/*Desktop*/
+@media screen and (min-width: 768px) {
+
+    .search-container {
+        margin-right: 78%;
+    }
+
+    .map-control-button-location-mode {
+        position: absolute;
+        top     : 70%;
+        left    : 4%;
+        padding : 10px;
+        z-index : 400;
+    }
+
+    .map-control-button-city-mode {
+        position: absolute;
+        top     : 70%;
+        left    : 8%;
+        padding : 10px;
+        z-index : 1002;
+    }
+
+    .map-control-buttons-locate-current {
+        position: absolute;
+        top     : 70%;
+        left    : 12%;
+        padding : 10px;
+        z-index : 400;
+    }
+
+    .map-control-buttons-locate-city {
+        position: absolute;
+        top     : 70%;
+        left    : 16%;
+        padding : 10px;
+        z-index : 400;
+    }
+
+    .slider-label {
+        margin-left : 11%;
+        margin-right: 11%;
+    }
+}

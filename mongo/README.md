@@ -15,3 +15,9 @@ The phases are, in order:
 1. Populate phase (Code: `01`)
 
 The order code is just a number used to order the execution of scripts which may be dependent from another script.
+
+# Database login
+To login into the database run:
+```
+mongo -u admin -p admin --authenticationDatabase admin smartPark
+```

@@ -24,7 +24,12 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<router-outlet></router-outlet>
+<div class="toolbar" role="banner">
+  <a routerLink="/signin">Sign in</a>
+  <app-searchbar></app-searchbar>
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
 
 <app-footer></app-footer>
