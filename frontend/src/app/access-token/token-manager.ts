@@ -1,11 +1,14 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
 export class TokenManagerService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   setToken(newToken: string): void {
     sessionStorage.setItem("auth-token", newToken);
@@ -13,24 +16,31 @@ export class TokenManagerService {
 
   getToken(): string {
     const token = sessionStorage.getItem("auth-token");
-    if(token) {
+    if (token) {
       return token;
     } else {
       throw "No token found";
     }
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): Observable<boolean> {
     const token = sessionStorage.getItem("auth-token");
-    if(token && this.isTokenValidServerSide()) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.isTokenValidServerSide(token).pipe(map(res => {
+      return res.isValid;
+    }));
   }
 
-  isTokenValidServerSide(): boolean {
-    return true; // TODO call backend
+  isTokenValidServerSide(token: string | null): Observable<TokenResponse> {
+    const url = "http://localhost:3000/api/auth/check";
+    const headers = new HttpHeaders({
+      "skip-token": "true"
+    });
+    const options = { headers: headers };
+    return this.http.post<TokenResponse>(url, { "token": token }, options);
   }
-  
+
+}
+
+type TokenResponse = {
+  "isValid": boolean;
 }

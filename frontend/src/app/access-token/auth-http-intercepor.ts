@@ -5,10 +5,14 @@ import { Observable } from "rxjs";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor() {}
+    constructor() { }
 
     intercept(req: HttpRequest<any>,
-              next: HttpHandler): Observable<HttpEvent<any>> {
+        next: HttpHandler): Observable<HttpEvent<any>> {
+
+        if (req.headers.get("skip-token")) {
+            return next.handle(req);
+        }
 
         const idToken = sessionStorage.getItem("auth-token");
 

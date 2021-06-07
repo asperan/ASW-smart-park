@@ -18,7 +18,7 @@ export class AppComponent {
     this.currentRoute = router.url;
     router.events
       .subscribe((event: any) => {
-        if(event instanceof NavigationEnd) {
+        if (event instanceof NavigationEnd) {
           this.currentRoute = event.url;
         }
       });
@@ -26,6 +26,8 @@ export class AppComponent {
 
 
   ngOnInit() {
-    this.isAuthenticated = this.auth.isAuthenticated();
+    this.auth.isAuthenticated().subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
   }
 }
