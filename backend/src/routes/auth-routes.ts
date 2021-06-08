@@ -10,8 +10,7 @@ routes.post(
     async (req: express.Request, res: express.Response) => {
         const token = req.body.token;
         const isValid = isJwtCorrect(token).ok;
-        res.status(200);
-        res.json({ isValid: isValid });
+        res.status(200).json({ isValid: isValid });
     }
 );
 

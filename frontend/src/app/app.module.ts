@@ -19,7 +19,7 @@ import { PricingDetailComponent } from './pages/parking-detail/pills/pricing-det
 import { SupportDetailComponent } from './pages/parking-detail/pills/support-detail/support-detail.component';
 import { ContactFormComponent } from './pages/contact-form/contact-form/contact-form.component';
 import { AuthGuardService } from './access-token/token-guard';
-import { AuthInterceptor } from './access-token/auth-http-intercepor';
+import { AuthInterceptor } from './access-token/auth-http-interceptor';
 
 @NgModule({
   declarations: [

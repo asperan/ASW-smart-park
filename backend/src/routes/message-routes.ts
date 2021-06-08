@@ -48,7 +48,7 @@ routes.post(
                 messageController.insertMessage(message, req.userEmail);
                 res.json({status: "OK"});
             } else {
-                throw "Cannot access email from token";
+                res.status(500).json({status: "Cannot extract user from token"});
             }
         } catch (err) {
             make500ErrorResponse(res, err);

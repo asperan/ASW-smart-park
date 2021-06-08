@@ -13,6 +13,7 @@ export async function getAllUnsentMessages(): Promise<any[]> {
 }
 
 export function insertMessage(message: MessageEntity, userEmail: string) {
+    message.sender = userEmail;
     messagesRepository.insertMessage(message);
 }
 
