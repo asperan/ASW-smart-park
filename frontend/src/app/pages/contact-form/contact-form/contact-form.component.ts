@@ -26,6 +26,7 @@ export class ContactFormComponent implements OnInit {
 
   submitSupport() {
     this.messagesService.addNewEmailMessage(this.makeEmail());
+    this.isSubmitted = true;
   }
 
   makeEmail(): Message {
