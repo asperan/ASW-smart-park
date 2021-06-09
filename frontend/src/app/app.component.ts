@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { TokenManagerService } from './access-token/token-manager';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +8,17 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'smart-parking';
   currentRoute: string;
 
-  constructor(private router: Router) {
+  isAuthenticated = false;
+
+  constructor(private router: Router, private auth: TokenManagerService) {
     this.currentRoute = router.url;
     router.events
       .subscribe((event: any) => {
-        if(event instanceof NavigationEnd) {
+        if (event instanceof NavigationEnd) {
           this.currentRoute = event.url;
         }
       });
@@ -23,6 +26,8 @@ export class AppComponent {
 
 
   ngOnInit() {
-
+    this.auth.isAuthenticated().subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
   }
 }
