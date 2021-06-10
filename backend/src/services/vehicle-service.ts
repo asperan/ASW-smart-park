@@ -16,6 +16,10 @@ export async function unbindUserFromVehicle(vehicleId: string): Promise<boolean>
   return vehicleRepository.unbindUserFromVehicle(vehicleId);
 }
 
+export async function isVehicleBoundToUser(vehicleId: string, userEmail: string): Promise<boolean> {
+  return vehicleRepository.isVehicleBoundToUser(vehicleId, userEmail);
+}
+
 export async function addParkingToVehicle(vehicleId: string, parkingId: string): Promise<boolean> {
   return vehicleRepository.addParkingToVehicle(vehicleId, parkingId);
 }
