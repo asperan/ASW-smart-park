@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentInfoService } from "../user-services/payment-info.service";
+import { PaymentInfoService } from "../../user-services/payment-info.service";
 
 type PaymentObject = {
   userEmail: string,
