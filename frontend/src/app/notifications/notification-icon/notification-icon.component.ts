@@ -28,11 +28,9 @@ export class NotificationIconComponent {
   }
 
   private updateNotificationCount() {
-    this.tokenManagerService.getToken().then(token => {
-      if (token.length > 0) {
-        this.notificationService.getUnreadNotificationCount().then((data: any) => this.notificationCount = data.count);
-      }
-    });
+    if (this.tokenManagerService.getToken().length > 0) {
+      this.notificationService.getUnreadNotificationCount().then((data: any) => this.notificationCount = data.count);
+    }
   }
 
   onIconClicked() {
