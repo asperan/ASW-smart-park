@@ -20,6 +20,7 @@ import { SupportDetailComponent } from './pages/parking-detail/pills/support-det
 import { ContactFormComponent } from './pages/contact-form/contact-form/contact-form.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
+import { SatisticsDetailComponent } from './pages/parking-detail/pills/satistics-detail/satistics-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthInterceptor } from './access-token/auth-http-interceptor';
     PricingDetailComponent,
     SupportDetailComponent,
     ContactFormComponent,
+    SatisticsDetailComponent,
   ],
   imports: [
     BrowserModule,
