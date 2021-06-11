@@ -23,6 +23,7 @@ import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.co
 import { PricingDetailComponent } from './pages/parking-detail/pills/pricing-detail/pricing-detail.component';
 import { SupportDetailComponent } from './pages/parking-detail/pills/support-detail/support-detail.component';
 import { ContactFormComponent } from './pages/contact-form/contact-form/contact-form.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ContactFormComponent } from './pages/contact-form/contact-form/contact-
     PricingDetailComponent,
     SupportDetailComponent,
     ContactFormComponent,
+    HomepageComponent,
   ],
   imports: [
     BrowserModule,
