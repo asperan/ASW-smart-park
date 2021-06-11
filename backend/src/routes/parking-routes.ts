@@ -3,6 +3,7 @@ import { body, validationResult } from 'express-validator';
 import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../services/validation';
 import * as parkingController from "../controllers/parking-controller";
 import { make500ErrorResponse } from '../services/response-utils';
+import { validateAccessToken } from '../middleware/token-auth';
 
 const routes = express.Router();
 
@@ -10,6 +11,7 @@ const routes = express.Router();
 
 routes.get(
     '/all/:cityName/',
+    validateAccessToken,
     async (req: express.Request, res: express.Response) => {
         const cityName = req.params.cityName;
 
@@ -23,6 +25,7 @@ routes.get(
 
 routes.post(
     '/radius/',
+    validateAccessToken,
     body("city").exists(),
     body("latitude").exists(),
     body("longitude").exists(),
@@ -47,6 +50,7 @@ routes.post(
 
 routes.post(
     '/radius-center/',
+    validateAccessToken,
     body("city").exists(),
     body("radiusKM").exists(),
     async (req: express.Request, res: express.Response) => {
@@ -66,6 +70,7 @@ routes.post(
 
 routes.get(
     '/spots/:cityName/:id',
+    validateAccessToken,
     async (req: express.Request, res: express.Response) => {
         const cityName = req.params.cityName;
         const parkingId = req.params.id;

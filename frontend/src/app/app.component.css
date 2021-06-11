@@ -266,6 +266,11 @@ svg#clouds {
   height: 100%;
 }
 
+.nav-link {
+  color: white !important;
+  text-decoration: underline;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
 

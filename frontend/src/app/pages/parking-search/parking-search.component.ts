@@ -2,8 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 import { faCar, faCity, faHome, faInfinity, faSearch, faSearchLocation, faUser } from '@fortawesome/free-solid-svg-icons';
 import * as L from 'leaflet';
 import { interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
-import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/parking-search/parking-search-services/parking-search.service';
+import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/services/parking-search.service';
+import { SharedSelectedCityService } from 'src/app/services/shared-selected-city.service';
 
 @Component({
   selector: 'app-parking-search',
@@ -13,8 +13,6 @@ import { City, Parking, ParkingSearchService, ParkingSpot } from 'src/app/pages/
 export class ParkingSearchComponent implements AfterViewInit {
 
   // font awsome icons
-  faUser = faUser;
-  faSearch = faSearch;
   faCity = faCity;
   faCar = faCar;
   faSearchLocation = faSearchLocation;
@@ -22,7 +20,6 @@ export class ParkingSearchComponent implements AfterViewInit {
   faInfinity = faInfinity;
 
   // cities & parkings
-  availableCities: City[] = [];
   parkingSpots: ParkingSpot[] = [];
   private selectedCity: City | undefined;
   private selectedParkingId: number | undefined;
@@ -74,15 +71,19 @@ export class ParkingSearchComponent implements AfterViewInit {
     iconUrl: '/assets/images/park-red.png',
     iconSize: [20, 20]
   });
+  private parkingYellow = L.icon({
+    iconUrl: '/assets/images/park-yellow.png',
+    iconSize: [20, 20]
+  });
 
 
   private map: any;
 
-  constructor(private parkingSearchService: ParkingSearchService) {
+  constructor(private parkingSearchService: ParkingSearchService, private sharedService: SharedSelectedCityService) {
   }
 
   ngAfterViewInit(): void {
-    this.initCities();
+    this.initCitiesSelect();
     this.initMap();
   }
 
@@ -128,23 +129,17 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.updateGraphics();
   }
 
-  onSearchCityChange(value: string) {
-    this.selectedCity = this.availableCities.find((city: City) => city.name == value);
-    if (!this.selectedCity) {
-      console.error("Could not retrieve the selected city: " + value);
-    } else {
+  private initCitiesSelect() {
+    this.sharedService.sharedParkingSearchSelectedCity.subscribe((city: City) => {
+      const shouldPan = this.selectedCity != undefined;
+      this.selectedCity = city;
       this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
       this.updateGraphics();
-      this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
-    }
-  }
-
-  private initCities() {
-    this.parkingSearchService.getAllCities().subscribe((cities: City[]) => {
-      this.availableCities = cities;
-      this.initDefaultCity();
-    }, (err) => console.error(err))
-  }
+      if(shouldPan) {
+        this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
+      }
+  });
+}
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -178,14 +173,6 @@ export class ParkingSearchComponent implements AfterViewInit {
     .subscribe(() => {
       this.updateParkingsStatus();
     });
-  }
-
-  private initDefaultCity() {
-    const defaultCityName = 'cesena';
-    this.selectedCity = this.availableCities.find((city: City) => city.name == defaultCityName);
-    if (this.selectedCity) {
-      this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
-    }
   }
 
   private updateGraphics() {
@@ -261,7 +248,7 @@ export class ParkingSearchComponent implements AfterViewInit {
       }
       const availableSpots = parking.capacity - parking.occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button">More Info</button><div>')
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" +  ' ">More Info</button><div>')
         .addEventListener("click", e => {
           this.selectedParkingId = parking.id;
           this.parkingSpots = parking.parkingSpots;
@@ -277,8 +264,10 @@ export class ParkingSearchComponent implements AfterViewInit {
     if (this.parkingSpots) {
       this.parkingSpots.forEach((spot: ParkingSpot) => {
         let options;
-        if (spot.occupied) {
+        if (spot.occupied && spot.paidFor) {
           options = { icon: this.parkingRed };
+        } else if(spot.occupied){
+          options = { icon: this.parkingYellow };
         } else {
           options = { icon: this.parkingGreen };
         }
@@ -320,7 +309,7 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private updateParkingsStatus() {
     if(this.selectedCity && this.selectedParkingId) {
-      this.parkingSearchService.getParkingByParkingId(this.selectedCity.name, this.selectedParkingId)
+      this.parkingSearchService.getParkingByCityNameAndParkingId(this.selectedCity.name, this.selectedParkingId)
       .subscribe((data: Parking) => {
         this.parkingSpots = data.parkingSpots;
         this.updateParkingSpotsMarkers();

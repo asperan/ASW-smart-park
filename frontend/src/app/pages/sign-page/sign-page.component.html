@@ -1,10 +1,11 @@
-<div class="component-content">
-  <div class="error-banner" *ngIf="signError > 0" [innerHTML]="errorMessage"></div>
-  <form #userlogin="ngForm" (ngSubmit) = "onSubmit(userlogin.value)">
-    <label class="form-label" >Email: <input type="email" name="email" ngModel/></label>
-    <label class="form-label" >Password: <input type="password" name="password" ngModel/></label>
-    <input type="submit" value="{{ isSignup ? 'Sign up' : 'Sign in' }}" />
-  </form>
+<div class="error-banner" *ngIf="signError > 0" [innerHTML]="errorMessage"></div>
+<form #userlogin="ngForm" (ngSubmit)="onSubmit(userlogin.value)" class="form-control login-form">
+  <div class="user-label"><fa-icon [icon]='faUser'></fa-icon></div>
+  <label class="form-label">Email: <input class="form-control" type="email" name="email" ngModel /></label>
+  <label class="form-label">Password: <input class="form-control" type="password" name="password" ngModel /></label>
+  <input class="form-control" type="submit" value="{{ isSignup ? 'Sign up' : 'Sign in' }}" />
+</form>
+<div class="login-link-container">
   <a routerLink="{{ isSignup ? '/signin' : '/signup'}}">
     {{ isSignup ? "Already have an account? Sign in!" : "Don't have an account? Sign up!" }}
   </a>

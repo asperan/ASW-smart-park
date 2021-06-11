@@ -1,6 +1,9 @@
 <div class="toolbar" role="banner">
-    <a routerLink="/signin">Sign in</a>
-    <notification-icon></notification-icon>
+  <a *ngIf='!isAuthenticated' class="nav-link" routerLink="/signin">Sign In / Register</a>
+  <a *ngIf='isAuthenticated' class="nav-link" routerLink="/userpage">Account</a>
+  <a *ngIf='isAuthenticated && currentRoute != "/parking-search"' class="nav-link" routerLink="/parking-search">Search Parking</a>
+  <app-searchbar *ngIf='currentRoute == "/parking-search"'></app-searchbar>
+  <notification-icon></notification-icon>
 </div>
 <div class="content">
   <router-outlet></router-outlet>

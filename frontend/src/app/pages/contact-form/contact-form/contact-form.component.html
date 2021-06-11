@@ -1,0 +1,34 @@
+<div *ngIf="isSubmitted">
+    <div class="thank-you">
+        <h1>Thank you for your feedback!</h1>
+    </div>
+    <div class="go-back">
+        <a href="/parking-search">Go back</a>
+    </div>
+</div>
+<div *ngIf="!isSubmitted">
+
+  <div class="form-header">
+    <h1>We are happy to help!</h1>
+  </div>
+
+
+  <div class="form-group form-body">
+    <div class="form-group">
+      <h3>What's the problem?</h3>
+      <select [(ngModel)]="requestType" class="form-control">
+        <option *ngFor="let type of types">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <h3>Describe your issue.</h3>
+      <textarea [(ngModel)]="requestText" class="form-control issue-area" rows="10"></textarea>
+    </div>
+
+    <div class="form-group d-flex justify-content-center">
+      <button (click)="submitSupport()" type="button" class="btn btn-info submit-button">Submit</button>
+    </div>
+
+  </div>
+</div>

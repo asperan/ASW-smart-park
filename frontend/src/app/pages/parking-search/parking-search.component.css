@@ -26,10 +26,10 @@
 
 .map-container {
     position: absolute;
-    top     : 10%;
-    left    : 0;
-    right   : 0;
-    bottom  : 0;
+    top     : 12%;
+    left    : 2px;
+    right   : 2px;
+    bottom  : 2px;
     margin  : 2px;
 }
 
@@ -128,10 +128,10 @@
 }
 
 .slider-container {
-    position   : absolute;
-    top        : 88%;
-    width      : 80%;
-    margin-left: 10%;
+    position: absolute;
+    top     : 88%;
+    left    : 10%;
+    width   : 80%;
 }
 
 .slider-label {
@@ -161,7 +161,7 @@
         padding : 10px;
         z-index : 400;
     }
-    
+
     .map-control-button-city-mode {
         position: absolute;
         top     : 70%;
@@ -169,7 +169,7 @@
         padding : 10px;
         z-index : 1002;
     }
-    
+
     .map-control-buttons-locate-current {
         position: absolute;
         top     : 70%;
@@ -177,7 +177,7 @@
         padding : 10px;
         z-index : 400;
     }
-    
+
     .map-control-buttons-locate-city {
         position: absolute;
         top     : 70%;

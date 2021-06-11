@@ -1,5 +1,0 @@
-<input class="vehicleSearch" type="text" (input)="onFilterChange($event)" placeholder="Cerca..."/>
-
-<p *ngIf="userVehicles.length === 0">Nessun veicolo associato.</p>
-<p *ngIf="userVehicles.length > 0 && filteredVehicleList.length === 0">Nessun veicolo trovato con il filtro specificato.</p>
-<div class="vehicleListElement" *ngFor="let vehicle of filteredVehicleList">{{vehicle.name}}</div>

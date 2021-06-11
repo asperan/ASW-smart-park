@@ -1,32 +1,46 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { GetStorageConflig, NgStorage, StorageConfig, StorageTypeUnit } from "ng-storage-local";
-
-const tokenStoragePrototype = {
-  storageType: StorageTypeUnit.STRING,
-  storageKey: "SMART_PARK_ACCESS_TOKEN",
-}
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
 export class TokenManagerService {
 
-  constructor(private ngStorage: NgStorage) { }
+  constructor(private http: HttpClient) { }
 
   setToken(newToken: string): void {
-    const tokenStorage: StorageConfig = Object.create(tokenStoragePrototype, {storageData: {value: newToken}} );
-    this.ngStorage.setSessionStorage(tokenStorage);
+    sessionStorage.setItem("auth-token", newToken);
   }
 
-  async getToken(): Promise<string> {
-    const tokenGetter: GetStorageConflig = Object.create(tokenStoragePrototype);
-    let token;
-    try {
-      token = await this.ngStorage.getSessionStorage(tokenGetter);  
-    } catch (error: any) {
-      token = "";
-    } finally {
-      return token.error ? "" : token;
+  getToken(): string {
+    const token = sessionStorage.getItem("auth-token");
+    if (token) {
+      return token;
+    } else {
+      throw "No token found";
     }
   }
+
+  isAuthenticated(): Observable<boolean> {
+    const token = sessionStorage.getItem("auth-token");
+    return this.isTokenValidServerSide(token).pipe(map(res => {
+      return res.isValid;
+    }));
+  }
+
+  isTokenValidServerSide(token: string | null): Observable<TokenResponse> {
+    const url = "http://localhost:3000/api/auth/check";
+    const headers = new HttpHeaders({
+      "skip-token": "true"
+    });
+    const options = { headers: headers };
+    return this.http.post<TokenResponse>(url, { "token": token }, options);
+  }
+
+}
+
+type TokenResponse = {
+  "isValid": boolean;
 }
