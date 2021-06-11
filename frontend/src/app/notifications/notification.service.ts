@@ -10,14 +10,14 @@ export class NotificationService {
   constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) { }
 
   async getUnreadNotificationCount() {
-    return this.http.get("http://localhost:3000/api/notifications/unread", { headers: { "x-access-token": await this.tokenManagerService.getToken() } }).toPromise();
+    return this.http.get("http://localhost:3000/api/notifications/unread", { headers: { "x-access-token": this.tokenManagerService.getToken() } }).toPromise();
   }
 
   async getUserNotificationSummary() {
-    return this.http.get("http://localhost:3000/api/notifications", { headers: { "x-access-token": await this.tokenManagerService.getToken() } }).toPromise();
+    return this.http.get("http://localhost:3000/api/notifications", { headers: { "x-access-token": this.tokenManagerService.getToken() } }).toPromise();
   }
 
   async getAllUserNotifications() {
-    return this.http.get("http://localhost:3000/api/notifications/all", { headers: { "x-access-token": await this.tokenManagerService.getToken() } }).toPromise();
+    return this.http.get("http://localhost:3000/api/notifications/all", { headers: { "x-access-token": this.tokenManagerService.getToken() } }).toPromise();
   }
 }

@@ -9,6 +9,6 @@ export class VehicleInfoService {
   constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) {}
 
   async requestVehicleInfos(): Promise<any> {
-    return this.http.get("http://localhost:3000/api/user/info-vehicles", {headers: {"x-access-token": await this.tokenManagerService.getToken()}}).toPromise();
+    return this.http.get("http://localhost:3000/api/user/info-vehicles", {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
   }
 }
