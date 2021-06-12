@@ -1,8 +1,8 @@
 import { ReviewEntity } from "../repositories/reviews-repository";
 import * as reviewsService from "../services/reviews-service";
 
-export async function addReview(parkingId: number, userEmail: string, rating: number): Promise<boolean> {
-    return await reviewsService.addReview(parkingId, userEmail, rating);
+export async function updateReview(parkingId: number, userEmail: string, rating: number): Promise<boolean> {
+    return await reviewsService.updateReview(parkingId, userEmail, rating);
 }
 
 export async function getUserReview(parkingId: number, userEmail: string): Promise<ReviewEntity> {

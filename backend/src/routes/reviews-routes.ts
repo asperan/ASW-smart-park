@@ -15,7 +15,7 @@ routes.post(
       try {
         const userEmail = req.userEmail;
         if(userEmail) {
-            const isSuccess = await reviewsController.addReview(
+            const isSuccess = await reviewsController.updateReview(
                 req.body.parkingId,
                 userEmail,
                 req.body.rating

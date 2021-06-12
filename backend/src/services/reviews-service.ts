@@ -1,14 +1,15 @@
 import * as reviewsRepository from "../repositories/reviews-repository"
 import { ReviewEntity } from "../repositories/reviews-repository";
 
-export async function addReview(parkingId: number, userEmail: string, rating: number): Promise<boolean> {
+export async function updateReview(parkingId: number, userEmail: string, rating: number): Promise<boolean> {
     const review = await reviewsRepository.getReviewForParking(parkingId, userEmail);
+    rating = squashRating(rating);
     if(!review) {
-        rating = squashRating(rating);
         await reviewsRepository.addReview(parkingId, userEmail, rating);
         return true;
     } else {
-        return false;
+        await reviewsRepository.updateReview(parkingId, userEmail, rating);
+        return true;
     }
 }
 

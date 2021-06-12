@@ -16,6 +16,14 @@ export async function addReview(parkingId: number, userEmail: string, rating: nu
     return await collection.insertOne(review);
 }
 
+export async function updateReview(parkingId: number, userEmail: string, rating: number) {
+    const collection = mongoClient.db.collection("reviews");
+    return await collection.updateOne({
+        parkingId: parkingId,
+        userEmail: userEmail
+    }, {$set: {rating: rating}});
+}
+
 export async function getReviewForParking(parkingId: number, userEmail: string): Promise<ReviewEntity> {
     const collection = mongoClient.db.collection("reviews");
     const review = await collection.findOne({
