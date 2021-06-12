@@ -1,12 +1,27 @@
-<div class="toolbar" role="banner">
-    <a routerLink="/signin">Sign in</a>
-</div>
 <div class="content">
-    <p>Email: <span class="email-text">{{ userEmail }}</span></p>
-    <button class="tab" [ngClass]="selectedTab == SubComponent.MyVehicles ? 'active-tab' : ''" (click)="selectTab(SubComponent.MyVehicles)">I miei veicoli</button>
-    <button class="tab" [ngClass]="selectedTab == SubComponent.PaymentHistory ? 'active-tab' : ''" (click)="selectTab(SubComponent.PaymentHistory)">Storico pagamenti</button>
-    <button class="tab" [ngClass]="selectedTab == SubComponent.Statistics ? 'active-tab' : ''" (click)="selectTab(SubComponent.Statistics)">Statistiche</button>
-    <app-vehicle-tab *ngIf="selectedTab == SubComponent.MyVehicles"></app-vehicle-tab>
-    <app-payment-tab *ngIf="selectedTab == SubComponent.PaymentHistory"></app-payment-tab>
-    <app-statistics-tab *ngIf="selectedTab == SubComponent.Statistics"></app-statistics-tab>
+
+    <div class="greeting-container">
+        <h2>Hello,  <span class="email-text">{{ userEmail }}</span>!</h2>
+    </div>
+
+    <div class="d-flex justify-content-center detail-nav">
+        <ul class="nav nav-pills">
+            <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.MyVehicles}">
+                <button class="nav-link" [ngClass]="selectedTab == SubComponent.MyVehicles ? 'active-tab' : ''" (click)="selectTab(SubComponent.MyVehicles)">vehicles</button>
+            </li>
+            <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.PaymentHistory}">
+                <button class="nav-link" [ngClass]="selectedTab == SubComponent.PaymentHistory ? 'active-tab' : ''" (click)="selectTab(SubComponent.PaymentHistory)">payments</button>
+            </li>
+            <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.Statistics}">
+                <button class="nav-link" [ngClass]="selectedTab == SubComponent.Statistics ? 'active-tab' : ''" (click)="selectTab(SubComponent.Statistics)">statistics</button>    
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-container">
+        <app-vehicle-tab *ngIf="selectedTab == SubComponent.MyVehicles"></app-vehicle-tab>
+        <app-payment-tab *ngIf="selectedTab == SubComponent.PaymentHistory"></app-payment-tab>
+        <app-statistics-tab *ngIf="selectedTab == SubComponent.Statistics"></app-statistics-tab>
+    </div>
+
 </div>

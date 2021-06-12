@@ -1,5 +1,9 @@
-<app-header></app-header>
-
-<router-outlet></router-outlet>
-
-<app-footer></app-footer>
+<div class="toolbar" role="banner">
+  <a *ngIf='!isAuthenticated' class="nav-link" routerLink="/signin">Sign In / Register</a>
+  <a *ngIf='isAuthenticated' class="nav-link" routerLink="/userpage">Account</a>
+  <a *ngIf='isAuthenticated && currentRoute != "/parking-search"' class="nav-link" routerLink="/parking-search">Search Parking</a>
+  <app-searchbar *ngIf='currentRoute == "/parking-search"'></app-searchbar>
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

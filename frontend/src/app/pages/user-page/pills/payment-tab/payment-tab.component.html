@@ -1,4 +1,4 @@
-<p *ngIf="userPayments.length === 0">Nessun pagamento ancora effettuato.</p>
+<p *ngIf="userPayments.length === 0">No Payments found</p>
 <div class="paymentListElement" *ngFor="let payment of userPayments">
   {{ payment.parkingId }} - {{ payment.amount | price }}<br/>
   {{ payment.date | date:"YYYY-MM-dd HH:mm:ss a (O)" }}

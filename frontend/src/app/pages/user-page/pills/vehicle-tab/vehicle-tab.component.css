@@ -1,0 +1,20 @@
+.vehicleSearch {
+  display: block;
+}
+
+.vehicleListElement {
+  margin: 10px;
+}
+
+.results-container {
+  margin-left: 10%;
+}
+
+.error-message {
+  text-align: center;
+  margin-top: 10%;
+}
+
+.remove-button {
+  margin-left: 40%;
+}

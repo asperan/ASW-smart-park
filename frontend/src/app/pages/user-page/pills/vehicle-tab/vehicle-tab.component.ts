@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleInfoService } from '../user-services/vehicle-info.service';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { VehicleInfoService } from '../../user-services/vehicle-info.service';
 
 @Component({
   selector: 'app-vehicle-tab',
@@ -7,6 +8,9 @@ import { VehicleInfoService } from '../user-services/vehicle-info.service';
   styleUrls: ['./vehicle-tab.component.css']
 })
 export class VehicleTabComponent implements OnInit {
+  
+  faTrash = faTrash;
+  faPlus = faPlus;
 
   userVehicles: Array<{vehicleId: string, name: string}>;
   filteredVehicleList: Array<{vehicleId: string, name: string}>;
@@ -28,6 +32,10 @@ export class VehicleTabComponent implements OnInit {
     this.filteredVehicleList = filterString.length > 0 ?
       this.userVehicles.filter(elem => elem.name.toLowerCase().includes(filterString.toLowerCase())) :
       this.userVehicles;
+  }
+
+  openAddVehicleForm() {
+    // TODO add logic, maybe navigate to a separate page?
   }
 
 }

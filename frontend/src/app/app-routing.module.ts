@@ -7,15 +7,17 @@ import { SignPageComponent } from './pages/sign-page/sign-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
 import { ContactFormComponent } from './pages/contact-form/contact-form/contact-form.component';
+import { AuthGuardService } from './access-token/token-guard';
 
 const routes: Routes = [
   {path: "", component: HomepageComponent},
-  {path: 'parking-search', component: ParkingSearchComponent},
+  {path: 'parking-search', component: ParkingSearchComponent, canActivate: [AuthGuardService]},
   {path: "signup", component: SignPageComponent, data: {isSignup: true}},
   {path: "signin", component: SignPageComponent, data: {isSignup: false}},
-  {path: "userpage", component: UserPageComponent},
-  {path: "parking/:cityName/:id", component: ParkingDetailComponent},
-  {path: "contact-us", component: ContactFormComponent}
+  {path: "userpage", component: UserPageComponent, canActivate: [AuthGuardService]},
+  {path: "parking/:cityName/:id", component: ParkingDetailComponent, canActivate: [AuthGuardService]},
+  {path: "contact-us", component: ContactFormComponent, canActivate: [AuthGuardService]},
+  {path: '**', redirectTo: ""}
 ];
 
 @NgModule({
