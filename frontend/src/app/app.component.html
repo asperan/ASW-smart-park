@@ -1,4 +1,20 @@
 <div class="toolbar" role="banner">
+  <a href="/">
+      <img
+      width="40"
+      alt="Angular Logo"
+      src="assets/images/logo.png"
+      />
+      <p>Smart Parking</p>
+  </a>
+  <a href="/">
+      <p>Mappa</p>
+  </a>
+  <a href="/">
+      <p>Statistiche</p>
+  </a>
+
+  <div class="spacer"></div>
   <a *ngIf='!isAuthenticated' class="nav-link" routerLink="/signin">Sign In / Register</a>
   <a *ngIf='isAuthenticated' class="nav-link" routerLink="/userpage">Account</a>
   <a *ngIf='isAuthenticated && currentRoute != "/parking-search"' class="nav-link" routerLink="/parking-search">Search Parking</a>
@@ -7,3 +23,5 @@
 <div class="content">
   <router-outlet></router-outlet>
 </div>
+
+<app-footer></app-footer>
