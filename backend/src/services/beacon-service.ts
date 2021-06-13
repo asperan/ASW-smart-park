@@ -27,7 +27,7 @@ export async function beaconExit(vehicleId: string, spotId: string, userEmail: s
 }
 
 async function validateVehicleIsBoundToUser(vehicleId: string, userEmail: string) {
-    const isVehicleBound = await vehicleService.isVehicleBoundToUser(vehicleId, userEmail);
+    const isVehicleBound = await vehicleService.isVehicleLinkedToUser(vehicleId, userEmail);
     if(!isVehicleBound) {
         console.error("Vehicle is not bound to user");
         throw new Error("Vehicle is not bound to user");
