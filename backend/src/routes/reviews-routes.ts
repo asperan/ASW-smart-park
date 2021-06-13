@@ -46,16 +46,16 @@ routes.get(
                 parkingId,
                 userEmail,
             );
-            if(review) {
-                res.json({isPresent: true, review: review});
-            } else {
-                res.json({isPresent: false});
-            }
+            res.json({isPresent: true, review: review});
         } else {
             make400ErrorResponse(res);
         }
       } catch (err) {
-        make500ErrorResponse(res, err);
+        if(err == "No review found") {
+          res.json({isPresent: false});
+        } else {
+          make500ErrorResponse(res, err);
+        }
       }
     }
 );
@@ -71,16 +71,16 @@ routes.get(
             const reviews = await reviewsController.getAllReviews(
                 parkingId
             );
-            if(reviews) {
-                res.json({isPresent: true, reviews: reviews});
-            } else {
-                res.json({isPresent: false});
-            }
+            res.json({isPresent: true, reviews: reviews});
         } else {
             make400ErrorResponse(res);
         }
       } catch (err) {
-        make500ErrorResponse(res, err);
+        if(err == "No reviews found") {
+          res.json({isPresent: false});
+        } else {
+          make500ErrorResponse(res, err);
+        }
       }
     }
 );

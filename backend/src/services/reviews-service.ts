@@ -24,9 +24,19 @@ function squashRating(rating: number): number {
 }
 
 export async function getReviewForParking(parkingId: number, userEmail: string): Promise<ReviewEntity> {
-    return await reviewsRepository.getReviewForParking(parkingId, userEmail);
+    const review = await reviewsRepository.getReviewForParking(parkingId, userEmail);
+    if(review) {
+        return review;
+    } else {
+        throw "No review found";
+    }
 }
 
 export async function getReviewsForParking(parkingId: number): Promise<ReviewEntity[]> {
-    return await reviewsRepository.getReviewsForParking(parkingId);
+    const reviews = await reviewsRepository.getReviewsForParking(parkingId);
+    if(reviews) {
+        return reviews;
+    } else {
+        throw "No reviews found";
+    }
 }

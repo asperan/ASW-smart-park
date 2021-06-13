@@ -4,7 +4,7 @@
             <div class="content text-center">
                 <div class="ratings"> 
                     <h3>Your Rating</h3>
-                    <span class="product-rating">{{ userRating }}</span><span>/5</span>
+                    <span class="product-rating">{{ userRating.toFixed(1) }}</span><span>/5</span>
                     <div class="stars"> 
                         <button class="star-button star-button-hover" *ngFor="let star of userStars; let i = index" type="button" (click)="updateReview(i + 1)">
                             <fa-icon [icon]="star == 1 ? faStar : faStarEmpty"></fa-icon>
@@ -13,15 +13,16 @@
                 </div>
                 <div class="ratings"> 
                     <h3>User Ratings</h3>
-                    <span class="product-rating">{{ averageRating }}</span><span>/5</span>
+                    <span class="product-rating">{{ averageRating.toFixed(1) }}</span><span>/5</span>
                     <div class="stars"> 
                         <button class="star-button" *ngFor="let star of stars" type="button">
-                            <fa-icon [icon]="faStar" ></fa-icon> 
+                            <fa-icon [icon]="star == 1 ? faStar : faStarEmpty" ></fa-icon> 
                         </button>
                         <button class="star-button"  *ngIf="isHalfStarPresent" type="button">
                             <fa-icon [icon]="faStarHalf"></fa-icon> 
                         </button>
                      </div>
+                     <span>of {{ reviews.length }} reviews</span>
                 </div>
             </div>
         </div>

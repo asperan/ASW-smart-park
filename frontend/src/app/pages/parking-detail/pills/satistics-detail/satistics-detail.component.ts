@@ -42,12 +42,15 @@ export class SatisticsDetailComponent implements OnInit {
           this.calculateUserStars();
         } else {
           this.userRating = 0;
+          this.setUserStartsNoReview();
         }
       });
       this.reviewsService.getAllReviews(this.parkingId).subscribe(res => {
         if (res.isPresent) {
           this.reviews = res.reviews;
           this.calculateStars();
+        } else {
+          this.averageRating = 0;
         }
       });
     }
@@ -75,6 +78,10 @@ export class SatisticsDetailComponent implements OnInit {
       for (let i = 0; i < wholeStarsNum; i++) {
         this.stars.push(1);
       }
+    } else {
+      for (let i = 0; i < 5; i++) {
+        this.stars.push(0);
+      }
     }
   }
 
@@ -84,6 +91,12 @@ export class SatisticsDetailComponent implements OnInit {
       this.userStars.push(1);
     }
     for (let i = 0; i < 5 - wholeStarsNum; i++) {
+      this.userStars.push(0);
+    }
+  }
+
+  private setUserStartsNoReview() {
+    for (let i = 0; i < 5; i++) {
       this.userStars.push(0);
     }
   }
