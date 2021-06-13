@@ -9,7 +9,6 @@ import authRoutes from "./routes/auth-routes";
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserInfoRoutes } from './routes/user-info-routes';
-import { firefoxCors } from './middleware/firefox-cors';
 
 const app = express();
 
