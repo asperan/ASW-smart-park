@@ -4,11 +4,11 @@ import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
 import { Review, ReviewsService } from 'src/app/services/reviews.service';
 
 @Component({
-  selector: 'app-satistics-detail',
-  templateUrl: './satistics-detail.component.html',
-  styleUrls: ['./satistics-detail.component.css']
+  selector: 'app-statistics-detail',
+  templateUrl: './statistics-detail.component.html',
+  styleUrls: ['./statistics-detail.component.css']
 })
-export class SatisticsDetailComponent implements OnInit {
+export class StatisticsDetailComponent implements OnInit {
 
   @Input() parkingId: number | undefined;
 

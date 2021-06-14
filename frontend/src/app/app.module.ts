@@ -26,7 +26,7 @@ import { ContactFormComponent } from './pages/contact-form/contact-form/contact-
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
-import { SatisticsDetailComponent } from './pages/parking-detail/pills/satistics-detail/satistics-detail.component';
+import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,7 @@ import { SatisticsDetailComponent } from './pages/parking-detail/pills/satistics
     PricingDetailComponent,
     SupportDetailComponent,
     ContactFormComponent,
-    SatisticsDetailComponent,
+    StatisticsDetailComponent,
     HomepageComponent,
   ],
   imports: [
