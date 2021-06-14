@@ -38,6 +38,29 @@ export type ParkingPricingEntity = {
     price: number
 }
 
+const citiesCollection = mongoClient.db.collection("cities");
+
+export async function getAllCities(): Promise<CityEntity[]> {
+    return citiesCollection.find().toArray().then(res => res.map(r => formCityEntity(r)));
+}
+
+export async function suggestCityByPartialName(name: String): Promise<CityEntity[]> {
+    const regExp = new RegExp("^" + name, "gi");
+    return citiesCollection.find({ name: regExp }).toArray().then(res => res.map(r => formCityEntity(r)));
+}
+
+export async function getCityByName(name: String): Promise<CityEntity> {
+    return citiesCollection.findOne({ name: name.toLowerCase() }).then(res => formCityEntity(res));
+}
+
+export async function updateCityParkings(cityName: string, parkings: ParkingEntity[]) {
+    return citiesCollection.updateOne({ "city": cityName }, {
+        $set: {
+            parkings: parkings
+        }
+    });
+}
+
 function formCityEntity(res: any): CityEntity {
     return {
         name: res.name,
@@ -77,29 +100,3 @@ function formPricingEntity(res: any): ParkingPricingEntity {
         price: Number(res.price)
     }
 }
-
-export async function getAllCities(): Promise<CityEntity[]> {
-    const citiesCollection = mongoClient.db.collection("cities");
-    return citiesCollection.find().toArray().then(res => res.map(r => formCityEntity(r)));
-}
-
-export async function suggestCityByPartialName(name: String): Promise<CityEntity[]> {
-    const regExp = new RegExp("^" + name, "gi");
-    const citiesCollection = mongoClient.db.collection("cities");
-    return citiesCollection.find({ name: regExp }).toArray().then(res => res.map(r => formCityEntity(r)));
-}
-
-export async function getCityByName(name: String): Promise<CityEntity> {
-    const citiesCollection = mongoClient.db.collection("cities");
-    return citiesCollection.findOne({ name: name.toLowerCase() }).then(res => formCityEntity(res));
-}
-
-export async function updateCityParkings(cityName: string, parkings: ParkingEntity[]) {
-    const citiesCollection = mongoClient.db.collection("cities");
-    return citiesCollection.updateOne({ "city": cityName }, {
-        $set: {
-            parkings: parkings
-        }
-    });
-}
-

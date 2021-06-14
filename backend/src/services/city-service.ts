@@ -22,19 +22,23 @@ export async function updateParkingSpotBeaconExit(spotId: string) {
 
 async function setParkingSpotStatus(spotId:string, isOccupied: boolean) {
     const city = await getCityByParkingSpotId(spotId);
-
-    const parkingIndex = city.parkings.findIndex(parking => parking.parkingSpots.filter(spot => spot.uid == spotId).length == 1);
-    if(parkingIndex) {
+    const parkingIndex = findParkingIndex(city, spotId);
+    if(parkingIndex > 0) {
         const spotIndex = city.parkings[parkingIndex].parkingSpots.findIndex(spot => spot.uid == spotId);
         const occupied = city.parkings[parkingIndex].parkingSpots[spotIndex].occupied;
         if(occupied != isOccupied) {
             city.parkings[parkingIndex].parkingSpots[spotIndex].occupied = isOccupied;
+            await citiesRepository.updateCityParkings(city.name, city.parkings);
         } else {
-            throw "Parking spot already has occupancy status: " + occupied;
+            throw new Error("Parking spot already has occupancy status: " + occupied);
         }
     } else {
-        throw "City " + city.name + "has not parking with spot " + spotId;
+        throw new Error("City " + city.name + "has no parking with spot " + spotId)
     }
+}
+
+function findParkingIndex(city: citiesRepository.CityEntity, spotId: string) {
+    return city.parkings.findIndex(parking => parking.parkingSpots.filter(spot => spot.uid == spotId).length == 1);
 }
 
 async function getCityByParkingSpotId(spotId: string): Promise<citiesRepository.CityEntity> {
@@ -44,7 +48,7 @@ async function getCityByParkingSpotId(spotId: string): Promise<citiesRepository.
         const city = cities[0];
         return city;
     } else {
-        throw "Spot id is present in multiple or none cities";
+        throw new Error("Spot id is present in multiple or none cities");
     }
 }
 
@@ -53,7 +57,7 @@ function parkingsIncludeSpot(city: citiesRepository.CityEntity, spotId: string) 
     if (spots && spots.length == 1) {
         return true;
     } else if(spots && spots.length > 1){
-        throw "Multiple parkings contain spot id";
+        throw new Error("Multiple parkings contain spot id");
     } else {
         return false;
     }
