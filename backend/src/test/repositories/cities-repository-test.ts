@@ -1,3 +1,6 @@
+const expect = require("chai").expect;
+
+
 describe("Cities MongoDB Repository", function() {
     describe("Get all cities", function() {
         it("Retrives all cities", function() {
