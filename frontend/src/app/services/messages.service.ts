@@ -11,7 +11,7 @@ export class MessagesService {
   private baseUrl = "http://localhost:3000/api";
   private messagesUrl = this.baseUrl + "/messages";
 
-  constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) {
+  constructor(private http: HttpClient) {
   }
 
   async addNewEmailMessage(message: Message): Promise<Observable<Message>> {

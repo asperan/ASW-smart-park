@@ -5,8 +5,6 @@ import { make500ErrorResponse } from '../services/response-utils';
 
 const routes = express.Router();
 
-// TODO improve error handling with different codes
-
 routes.get(
   '/suggest/:partialName',
   validateAccessToken,
