@@ -11,7 +11,6 @@ import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserInfoRoutes } from './routes/user-info-routes';
 
-
 const app = express();
 
 main();
