@@ -47,7 +47,7 @@ db.createCollection("cities", {
                 required: ["uid", "occupied", "paidFor", "longitude", "latitude"],
                 items: {
                   uid: {
-                    bsonType: "int",
+                    bsonType: "string",
                     description: "parking spot ID unique globally across application",
                   },
                   occupied: {
