@@ -26,6 +26,7 @@ import { ContactFormComponent } from './pages/contact-form/contact-form/contact-
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
+import { WebBluetoothModule } from '@manekinekko/angular-web-bluetooth';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,10 @@ import { AuthInterceptor } from './access-token/auth-http-interceptor';
     AppRoutingModule,
     FontAwesomeModule,
     AppRoutingModule,
-    NgStorageModule
+    NgStorageModule,
+    WebBluetoothModule.forRoot({
+      enableTracing: true
+    })
   ],
   providers: [
     MarkerService,
