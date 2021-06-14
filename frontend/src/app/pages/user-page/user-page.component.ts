@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BasicInfoService } from './user-services/basic-info.service';
+import { BluetoothService } from './../../services/bluetooth.service';
 
 @Component({
   selector: 'app-user-page',
@@ -14,7 +15,7 @@ export class UserPageComponent implements OnInit {
 
   userEmail: string;
 
-  constructor(private basicInfoService: BasicInfoService, private router: Router) {
+  constructor(private basicInfoService: BasicInfoService, private router: Router, public bluetoothService: BluetoothService) {
     this.selectedTab = SubComponent.MyVehicles;
     this.userEmail = "";
   }

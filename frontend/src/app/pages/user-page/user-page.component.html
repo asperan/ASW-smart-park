@@ -3,6 +3,9 @@
     <div class="greeting-container">
         <h2>Hello,  <span class="email-text">{{ userEmail }}</span>!</h2>
     </div>
+    <div class="">
+      <button class="btn btn-primary" (click)="bluetoothService.discover()">Registra parcheggio</button>
+    </div>
 
     <div class="d-flex justify-content-center detail-nav">
         <ul class="nav nav-pills">
@@ -13,7 +16,7 @@
                 <button class="nav-link" [ngClass]="selectedTab == SubComponent.PaymentHistory ? 'active-tab' : ''" (click)="selectTab(SubComponent.PaymentHistory)">payments</button>
             </li>
             <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.Statistics}">
-                <button class="nav-link" [ngClass]="selectedTab == SubComponent.Statistics ? 'active-tab' : ''" (click)="selectTab(SubComponent.Statistics)">statistics</button>    
+                <button class="nav-link" [ngClass]="selectedTab == SubComponent.Statistics ? 'active-tab' : ''" (click)="selectTab(SubComponent.Statistics)">statistics</button>
             </li>
         </ul>
     </div>
