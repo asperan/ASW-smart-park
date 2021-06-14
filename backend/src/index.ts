@@ -7,6 +7,7 @@ import parkingRoutes from "./routes/parking-routes";
 import messageRoutes from "./routes/message-routes"
 import authRoutes from "./routes/auth-routes";
 import beaconRoutes from "./routes/beacon-routes"
+import reviewsRoutes from "./routes/reviews-routes"
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserInfoRoutes } from './routes/user-info-routes';
@@ -48,7 +49,11 @@ function configureRoutes() {
     app.use('/api/parking', parkingRoutes);
     app.use('/api/messages', messageRoutes)
     app.use('/api/auth', authRoutes);
+<<<<<<< HEAD
     app.use('/api/beacon', beaconRoutes);
+=======
+    app.use('/api/reviews', reviewsRoutes)
+>>>>>>> 211373982399b9c4795ea465406282f61e4d241f
     setSignupRoutes(app);
     setSigninRoutes(app);
     setUserInfoRoutes(app);

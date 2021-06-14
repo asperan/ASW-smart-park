@@ -1,0 +1,19 @@
+<div class="search-container">
+    <div class="input-group mb-3">
+        <input class="form-control vehicleSearch" type="text" (input)="onFilterChange($event)" placeholder="Search..."/>
+        <div class="input-group-append">
+            <button class="btn btn-success add-button"><fa-icon [icon]="faPlus" title="add vehicle" (click)="openAddVehicleForm()"></fa-icon></button>
+        </div>
+    </div>
+</div>
+
+<div class="error-message">
+    <p *ngIf="userVehicles.length === 0">No vehicles found :(</p>
+</div>
+
+<div class="results-container">
+    <p *ngIf="userVehicles.length > 0 && filteredVehicleList.length === 0">No vehicles found for the given query...</p>
+    <ul>
+        <li class="vehicleListElement" *ngFor="let vehicle of filteredVehicleList"><b>{{vehicle.name}}</b><button class="btn btn-danger remove-button"><fa-icon [icon]="faTrash" title="Remove vehicle"></fa-icon></button></li>
+    </ul>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserStatisticsService } from '../user-services/statistics.service';
+import { UserStatisticsService } from '../../user-services/statistics.service';
 
 type UserStatistic = {
   name: string,

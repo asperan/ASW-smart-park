@@ -5,7 +5,7 @@ import { TokenManagerService } from './access-token/token-manager';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
 
@@ -23,8 +23,7 @@ export class AppComponent {
         }
       });
   }
-
-
+  
   ngOnInit() {
     this.auth.isAuthenticated().subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;

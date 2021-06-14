@@ -16,7 +16,7 @@ export class ParkingDetailComponent implements OnInit {
   imageUrl: string | undefined;
 
   private cityName: string | undefined;
-  private parkingId: number | undefined;
+  parkingId: number | undefined;
 
   private weekdays: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
