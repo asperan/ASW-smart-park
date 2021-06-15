@@ -66,3 +66,14 @@ export function updateLastNotificationCheck(request: express.Request, response: 
       else { response.status(400).json({code: 1, message: "Failed to update the date."}); }
   }));
 }
+
+export function updateUserSubscription(request: express.Request, response: express.Response) {
+  checkAccessToken(request, response, (email: string) => {
+    if (request.body.subscription) {
+      userService.updateUserSubscription(email, request.body.subscription).then(ok => {
+        if (ok) { response.status(200).json({ code: 0, message: "Subscription updated." }); }
+        else { response.status(400).json({ code: 1, message: "Failed to update subscription" }); }
+      });
+    } else { response.status(400).json({ code: 1, message: "Subscription object not sent." }); }
+  });
+}
