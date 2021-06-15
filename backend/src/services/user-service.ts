@@ -46,3 +46,7 @@ export async function getUserStatistics(email: string): Promise<any> {
 export async function updateLastNotificationCheck(email: string, date: Date) {
   return userRepository.updateLastNotificationCheck(email, date);
 }
+
+export async function updateUserSubscription(email: string, subscriptionObject: any) {
+  return userRepository.setUserSubscription(email, subscriptionObject);
+}
