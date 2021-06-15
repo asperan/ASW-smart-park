@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ParkingSearchComponent } from './pages/parking-search/parking-search.component';
 import { AppComponent } from './app.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
 import { SignPageComponent } from './pages/sign-page/sign-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { NotificationPageComponent } from './notifications/notification-page/notification-page.component';
@@ -10,7 +11,7 @@ import { ContactFormComponent } from './pages/contact-form/contact-form/contact-
 import { AuthGuardService } from './access-token/token-guard';
 
 const routes: Routes = [
-  {path: "", component: AppComponent}, 
+  {path: "", component: HomepageComponent},
   {path: 'parking-search', component: ParkingSearchComponent, canActivate: [AuthGuardService]},
   {path: "signup", component: SignPageComponent, data: {isSignup: true}},
   {path: "signin", component: SignPageComponent, data: {isSignup: false}},

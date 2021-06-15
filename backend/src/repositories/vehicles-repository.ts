@@ -17,6 +17,15 @@ export async function unbindUserFromVehicle(vehicleId: string): Promise<boolean>
   return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId}, {$unset: {userEmail: ""}})).ok === 1;
 }
 
+export async function isVehicleBoundToUser(vehicleId: string, userEmail: string): Promise<boolean> {
+  const vehicle = await mongoClient.db.collection("vehicles").findOne({id: vehicleId});
+  if(vehicle) {
+    return vehicle.userEmail == userEmail;
+  } else {
+    return false;
+  }
+}
+
 export async function addParkingToVehicle(vehicleId: string, parkingId: string): Promise<boolean> {
   return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId}, {$set: {parkingId: parkingId}})).ok === 1;
 }

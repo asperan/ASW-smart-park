@@ -15,3 +15,10 @@ export function make400ErrorResponse(res: express.Response) {
         message: "Bad Request",
     });
 }
+
+export function make401ErrorResponse(res: express.Response) {
+    res.status(401);
+    res.json({
+        message: "Unathrorized",
+    });
+}

@@ -1,0 +1,22 @@
+.ratings {
+    margin-top   : 30%;
+    margin-bottom: 30%;
+}
+
+.product-rating {
+    font-size: 50px
+}
+
+.rating-text {
+    margin-top: 10px
+}
+
+.star-button {
+    border-style: none;
+    background-color: white;
+    color: gold
+}
+
+.star-button-hover:hover {
+    color: palevioletred
+}

@@ -1,7 +1,7 @@
 import { mongoClient } from "../services/mongo-client";
 
 export type CityEntity = {
-    name: String,
+    name: string,
     longitude: number,
     latitude: number,
     parkings: ParkingEntity[]
@@ -19,7 +19,7 @@ export type ParkingEntity = {
 }
 
 export type ParkingSpotEntity = {
-    uid: number,
+    uid: string,
     occupied: boolean,
     paidFor: boolean,
     longitude: number,
@@ -54,7 +54,7 @@ function formParkingEntity(res: any): ParkingEntity {
         occupancy: res.occupancy,
         longitude: Number(res.longitude),
         latitude: Number(res.latitude),
-        parkingSpots: res.parkingSpots.map((parkingSpot:any) => formParkingSpotEntity(parkingSpot)),
+        parkingSpots: res.parkingSpots.map((parkingSpot: any) => formParkingSpotEntity(parkingSpot)),
         detail: res.detail,
         pricing: formPricingEntity(res.pricing)
     }
@@ -86,10 +86,20 @@ export async function getAllCities(): Promise<CityEntity[]> {
 export async function suggestCityByPartialName(name: String): Promise<CityEntity[]> {
     const regExp = new RegExp("^" + name, "gi");
     const citiesCollection = mongoClient.db.collection("cities");
-    return citiesCollection.find({name: regExp}).toArray().then(res => res.map(r => formCityEntity(r)));
+    return citiesCollection.find({ name: regExp }).toArray().then(res => res.map(r => formCityEntity(r)));
 }
 
 export async function getCityByName(name: String): Promise<CityEntity> {
     const citiesCollection = mongoClient.db.collection("cities");
-    return citiesCollection.findOne({name: name.toLowerCase()}).then(res => formCityEntity(res));
+    return citiesCollection.findOne({ name: name.toLowerCase() }).then(res => formCityEntity(res));
 }
+
+export async function updateCityParkings(cityName: string, parkings: ParkingEntity[]) {
+    const citiesCollection = mongoClient.db.collection("cities");
+    return citiesCollection.updateOne({ "city": cityName }, {
+        $set: {
+            parkings: parkings
+        }
+    });
+}
+
