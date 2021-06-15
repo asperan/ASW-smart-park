@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "prestart": "ng build",
+    "start": "npx http-server dist/smart-parking/ -p 4200",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
