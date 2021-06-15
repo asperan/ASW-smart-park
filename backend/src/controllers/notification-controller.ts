@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import { checkAccessToken } from "../services/user-auth";
 import * as notificationService from "../services/notification-service";
 
