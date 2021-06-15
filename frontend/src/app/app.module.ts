@@ -29,6 +29,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
 import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,13 @@ import { StatisticsDetailComponent } from './pages/parking-detail/pills/statisti
     AppRoutingModule,
     FontAwesomeModule,
     AppRoutingModule,
-    NgStorageModule
+    NgStorageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: true,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     MarkerService,
