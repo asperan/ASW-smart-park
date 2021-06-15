@@ -37,6 +37,10 @@ db.createCollection("users", {
               }
             }
           }
+        },
+        userSubscription : {
+          bsonType: "object",
+          description: "The subscription object for push notifications. It is required for push notifications to work."
         }
       }
     }
