@@ -12,6 +12,7 @@ import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserRoutes } from './routes/user-routes';
 import { setNotificationRoutes } from './routes/notification-routes';
+import { configureWebpush } from "./services/notification-service";
 
 const app = express();
 
@@ -19,6 +20,7 @@ main();
 
 function main() {
     initConfig();
+    configureWebpush();
     connectToMongoDB();
     configureMiddleware();
     configureRoutes();
