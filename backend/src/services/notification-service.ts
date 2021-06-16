@@ -18,6 +18,5 @@ export async function countUnreadNotifications(userEmail: string) {
 
 export async function sendNotification(userEmail: string, payload: any) {
   const userSubscription = await userRepository.getUserSubscription(userEmail);
-  console.log(userSubscription.userSubscription);
   return webpush.sendNotification(userSubscription.userSubscription, JSON.stringify(payload));
 }
