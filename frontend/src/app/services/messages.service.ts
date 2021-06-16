@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TokenManagerService } from '../access-token/token-manager';
-import { environment } from '../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
