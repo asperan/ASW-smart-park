@@ -7,7 +7,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node build/index.js",
-    "test": "mocha --reporter spec"
+    "test": "mocha -r ts-node/register 'src/test/**/*.ts' --recursive --reporter spec"
   },
   "author": "",
   "license": "ISC",

@@ -1,4 +1,4 @@
-import * as citiesService from "./city-service";
+import { citiesService } from "./city-service";
 import * as vehicleService from "./vehicle-service"
 
 
