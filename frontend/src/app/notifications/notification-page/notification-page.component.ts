@@ -14,6 +14,9 @@ export class NotificationPageComponent {
   }
 
   ngOnInit() {
-    this.notificationService.getAllUserNotifications().then((data: any) => this.userNotifications = data.notifications);
+    this.notificationService.getAllUserNotifications().then((data: any) => {
+      this.userNotifications = data.notifications;
+      this.notificationService.updateUserLastNotificationCheck();
+    });
   }
 }
