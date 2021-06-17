@@ -21,3 +21,18 @@ export async function sendNotification(userEmail: string, payload: any) {
   const userSubscription = await userRepository.getUserSubscription(userEmail);
   return webpush.sendNotification(userSubscription.userSubscription, JSON.stringify(payload));
 }
+
+export function buildGotoNotificationPayload(message: string, url: string, parameters: any) {
+  return {
+    "notification": {
+      "title": "Smart-Parking",
+      "body": message,
+      "vibrate": [100, 50, 100],
+      "data": {
+        "type": "goto",
+        "url": url,
+        "parameters": parameters,
+      },
+    }
+  };
+}
