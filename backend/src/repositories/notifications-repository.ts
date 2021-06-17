@@ -13,3 +13,13 @@ export async function countUnreadNotifications(userEmail: string, lastCheckDate:
   queryObject.date = { $gt: lastCheckDate };
   return await mongoClient.db.collection("notifications").countDocuments(queryObject);
 }
+
+export async function insertSystemNotification(userEmail: string, date: Date, message: string): Promise<boolean> {
+  const notificationObject = {
+    date: date,
+    addressees: [userEmail],
+    message: message,
+    senderReference: "System",
+  };
+  return (await mongoClient.db.collection("notifications").insertOne(notificationObject)).result.ok === 1;
+}
