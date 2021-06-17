@@ -16,6 +16,7 @@ export class NotificationIconComponent {
     this.notificationCount = 0;
     this.updateNotificationCount = this.updateNotificationCount.bind(this);
     this.updateNotificationCount();
+    this.notificationService.registerNotificationIcon(this);
   }
 
   ngOnInit() {
@@ -27,7 +28,7 @@ export class NotificationIconComponent {
     clearInterval(this.updateInterval);
   }
 
-  private updateNotificationCount() {
+  updateNotificationCount() {
     if (this.tokenManagerService.getToken().length > 0) {
       this.notificationService.getUnreadNotificationCount().then((data: any) => this.notificationCount = data.count);
     }
