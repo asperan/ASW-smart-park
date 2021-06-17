@@ -18,8 +18,8 @@ export async function unbindUserFromVehicle(vehicleId: string): Promise<boolean>
 }
 
 export async function isVehicleLinkedToUser(vehicleId: string, userEmail: string): Promise<boolean> {
-  const userVehicles = await userRepository.getUserLinkedVehicles(userEmail);
-  if(userVehicles) {
+  const userVehicles = (await userRepository.getUserLinkedVehicles(userEmail)).linkedVehicles;
+  if(userVehicles && userVehicles.length > 0) {
     return userVehicles.map((veh:any) => veh.vehicleId).includes(vehicleId);
   } else {
     return false;
