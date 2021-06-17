@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenManagerService } from 'src/app/access-token/token-manager';
 import { BasicInfoService } from './user-services/basic-info.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class UserPageComponent implements OnInit {
 
   userEmail: string;
 
-  constructor(private basicInfoService: BasicInfoService, private router: Router) {
+  constructor(private basicInfoService: BasicInfoService, private router: Router, private tokenManagerService: TokenManagerService) {
     this.selectedTab = SubComponent.MyVehicles;
     this.userEmail = "";
   }
@@ -29,6 +30,11 @@ export class UserPageComponent implements OnInit {
 
   onFailedRequest(reason: any): void {
     alert("An authentication error occurred while retrieving your informations: " + reason.error.message + "\nYou will be redirected to the sign in page.");
+    this.router.navigate(['signin']);
+  }
+
+  onLogout(): void {
+    this.tokenManagerService.unsetToken();
     this.router.navigate(['signin']);
   }
 }

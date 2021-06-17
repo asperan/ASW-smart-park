@@ -10,14 +10,20 @@ import { environment } from 'src/environments/environment';
 })
 export class TokenManagerService {
 
+  private tokenKeyString = "auth-token";
+
   constructor(private http: HttpClient) { }
 
   setToken(newToken: string): void {
-    sessionStorage.setItem("auth-token", newToken);
+    sessionStorage.setItem(this.tokenKeyString, newToken);
+  }
+
+  unsetToken(): void {
+    sessionStorage.removeItem(this.tokenKeyString);
   }
 
   getToken(): string {
-    const token = sessionStorage.getItem("auth-token");
+    const token = sessionStorage.getItem(this.tokenKeyString);
     if (token) {
       return token;
     } else {
@@ -26,13 +32,17 @@ export class TokenManagerService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    const token = sessionStorage.getItem("auth-token");
-    return this.isTokenValidServerSide(token).pipe(map(res => {
-      return res.isValid;
-    }));
+    const token = sessionStorage.getItem(this.tokenKeyString);
+    if (token) {
+      return this.isTokenValidServerSide(token).pipe(map(res => {
+        return res.isValid;
+      }));
+    } else {
+      return new Observable(subscriber => subscriber.next(false));
+    }
   }
 
-  isTokenValidServerSide(token: string | null): Observable<TokenResponse> {
+  isTokenValidServerSide(token: string): Observable<TokenResponse> {
     const url = environment.baseUrl + "/auth/check";
     const headers = new HttpHeaders({
       "skip-token": "true"
