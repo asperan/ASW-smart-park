@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParkingSearchService {
 
-  private baseUrl = "http://localhost:3000/api";
-  private citiesUrl = this.baseUrl + "/city";
-  private parkingsUrl = this.baseUrl + "/parking";
+
+  private citiesUrl = environment.baseUrl + "/city";
+  private parkingsUrl = environment.baseUrl + "/parking";
 
   constructor(private http: HttpClient) { }
 

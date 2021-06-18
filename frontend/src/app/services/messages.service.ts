@@ -2,14 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TokenManagerService } from '../access-token/token-manager';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
 
-  private baseUrl = "http://localhost:3000/api";
-  private messagesUrl = this.baseUrl + "/messages";
+
+  private messagesUrl = environment.baseUrl + "/messages";
 
   constructor(private http: HttpClient) {
   }

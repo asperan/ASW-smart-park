@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: "root",
@@ -41,7 +43,7 @@ export class TokenManagerService {
   }
 
   isTokenValidServerSide(token: string): Observable<TokenResponse> {
-    const url = "http://localhost:3000/api/auth/check";
+    const url = environment.baseUrl + "/auth/check";
     const headers = new HttpHeaders({
       "skip-token": "true"
     });
