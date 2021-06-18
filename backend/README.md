@@ -33,6 +33,7 @@ All queries about a user private information requires their access token, which 
 * `/api/user/info-vehicles`: `{vehicleId: <vehicleId>, vehicleName: <vehicleName>}`
 * `/api/user/info-payments`: `{parkingId: <parkingId>, date: <date-as-unix-timestamp>, amount: <amount-in-cents>}`
 * `/api/user/update-last-notification-check`: `{ date: <date-as-unix-timestamp>}`
+* DEBUG-TESTING: `/api/notifications`: `{ userEmail: <existing-user-email> }` (Change payload in file `src/controllers/notification-controller.ts`)
 
 #### PUT
 * `/api/user/info-payments`: `{parkingId: <parkingId>, date: <date-as-unix-timestamp>}`
