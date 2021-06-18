@@ -36,3 +36,17 @@ export function buildGotoNotificationPayload(message: string, url: string, param
     }
   };
 }
+
+export function buildRemainderNotificationPayload(message: string, parameters: any) {
+  return {
+    "notification": {
+      "title": "Smart-Parking",
+      "body": message,
+      "vibrate": [100, 50, 100],
+      "data": {
+        "type": "remainder",
+        "parameters": parameters,
+      },
+    }
+  };
+}
