@@ -41,7 +41,7 @@ export class ParkingDetailComponent implements OnInit {
           this.parkingName = parking.detail.name;
           this.parkingAddress = parking.detail.address;
           this.parkingType = parking.detail.type;
-          this.parkingsAvailable = parking.capacity - parking.occupancy;
+          this.parkingsAvailable = parking.parkingSpots.length - parking.parkingSpots.filter(p => p.occupied).length;
           this.pricings = this.parsePricings(parking);
           if(parking.detail.imageUrl) {
             this.imageUrl = parking.detail.imageUrl;

@@ -57,8 +57,6 @@ export type City = {
 
 export type Parking = {
   id: number,
-  capacity: number,
-  occupancy: number,
   longitude: number,
   latitude: number,
   parkingSpots: ParkingSpot[]
