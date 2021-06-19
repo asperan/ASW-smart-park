@@ -1,7 +1,7 @@
 import express from "express";
-import { isJwtCorrect } from "../services/user-auth";
 import * as userService from "../services/user-service";
 import * as paymentService from "../services/payment-service";
+import { checkAccessToken } from "../services/user-auth";
 
 export function getBasicUserInfo(request: express.Request, response: express.Response) {
   checkAccessToken(request, response,
@@ -58,16 +58,22 @@ export function getUserStatistics(request: express.Request, response: express.Re
     (email: string) => userService.getUserStatistics(email).then(data => response.status(200).json(data)));
 }
 
-function checkAccessToken(request: express.Request, response: express.Response, callback: (email: string) => any) {
-  const accessToken = request.header("x-access-token");
-  if (accessToken) {
-    const result = isJwtCorrect(accessToken);
-    if (result.ok && result.email) {
-      callback(result.email);
-    } else {
-      response.status(400).json({ code: 1, message: "Bad JWT." });
-    }
-  } else {
-    response.status(400).json({ code: 2, message: "JWT not sent." });
-  }
+export function updateLastNotificationCheck(request: express.Request, response: express.Response) {
+  checkAccessToken(request, response, 
+    (email: string) => userService.updateLastNotificationCheck(email, new Date(request.body.date))
+    .then(ok => {
+      if (ok) { response.status(200).json({code: 0, message: "Date updated."}); }
+      else { response.status(400).json({code: 1, message: "Failed to update the date."}); }
+  }));
+}
+
+export function updateUserSubscription(request: express.Request, response: express.Response) {
+  checkAccessToken(request, response, (email: string) => {
+    if (request.body.subscription) {
+      userService.updateUserSubscription(email, request.body.subscription).then(ok => {
+        if (ok) { response.status(200).json({ code: 0, message: "Subscription updated." }); }
+        else { response.status(400).json({ code: 1, message: "Failed to update subscription" }); }
+      });
+    } else { response.status(400).json({ code: 1, message: "Subscription object not sent." }); }
+  });
 }
