@@ -9,6 +9,10 @@ export async function isVehiclePresent(vehicleId: string) {
   return vehicleRepository.isVehiclePresent(vehicleId);
 }
 
+export async function getVehicleLinkedToUser(userEmail: string) {
+  return vehicleRepository.getVehicleLinkedToUser(userEmail);
+}
+
 export async function bindUserToVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
   return vehicleRepository.bindUserToVehicle(vehicleId, userEmail);
 }
