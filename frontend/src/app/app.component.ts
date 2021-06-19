@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TokenManagerService } from './access-token/token-manager';
+import { AuthenticationListenerService } from './services/authentication-listener-service.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
 
   isAuthenticated = false;
 
-  constructor(private router: Router, private auth: TokenManagerService) {
+  constructor(private router: Router, private authListener: AuthenticationListenerService) {
     this.currentRoute = router.url;
     router.events
       .subscribe((event: any) => {
@@ -25,7 +26,7 @@ export class AppComponent {
   }
   
   ngOnInit() {
-    this.auth.isAuthenticated().subscribe(isAuthenticated => {
+    this.authListener.sharedIsAuthenticated.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
     });
   }
