@@ -9,6 +9,10 @@ export async function isVehiclePresent(vehicleId: string): Promise<boolean> {
   return (await mongoClient.db.collection("vehicles").countDocuments({id: vehicleId})) === 1;
 }
 
+export async function getVehicleLinkedToUser(userEmail: string): Promise<any> {
+  return await mongoClient.db.collection("vehicles").findOne({userEmail: userEmail});
+}
+
 export async function bindUserToVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
   return (await mongoClient.db.collection("vehicles").updateMany({ userEmail: userEmail }, { $unset: { userEmail: "" } })).result.ok === 1 &&
     (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId }, { $set: { userEmail: userEmail } })).ok === 1;
