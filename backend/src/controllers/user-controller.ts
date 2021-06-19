@@ -1,6 +1,7 @@
 import express from "express";
 import * as userService from "../services/user-service";
 import * as paymentService from "../services/payment-service";
+import * as vehicleService from "../services/vehicle-service";
 
 export function getBasicUserInfo(request: express.Request, response: express.Response) {
   response.status(200).json({ code: 0, email: request.userEmail });
@@ -83,5 +84,22 @@ export function updateUserSubscription(request: express.Request, response: expre
         else { response.status(400).json({ code: 1, message: "Failed to update subscription" }); }
       });
     } else { response.status(400).json({ code: 1, message: "Subscription object not sent." }); }
+  }
+}
+
+export function getVehicleLinkedToUser(request: express.Request, response: express.Response) {
+  if (request.userEmail) {
+    vehicleService.getVehicleLinkedToUser(request.userEmail).then(vehicle => {
+      response.status(200).json({ code: 0, vehicleId: vehicle ? vehicle.id : "" });
+    });
+  }
+}
+
+export function linkUserToVehicle(request: express.Request, response: express.Response) {
+  if (request.userEmail) {
+    vehicleService.bindUserToVehicle(request.body.vehicleId, request.userEmail).then(ok => {
+      if (ok) { response.status(200).json({ code: 0, message: "User and vehicle linked successfully." }); }
+      else { response.status(400).json({ code: 1, message: "Failed to link user and vehicle." }); }
+    });
   }
 }
