@@ -10,7 +10,8 @@ export async function isVehiclePresent(vehicleId: string): Promise<boolean> {
 }
 
 export async function bindUserToVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
-  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId}, {$set: {userEmail: userEmail}})).ok === 1;
+  return (await mongoClient.db.collection("vehicles").updateMany({ userEmail: userEmail }, { $unset: { userEmail: "" } })).result.ok === 1 &&
+    (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId }, { $set: { userEmail: userEmail } })).ok === 1;
 }
 
 export async function unbindUserFromVehicle(vehicleId: string): Promise<boolean> {
