@@ -16,4 +16,13 @@ export class VehicleInfoService {
   async linkUserToVehicle(vehicleId: string, vehicleName: string): Promise<any> {
     return this.http.post(environment.baseUrl + "/user/info-vehicles", {vehicleId: vehicleId, vehicleName: vehicleName}, {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
   }
+
+  async getLinkedVehicle(): Promise<any> {
+    return this.http.get(environment.baseUrl + "/user/linked-vehicle", {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
+  }
+
+  async bindVehicleToUser(vehicleId: string): Promise<any> {
+    console.log(vehicleId);
+    return this.http.post(environment.baseUrl + "/user/linked-vehicle", {vehicleId: vehicleId}, {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
+  }
 }
