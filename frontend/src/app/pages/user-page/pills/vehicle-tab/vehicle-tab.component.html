@@ -2,10 +2,19 @@
     <div class="input-group mb-3">
         <input class="form-control vehicleSearch" type="text" (input)="onFilterChange($event)" placeholder="Search..."/>
         <div class="input-group-append">
-            <button class="btn btn-success add-button"><fa-icon [icon]="faPlus" title="add vehicle" (click)="openAddVehicleForm()"></fa-icon></button>
+            <button class="btn btn-success add-button" (click)="openAddVehicleForm()"><fa-icon [icon]="faPlus" title="add vehicle"></fa-icon></button>
         </div>
     </div>
 </div>
+
+<ng-template [ngIf]="addVehicleFormVisible">
+    <form #vehiclelink="ngForm" (ngSubmit)="onAddVehicle(vehiclelink.value)" class="form-control">
+        <zxing-scanner *ngIf="qrcodeScannerVisible" (scanSuccess)="capturedQr($event)"></zxing-scanner>
+        <label class="form-label">Vehicle id <input class="form-control" type="text" name="vehicleId" [value]="vehicleFormId" ngModel disabled/><fa-icon [icon]="faCamera" (click)="toggleQrScanner()"></fa-icon></label>
+        <label class="form-label">Vehicle name <input class="form-control" type="text" name="vehicleName" ngModel/></label>
+        <input class="form-control" type="submit" value="Link vehicle" />
+    </form>
+</ng-template>
 
 <div class="error-message">
     <p *ngIf="userVehicles.length === 0">No vehicles found :(</p>
