@@ -1,23 +1,19 @@
 import express from "express";
-import { checkAccessToken } from "../services/user-auth";
 import * as notificationService from "../services/notification-service";
 
 export function getUserNotificationSummary(request: express.Request, response: express.Response) {
-  checkAccessToken(request, response, (email: string) => {
+  if (request.userEmail) {
     const limit = 20;
-    notificationService.getUserNotifications(email, limit).then(values => response.status(200).json({code: 0, notifications: values}));
-  });
+    notificationService.getUserNotifications(request.userEmail, limit).then(values => response.status(200).json({code: 0, notifications: values}));
+  }
 }
 
 export function getAllUserNotifications(request: express.Request, response: express.Response) {
-  checkAccessToken(request, response, 
-    (email: string) => notificationService.getUserNotifications(email).then(values => response.status(200).json({code: 0, notifications: values})));
+  if (request.userEmail) notificationService.getUserNotifications(request.userEmail).then(values => response.status(200).json({code: 0, notifications: values}));
 }
 
 export function getUserUnreadNotifications(request: express.Request, response: express.Response) {
-  checkAccessToken(request, response, (email: string) => {
-    notificationService.countUnreadNotifications(email).then(num => response.status(200).json({code: 0, count: num}));
-  });
+  if (request.userEmail) notificationService.countUnreadNotifications(request.userEmail).then(num => response.status(200).json({code: 0, count: num}));
 }
 
 // TODO: remove function, it is used only for debugging purpose
