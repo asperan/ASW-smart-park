@@ -42,6 +42,10 @@ export async function linkVehicle(email: string, vehicleId: string, vehicleName:
   return (await mongoClient.db.collection("users").findOneAndUpdate({email: email}, {$push: {linkedVehicles: {vehicleId: vehicleId, name: vehicleName}}})).ok === 1;
 }
 
+export async function unlinkVehicle(email: string, vehicleId: string): Promise<boolean> {
+  return (await mongoClient.db.collection("users").findOneAndUpdate({ email: email }, { $pull: { "liknedVehicles.vehicleId": vehicleId } })).ok === 1;
+}
+
 export async function getUserSubscription(email: string): Promise<any> {
   return mongoClient.db.collection("users").findOne({email: email}, {projection: {userSubscription: 1, _id: 0}});
 }
