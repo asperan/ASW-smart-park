@@ -30,6 +30,7 @@ import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
 import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ZXingScannerModule } from "@mirror520/ngx-scanner";
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    ZXingScannerModule,
   ],
   providers: [
     MarkerService,
@@ -78,7 +80,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }],
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
