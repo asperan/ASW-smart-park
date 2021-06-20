@@ -29,6 +29,7 @@ routes.post(
             make400ErrorResponse(res);
         }
       } catch (err) {
+        console.log(err);
         make500ErrorResponse(res, err);
       }
     }
@@ -51,7 +52,7 @@ routes.get(
             make400ErrorResponse(res);
         }
       } catch (err) {
-        if(err == "No review found") {
+        if(err.message == "No review found") {
           res.json({isPresent: false});
         } else {
           make500ErrorResponse(res, err);
@@ -76,7 +77,7 @@ routes.get(
             make400ErrorResponse(res);
         }
       } catch (err) {
-        if(err == "No reviews found") {
+        if(err.message == "No review found") {
           res.json({isPresent: false});
         } else {
           make500ErrorResponse(res, err);
