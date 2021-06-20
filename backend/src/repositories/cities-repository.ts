@@ -40,24 +40,28 @@ export type ParkingPricingEntity = {
 
 export class CitiesRepository {
 
-    constructor(citiesCollection: Collection<any>) {
+    constructor() {
 
     }
 
     async getAllCities(): Promise<CityEntity[]> {
+        const citiesCollection = mongoClient.db.collection("cities");
         return citiesCollection.find().toArray().then(res => res.map(r => this.formCityEntity(r)));
     }
     
     async suggestCityByPartialName(name: String): Promise<CityEntity[]> {
+        const citiesCollection = mongoClient.db.collection("cities");
         const regExp = new RegExp("^" + name, "gi");
         return citiesCollection.find({ name: regExp }).toArray().then(res => res.map(r => this.formCityEntity(r)));
     }
     
     async getCityByName(name: String): Promise<CityEntity> {
+        const citiesCollection = mongoClient.db.collection("cities");
         return citiesCollection.findOne({ name: name.toLowerCase() }).then(res => this.formCityEntity(res));
     }
     
     async updateCityParkings(cityName: string, parkings: ParkingEntity[]) {
+        const citiesCollection = mongoClient.db.collection("cities");
         return citiesCollection.updateOne({ "city": cityName }, {
             $set: {
                 parkings: parkings
@@ -105,5 +109,4 @@ export class CitiesRepository {
 
 }
 
-const citiesCollection = mongoClient?.db.collection("cities");
-export const citiesRepository = new CitiesRepository(citiesCollection);
+export const citiesRepository = new CitiesRepository();

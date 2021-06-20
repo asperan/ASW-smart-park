@@ -14,6 +14,7 @@ routes.get(
       const cities = await cityController.suggestCity(partialName);
       res.json(cities);
     } catch (err) {
+      console.log(err);
       make500ErrorResponse(res, err);
     }
   }
@@ -27,6 +28,7 @@ routes.get(
       const cities = await cityController.allCities();
       res.json(cities);
     } catch (err) {
+      console.log(err);
       make500ErrorResponse(res, err);
     }
   }
