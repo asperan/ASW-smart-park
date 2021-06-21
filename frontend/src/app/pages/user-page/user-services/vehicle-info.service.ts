@@ -17,6 +17,10 @@ export class VehicleInfoService {
     return this.http.post(environment.baseUrl + "/user/info-vehicles", {vehicleId: vehicleId, vehicleName: vehicleName}, {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
   }
 
+  async removeVehicleForUser(vehicleId: string): Promise<any> {
+    return this.http.delete(environment.baseUrl + "/user/info-vehicles", {headers: {"x-access-token": this.tokenManagerService.getToken()}, params: {vehicleId: vehicleId}}).toPromise();
+  }
+
   async getLinkedVehicle(): Promise<any> {
     return this.http.get(environment.baseUrl + "/user/linked-vehicle", {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
   }
