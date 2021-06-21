@@ -14,7 +14,8 @@ export function setUserRoutes(app: express.Application): void {
      .put(resolvePendingPayment);
   app.route("/api/user/linked-vehicle").all(validateAccessToken)
      .get(getVehicleLinkedToUser)
-     .post(linkUserToVehicle);
+     .post(linkUserToVehicle)
+     .delete(unlinkUserFromVehicle);
   app.get("/api/user/info-stats", validateAccessToken, getUserStatistics);
   app.post("/api/user/update-last-notification-check", validateAccessToken, updateLastNotificationCheck);
   app.post("/api/user/subscription", validateAccessToken, updateUserSubscription);
