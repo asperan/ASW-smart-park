@@ -1,5 +1,5 @@
 import express from "express";
-import { addUserPayment, deleteUserVehicle, getBasicUserInfo, getUserPaymentsInfo, getUserStatistics, getVehicleLinkedToUser, getVehicleUserInfo, linkUserToVehicle, postUserVehicle, resolvePendingPayment, updateLastNotificationCheck, updateUserSubscription } from "../controllers/user-controller";
+import { addUserPayment, deleteUserVehicle, getBasicUserInfo, getUserPaymentsInfo, getUserStatistics, getVehicleLinkedToUser, getVehicleUserInfo, linkUserToVehicle, postUserVehicle, resolvePendingPayment, unlinkUserFromVehicle, updateLastNotificationCheck, updateUserSubscription } from "../controllers/user-controller";
 import { validateAccessToken } from "../middleware/token-auth";
 
 export function setUserRoutes(app: express.Application): void {
