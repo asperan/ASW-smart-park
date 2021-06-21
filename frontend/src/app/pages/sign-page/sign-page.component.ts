@@ -6,6 +6,7 @@ import UserCredentials from './sign-services/user-credentials';
 import * as SignErrors from "./sign-errors";
 import { TokenManagerService } from "../../access-token/token-manager";
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { NotificationService } from "../../notifications/notification.service";
 
 @Component({
   selector: 'app-sign-page',
@@ -25,7 +26,8 @@ export class SignPageComponent implements OnInit {
     private router: Router, 
     private signupService: SignupService,
     private signinService: SigninService,
-    private tokenManagerService: TokenManagerService) { 
+    private tokenManagerService: TokenManagerService,
+    private notificationService: NotificationService) { 
       this.signError = SignErrors.None.None;
       this.errorMessage = SignErrors.errorMessages[this.signError];
     }
@@ -55,7 +57,14 @@ export class SignPageComponent implements OnInit {
     const router = this.router;
     this.signinService.requestSignin(userCredentials).then(data => {
       this.tokenManagerService.setToken(data.access_token);
-      router.navigate(["parking-search"]);
+      this.notificationService.subcribeToPushNotification().then((response: any) => {
+        if(response.code === 0) {
+          router.navigate(["userpage"]); 
+        } else {
+          this.tokenManagerService.setToken("");
+          this.onRequestError(response);
+        }
+      });
     }, reason => this.onRequestError(reason.error));
   }
 

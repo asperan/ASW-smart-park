@@ -10,7 +10,9 @@ import beaconRoutes from "./routes/beacon-routes";
 import reviewsRoutes from "./routes/reviews-routes";
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
-import { setUserInfoRoutes } from './routes/user-info-routes';
+import { setUserRoutes } from './routes/user-routes';
+import { setNotificationRoutes } from './routes/notification-routes';
+import { configureWebpush } from "./services/notification-service";
 
 const app = express();
 
@@ -18,6 +20,7 @@ main();
 
 function main() {
     initConfig();
+    configureWebpush();
     connectToMongoDB();
     configureMiddleware();
     configureRoutes();
@@ -53,7 +56,8 @@ function configureRoutes() {
     app.use('/api/reviews', reviewsRoutes)
     setSignupRoutes(app);
     setSigninRoutes(app);
-    setUserInfoRoutes(app);
+    setUserRoutes(app);
+    setNotificationRoutes(app);
 }
 
 function startServer() {

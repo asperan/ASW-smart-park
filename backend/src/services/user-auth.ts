@@ -27,3 +27,17 @@ export function isJwtCorrect(token: string): { ok: boolean, email?: string } {
     return { ok: false };
   }
 }
+
+export function checkAccessToken(request: express.Request, response: express.Response, callback: (email: string) => any) {
+  const accessToken = request.header("x-access-token");
+  if (accessToken) {
+    const result = isJwtCorrect(accessToken);
+    if (result.ok && result.email) {
+      callback(result.email);
+    } else {
+      response.status(400).json({ code: 1, message: "Bad JWT." });
+    }
+  } else {
+    response.status(400).json({ code: 2, message: "JWT not sent." });
+  }
+}
