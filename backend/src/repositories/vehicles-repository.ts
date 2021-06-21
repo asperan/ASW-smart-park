@@ -18,8 +18,8 @@ export async function bindUserToVehicle(vehicleId: string, userEmail: string): P
     (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId }, { $set: { userEmail: userEmail } })).ok === 1;
 }
 
-export async function unbindUserFromVehicle(vehicleId: string): Promise<boolean> {
-  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId}, {$unset: {userEmail: ""}})).ok === 1;
+export async function unbindUserFromVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
+  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId, userEmail: userEmail}, {$unset: {userEmail: ""}})).ok === 1;
 }
 
 export async function isVehicleBoundToUser(vehicleId: string, userEmail: string): Promise<boolean> {
