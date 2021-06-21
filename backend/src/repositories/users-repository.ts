@@ -43,7 +43,7 @@ export async function linkVehicle(email: string, vehicleId: string, vehicleName:
 }
 
 export async function removeUserVehicle(email: string, vehicleId: string): Promise<boolean> {
-  return (await mongoClient.db.collection("users").findOneAndUpdate({ email: email }, { $pull: { "liknedVehicles.vehicleId": vehicleId } })).ok === 1;
+  return (await mongoClient.db.collection("users").findOneAndUpdate({ email: email }, { $pull: { linkedVehicles: {vehicleId: vehicleId} } })).ok === 1;
 }
 
 export async function getUserSubscription(email: string): Promise<any> {
