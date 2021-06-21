@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { SwPush } from '@angular/service-worker';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
@@ -8,11 +9,17 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
         AppComponent
       ],
+      providers: [
+        {
+          provide: SwPush,
+          useValue: new SwPush({isEnabled: false} as any)
+        }
+      ]
     }).compileComponents();
   });
 
