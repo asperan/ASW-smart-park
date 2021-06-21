@@ -6,8 +6,8 @@ import cityRoutes from "./routes/city-routes";
 import parkingRoutes from "./routes/parking-routes";
 import messageRoutes from "./routes/message-routes"
 import authRoutes from "./routes/auth-routes";
-import beaconRoutes from "./routes/beacon-routes"
-import reviewsRoutes from "./routes/reviews-routes"
+import beaconRoutes from "./routes/beacon-routes";
+import reviewsRoutes from "./routes/reviews-routes";
 import { setSignupRoutes } from "./routes/signup-routes";
 import { setSigninRoutes } from './routes/signin-routes';
 import { setUserInfoRoutes } from './routes/user-info-routes';
