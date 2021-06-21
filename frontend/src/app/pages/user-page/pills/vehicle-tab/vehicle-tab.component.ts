@@ -56,7 +56,7 @@ export class VehicleTabComponent implements OnInit {
   }
 
   onAddVehicle(data: any) {
-    this.vehicleInfoService.linkUserToVehicle(this.vehicleFormId, data.vehicleName).then(_value => {
+    this.vehicleInfoService.addVehicleForUser(this.vehicleFormId, data.vehicleName).then(_value => {
       this.updateVehicleList();
     }).finally(() => {
       this.addVehicleFormVisible = false;
