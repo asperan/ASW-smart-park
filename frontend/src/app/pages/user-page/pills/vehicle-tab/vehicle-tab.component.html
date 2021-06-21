@@ -23,6 +23,11 @@
 <div class="results-container">
     <p *ngIf="userVehicles.length > 0 && filteredVehicleList.length === 0">No vehicles found for the given query...</p>
     <ul>
-        <li class="vehicleListElement" *ngFor="let vehicle of filteredVehicleList"><b (click)="linkToVehicle(vehicle.vehicleId)">{{vehicle.name}}</b><fa-icon *ngIf="vehicle.vehicleId === linkedVehicleId" [icon]="faLink"></fa-icon><button class="btn btn-danger remove-button"><fa-icon [icon]="faTrash" title="Remove vehicle"></fa-icon></button></li>
+        <li class="vehicleListElement" *ngFor="let vehicle of filteredVehicleList">
+            <b (click)="toggleVehicleLink(vehicle.vehicleId)">{{vehicle.name}}</b><fa-icon *ngIf="vehicle.vehicleId === linkedVehicleId" [icon]="faLink"></fa-icon>
+            <button class="btn btn-danger remove-button">
+                <fa-icon [icon]="faTrash" title="Remove vehicle"></fa-icon>
+            </button>
+        </li>
     </ul>
 </div>
