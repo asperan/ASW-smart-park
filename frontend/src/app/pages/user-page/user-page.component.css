@@ -58,4 +58,5 @@ button.nav-link {
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
+  float: right;
 }
