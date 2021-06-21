@@ -103,3 +103,12 @@ export function linkUserToVehicle(request: express.Request, response: express.Re
     });
   }
 }
+
+export function unlinkUserFromVehicle(request: express.Request, response: express.Response) {
+  if (request.userEmail && request.query.vehicleId) {
+    vehicleService.unbindUserFromVehicle(request.query.vehicleId as string, request.userEmail).then(ok => {
+      if (ok) { response.status(200).json({ code: 0, message: "User and vehicle unlinked successfully." }); }
+      else { response.status(400).json({ code: 1, message: "Failed to unlink user and vehicle." }); }
+    });
+  }
+}
