@@ -27,6 +27,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
 import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
+import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { StatisticsDetailComponent } from './pages/parking-detail/pills/statisti
     ContactFormComponent,
     StatisticsDetailComponent,
     HomepageComponent,
+    PaymentPageComponent,
   ],
   imports: [
     BrowserModule,

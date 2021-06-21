@@ -1,0 +1,34 @@
+.title {
+    text-align: center;
+    width: 100%;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 0px 0px 2px 0px;
+}
+
+.date-container {
+    text-align: center;
+    margin-top: 40%;
+    font-size: xx-large;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 0px 0px 2px 0px;
+}
+
+.time-container {
+    margin-top: 40%;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 0px 0px 2px 0px;
+}
+
+.vehicle-data {
+    margin-top: 40%;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 0px 0px 2px 0px;
+}
+
+.circle-button {
+    border-radius: 50%;
+}
