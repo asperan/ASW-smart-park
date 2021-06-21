@@ -2,12 +2,20 @@
   display: block;
 }
 
-.vehicleListElement {
-  margin: 10px;
+/* .vehicleListElement {
+
+} */
+
+.vehicleElementContainer {
+  display: flex;
 }
 
-.results-container {
-  margin-left: 10%;
+/* .results-container {
+
+} */
+
+.result-container > ul {
+  padding-left: 1rem;
 }
 
 .error-message {
@@ -15,6 +23,17 @@
   margin-top: 10%;
 }
 
-.remove-button {
-  margin-left: 40%;
+.vehicle-name, .vehicle-link-icon {
+  margin-top: auto;
+  margin-bottom: auto;
 }
+
+.remove-button {
+  margin-left: auto;
+}
+
+.vehicle-link-icon {
+  margin-left: 1rem;
+}
+
+/* TODO: inline camera icon */
