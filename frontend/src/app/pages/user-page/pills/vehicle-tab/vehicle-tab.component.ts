@@ -64,12 +64,21 @@ export class VehicleTabComponent implements OnInit {
     });
   }
 
-  linkToVehicle(vehicleId: string) {
+  toggleVehicleLink(vehicleId: string) {
+    if (vehicleId === this.linkedVehicleId) { 
+      this.unlinkVehicle(vehicleId); 
+    } else { 
+      this.linkToVehicle(vehicleId); 
+    }
+  }
+
+  private linkToVehicle(vehicleId: string) {
     this.vehicleInfoService.bindVehicleToUser(vehicleId).then(_result => this.updateVehicleList());
   }
 
-  // TODO:
-  // unlinkVehicle(vehicleId: string) {}
+  private unlinkVehicle(vehicleId: string) {
+    this.vehicleInfoService.unbindVehicleFromUser(vehicleId).then(_result => this.updateVehicleList());
+  }
 
   private updateVehicleList() {
     this.vehicleInfoService.requestVehicleInfos().then(data => {
