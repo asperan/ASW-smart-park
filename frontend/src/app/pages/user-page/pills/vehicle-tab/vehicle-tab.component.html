@@ -12,8 +12,8 @@
 <ng-template [ngIf]="addVehicleFormVisible">
     <form #vehiclelink="ngForm" (ngSubmit)="onAddVehicle(vehiclelink.value)" class="form-control">
         <zxing-scanner *ngIf="qrcodeScannerVisible" (scanSuccess)="capturedQr($event)"></zxing-scanner>
-        <label class="form-label">Vehicle id <input class="form-control" type="text" name="vehicleId" [value]="vehicleFormId" ngModel required disabled/><fa-icon class="camera-icon" [icon]="faCamera" (click)="toggleQrScanner()"></fa-icon></label>
-        <label class="form-label">Vehicle name <input class="form-control" type="text" name="vehicleName" ngModel required/></label>
+        <label class="form-label vehicle-form-label vehicle-id-label">Vehicle id <input class="form-control" type="text" name="vehicleId" [value]="vehicleFormId" ngModel required disabled/><fa-icon class="camera-icon" [icon]="faCamera" (click)="toggleQrScanner()"></fa-icon></label>
+        <label class="form-label vehicle-form-label">Vehicle name <input class="form-control" type="text" name="vehicleName" ngModel required/></label>
         <input class="form-control" type="submit" value="Link vehicle" />
     </form>
 </ng-template>
