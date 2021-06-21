@@ -22,7 +22,10 @@ export class VehicleInfoService {
   }
 
   async bindVehicleToUser(vehicleId: string): Promise<any> {
-    console.log(vehicleId);
     return this.http.post(environment.baseUrl + "/user/linked-vehicle", {vehicleId: vehicleId}, {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
+  }
+
+  async unbindVehicleFromUser(vehicleId: string): Promise<any> {
+    return this.http.delete(environment.baseUrl + "/user/linked-vehicle", {headers: {"x-access-token": this.tokenManagerService.getToken()}, params: {vehicleId: vehicleId}}).toPromise();
   }
 }
