@@ -64,6 +64,12 @@ export class VehicleTabComponent implements OnInit {
     });
   }
 
+  onRemoveVehicle(vehicleId: string) {
+    this.vehicleInfoService.removeVehicleForUser(vehicleId).then(result => {
+      this.updateVehicleList();
+    });
+  }
+
   toggleVehicleLink(vehicleId: string) {
     if (vehicleId === this.linkedVehicleId) { 
       this.unlinkVehicle(vehicleId); 
