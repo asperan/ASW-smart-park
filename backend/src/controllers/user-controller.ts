@@ -31,7 +31,7 @@ export function postUserVehicle(request: express.Request, response: express.Resp
 
 export function deleteUserVehicle(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    userService.removeUserVehicle(request.userEmail, request.body.vehicleId).then(ok => {
+    userService.removeUserVehicle(request.userEmail, request.query.vehicleId as string).then(ok => {
       if (ok) { response.status(200).json({code: 0, message: "Vehicle removed."}); }
       else {response.status(400).json({code: 1, message: "Failed to remove vehicle"}); }
     });
