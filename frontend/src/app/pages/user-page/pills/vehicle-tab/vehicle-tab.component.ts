@@ -55,6 +55,8 @@ export class VehicleTabComponent implements OnInit {
     this.qrcodeScannerVisible = false;
   }
 
+  // TODO: check for errors
+
   onAddVehicle(data: any) {
     this.vehicleInfoService.addVehicleForUser(this.vehicleFormId, data.vehicleName).then(_value => {
       this.updateVehicleList();
