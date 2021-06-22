@@ -2,7 +2,7 @@ db.createCollection("users", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["email", "password", "salt"],
+      required: ["email", "password", "salt", "lastNotificationCheck", "linkedVehicles", "userSubscription"],
       properties: {
         email: {
           bsonType: "string",
@@ -15,6 +15,10 @@ db.createCollection("users", {
         salt: {
           bsonType: "string",
           description: "must be a string and is required"
+        },
+        lastNotificationCheck: {
+          bsonType: "date",
+          description: "the date-time of the last notification check"
         },
         linkedVehicles: {
           bsonType: "array",
@@ -33,6 +37,10 @@ db.createCollection("users", {
               }
             }
           }
+        },
+        userSubscription : {
+          bsonType: "object",
+          description: "The subscription object for push notifications. It is required for push notifications to work."
         }
       }
     }

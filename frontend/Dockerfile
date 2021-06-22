@@ -8,4 +8,4 @@ WORKDIR /node-app
 
 RUN npm install
 
-CMD ["sh", "-c", "ng serve --host 0.0.0.0"]
+CMD ["sh", "-c", "npm start"]

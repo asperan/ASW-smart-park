@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faPlus, faTrash, faLink } from '@fortawesome/free-solid-svg-icons';
 import { VehicleInfoService } from '../../user-services/vehicle-info.service';
 
 @Component({
@@ -11,6 +11,12 @@ export class VehicleTabComponent implements OnInit {
   
   faTrash = faTrash;
   faPlus = faPlus;
+  faCamera = faCamera;
+  faLink = faLink;
+  addVehicleFormVisible: boolean;
+  qrcodeScannerVisible: boolean;
+  vehicleFormId: string;
+  linkedVehicleId: string;
 
   userVehicles: Array<{vehicleId: string, name: string}>;
   filteredVehicleList: Array<{vehicleId: string, name: string}>;
@@ -18,13 +24,14 @@ export class VehicleTabComponent implements OnInit {
   constructor(private vehicleInfoService: VehicleInfoService) { 
     this.userVehicles = [];
     this.filteredVehicleList = this.userVehicles;
+    this.addVehicleFormVisible = false;
+    this.qrcodeScannerVisible = false;
+    this.vehicleFormId = "";
+    this.linkedVehicleId = "";
   }
 
   ngOnInit(): void {
-    this.vehicleInfoService.requestVehicleInfos().then(data => {
-      this.userVehicles = data.linkedVehicles;
-      this.filteredVehicleList = this.userVehicles;
-    });
+    this.updateVehicleList();
   }
 
   onFilterChange(event: Event): void {
@@ -35,7 +42,60 @@ export class VehicleTabComponent implements OnInit {
   }
 
   openAddVehicleForm() {
-    // TODO add logic, maybe navigate to a separate page?
+    this.addVehicleFormVisible = !this.addVehicleFormVisible;
+    this.qrcodeScannerVisible = this.addVehicleFormVisible;
+  }
+
+  toggleQrScanner() {
+    this.qrcodeScannerVisible = !this.qrcodeScannerVisible;
+  }
+
+  capturedQr(vehicleId: string) {
+    this.vehicleFormId = vehicleId;
+    this.qrcodeScannerVisible = false;
+  }
+
+  // TODO: check for errors
+
+  onAddVehicle(data: any) {
+    this.vehicleInfoService.addVehicleForUser(this.vehicleFormId, data.vehicleName).then(_value => {
+      this.updateVehicleList();
+    }).finally(() => {
+      this.addVehicleFormVisible = false;
+      this.qrcodeScannerVisible = false;
+    });
+  }
+
+  onRemoveVehicle(vehicleId: string) {
+    this.vehicleInfoService.removeVehicleForUser(vehicleId).then(result => {
+      this.updateVehicleList();
+    });
+  }
+
+  toggleVehicleLink(vehicleId: string) {
+    if (vehicleId === this.linkedVehicleId) { 
+      this.unlinkVehicle(vehicleId); 
+    } else { 
+      this.linkToVehicle(vehicleId); 
+    }
+  }
+
+  private linkToVehicle(vehicleId: string) {
+    this.vehicleInfoService.bindVehicleToUser(vehicleId).then(_result => this.updateVehicleList());
+  }
+
+  private unlinkVehicle(vehicleId: string) {
+    this.vehicleInfoService.unbindVehicleFromUser(vehicleId).then(_result => this.updateVehicleList());
+  }
+
+  private updateVehicleList() {
+    this.vehicleInfoService.requestVehicleInfos().then(data => {
+      this.userVehicles = data.linkedVehicles;
+      this.filteredVehicleList = this.userVehicles;
+    });
+    this.vehicleInfoService.getLinkedVehicle().then(response => {
+      this.linkedVehicleId = response.vehicleId;
+    });
   }
 
 }

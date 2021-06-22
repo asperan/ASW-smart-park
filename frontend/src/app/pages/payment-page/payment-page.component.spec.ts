@@ -22,4 +22,21 @@ describe('PaymentPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('add hours', () => {
+    component.addHours(1);
+  });
+
+  it('add hours bounds', () => {
+
+  });
+
+  it('add minutes bounds', () => {
+
+  });
+
+  it('add minutes bounds', () => {
+
+  });
+
 });
