@@ -36,7 +36,7 @@ db.cities.insertMany([{
                     }
                 ],
                 "detail": {
-                    "name": "Cesena",
+                    "name": "Parcheggio Campus Cesena",
                     "address": "Via Riccardo Bacchelli, 47522 Cesena FC",
                     "type": "Open Park",
                     "imageUrl": "http://www.parkingroma.it/wp-content/uploads/2016/02/strisce-blu.jpg"

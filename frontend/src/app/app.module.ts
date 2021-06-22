@@ -22,6 +22,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
 import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
+import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ZXingScannerModule } from "@mirror520/ngx-scanner";
 import { NotificationIconComponent } from './notifications/notification-icon/notification-icon.component';
@@ -46,6 +47,7 @@ import { NotificationPageComponent } from './notifications/notification-page/not
     ContactFormComponent,
     StatisticsDetailComponent,
     HomepageComponent,
+    PaymentPageComponent,
   ],
   imports: [
     BrowserModule,

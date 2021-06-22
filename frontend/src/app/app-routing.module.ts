@@ -9,6 +9,7 @@ import { NotificationPageComponent } from './notifications/notification-page/not
 import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
 import { ContactFormComponent } from './pages/contact-form/contact-form/contact-form.component';
 import { AuthGuardService } from './access-token/token-guard';
+import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
 
 const routes: Routes = [
   {path: "", component: HomepageComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: "userpage", component: UserPageComponent, canActivate: [AuthGuardService]},
   {path: "parking/:cityName/:id", component: ParkingDetailComponent, canActivate: [AuthGuardService]},
   {path: "contact-us", component: ContactFormComponent, canActivate: [AuthGuardService]},
+  {path: "payment/:cityName/:id", component: PaymentPageComponent, canActivate: [AuthGuardService]},
   {path: '**', redirectTo: ""}
 ];
 
