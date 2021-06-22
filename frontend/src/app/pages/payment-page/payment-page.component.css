@@ -8,7 +8,7 @@
 
 .date-container {
     text-align: center;
-    margin-top: 40%;
+    margin-top: 25%;
     font-size: xx-large;
     border-style: solid;
     border-color: lightgray;
@@ -16,14 +16,23 @@
 }
 
 .time-container {
-    margin-top: 40%;
     border-style: solid;
     border-color: lightgray;
     border-width: 0px 0px 2px 0px;
 }
 
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
 .vehicle-data {
-    margin-top: 40%;
+    margin-top: 25%;
     border-style: solid;
     border-color: lightgray;
     border-width: 0px 0px 2px 0px;
@@ -31,4 +40,37 @@
 
 .circle-button {
     border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+}
+
+.payment-button {
+    margin-top: 20%;
+}
+
+.circle-span {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+
+    border: 2px solid lightgray;
+    color: black;
+    text-align: center;
+}
+
+.price-container {
+    border: 2px solid lightgray;
+    border-radius: 5%;
+    margin-bottom: 5%;
+}
+
+.congratulations-form {
+    margin-top: 20%;
+    text-align: center;
+}
+
+.back-button {
+    margin-top: 20%
 }
