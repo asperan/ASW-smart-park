@@ -59,7 +59,7 @@ export class SignPageComponent implements OnInit {
       this.tokenManagerService.setToken(data.access_token);
       this.notificationService.subcribeToPushNotification().then((response: any) => {
         if(response.code === 0) {
-          router.navigate(["userpage"]); 
+          router.navigate(["parking-search"]);
         } else {
           this.tokenManagerService.setToken("");
           this.onRequestError(response);
