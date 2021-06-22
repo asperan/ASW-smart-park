@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { DateService } from 'src/app/services/date.service';
 import { Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { Parking, ParkingSearchService } from 'src/app/services/parking-search.s
 })
 export class PaymentPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router , private parkingService: ParkingSearchService) { }
+  constructor(private route: ActivatedRoute, private router: Router , private parkingService: ParkingSearchService, private dateService: DateService) { }
 
   faCalendar = faCalendar;
   faMinus = faMinus;
@@ -48,7 +49,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private parseCurrentDate() {
-    const today = new Date();
+    const today = this.dateService.now();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
