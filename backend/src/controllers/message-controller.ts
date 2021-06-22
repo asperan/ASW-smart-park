@@ -1,5 +1,4 @@
-import express from "express";
-import * as messagesRepository from "../repositories/messages-repository";
+import { messagesRepository } from "../repositories/messages-repository";
 import { MessageEntity } from "../repositories/messages-repository";
 
 export async function getAllMessages(): Promise<any[]> {

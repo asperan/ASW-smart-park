@@ -16,7 +16,7 @@ export class MessagesService {
   constructor(private http: HttpClient) {
   }
 
-  async addNewEmailMessage(message: Message): Promise<Observable<Message>> {
+  addNewEmailMessage(message: Message): Observable<Message> {
     const messageDto: Message = {
       type: "email",
       sender: message.sender,
