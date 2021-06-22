@@ -1,5 +1,6 @@
 import * as paymentRepository from "../repositories/payments-repository";
 
+// TODO: On payment add remainder notifications
 export async function addPayment(email: string, parkingId: string, date: Date, amount: number): Promise<boolean> {
   return paymentRepository.addPayment(email, parkingId, date, amount);
 }
