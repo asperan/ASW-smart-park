@@ -3,11 +3,11 @@ import * as vehicleService from "./vehicle-service";
 import * as notificationService from "./notification-service";
 
 export type VehicleMessage = {
-    vehicleId: string
+    vehicleId: string,
     spotId: number,
-    userEmail: string
+    userEmail: string,
     operation: string,
-}
+};
 
 /* 
 TODO 
