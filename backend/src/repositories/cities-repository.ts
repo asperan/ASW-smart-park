@@ -91,7 +91,7 @@ export class CitiesRepository {
     
     private formParkingSpotEntity(res: any): ParkingSpotEntity {
         return {
-            uid: res.id,
+            uid: res.uid,
             occupied: res.occupied,
             paidFor: res.paidFor,
             longitude: Number(res.longitude),
