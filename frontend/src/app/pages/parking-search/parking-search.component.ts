@@ -21,12 +21,12 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   // cities & parkings
   parkingSpots: ParkingSpot[] = [];
-  private selectedCity: City | undefined;
+  selectedCity: City | undefined;
   private selectedParkingId: number | undefined;
   private availableParkings: Parking[] = [];
 
   // searchModes: false = current location, true = city center
-  private currentLocationSearchEnabled: boolean = false;
+  currentLocationSearchEnabled: boolean = false;
   // current location unavailable
   currentLocationUnavailable: boolean = false;
 
@@ -238,15 +238,17 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private displayParkings() {
     this.availableParkings.forEach(parking => {
+      const capacity = parking.parkingSpots.length;
+      const occupancy = capacity - parking.parkingSpots.filter(p => p.occupied).length;
       let options;
-      if (parking.occupancy == parking.capacity) {
+      if (occupancy == capacity) {
         options = { icon: this.redMarkerIcon };
-      } else if (parking.occupancy / parking.capacity * 100 >= 75) {
+      } else if (occupancy / capacity * 100 >= 75) {
         options = { icon: this.yellowMarkerIcon };
       } else {
         options = { icon: this.blueMarkerIcon };
       }
-      const availableSpots = parking.capacity - parking.occupancy;
+      const availableSpots = capacity - occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
         .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" +  ' ">More Info</button><div>')
         .addEventListener("click", e => {

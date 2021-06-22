@@ -48,7 +48,7 @@ export class SignPageComponent implements OnInit {
   private onSubmitSignup(userCredentials: UserCredentials): void {
     const router = this.router;
     this.signupService.requestSignup(userCredentials).then(data => {
-      alert("You are subscribed! You will be redirected to sing in page where you can log in.");
+      //alert("You are subscribed! You will be redirected to sing in page where you can log in.");
       router.navigate(['signin']);
     }, reason => this.onRequestError(reason.error));
   }

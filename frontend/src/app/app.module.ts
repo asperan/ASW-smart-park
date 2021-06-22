@@ -6,11 +6,6 @@ import { ParkingSearchComponent } from './pages/parking-search/parking-search.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { MapComponent } from './components/map/map.component';
-import { MarkerService } from './marker.service';
-import { PopupService } from './popup.service';
 import { SignPageComponent } from './pages/sign-page/sign-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { VehicleTabComponent } from './pages/user-page/pills/vehicle-tab/vehicle-tab.component';
@@ -18,8 +13,6 @@ import { PaymentTabComponent } from './pages/user-page/pills/payment-tab/payment
 import { StatisticsTabComponent } from './pages/user-page/pills/statistics-tab/statistics-tab.component';
 import { NgStorageModule } from 'ng-storage-local';
 import { PricePipe } from './pipes/prices.pipe';
-import { NotificationIconComponent } from "./notifications/notification-icon/notification-icon.component";
-import { NotificationPageComponent } from "./notifications/notification-page/notification-page.component";
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { ParkingDetailComponent } from './pages/parking-detail/parking-detail.component';
 import { PricingDetailComponent } from './pages/parking-detail/pills/pricing-detail/pricing-detail.component';
@@ -30,13 +23,12 @@ import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
 import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NotificationIconComponent } from './notifications/notification-icon/notification-icon.component';
+import { NotificationPageComponent } from './notifications/notification-page/notification-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    MapComponent,
     ParkingSearchComponent,
     SignPageComponent,
     UserPageComponent,
@@ -71,8 +63,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     }),
   ],
   providers: [
-    MarkerService,
-    PopupService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

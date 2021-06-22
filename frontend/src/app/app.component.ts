@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { SwPush } from '@angular/service-worker';
 import { TokenManagerService } from './access-token/token-manager';
+import { AuthenticationListenerService } from './services/authentication-listener-service.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent {
 
   isAuthenticated = false;
 
-  constructor(private router: Router, private auth: TokenManagerService, private swPush: SwPush) {
+  constructor(private router: Router, private authListener: AuthenticationListenerService, private auth: TokenManagerService, private swPush: SwPush) {
     this.currentRoute = this.router.url;
     this.router.events
       .subscribe((event: any) => {
@@ -37,7 +38,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.auth.isAuthenticated().subscribe(isAuthenticated => {
+    this.authListener.sharedIsAuthenticated.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
     });
   }

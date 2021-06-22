@@ -29,7 +29,7 @@ export class ContactFormComponent implements OnInit {
     this.isSubmitted = true;
   }
 
-  makeEmail(): Message {
+  private makeEmail(): Message {
     return {
       type: "email",
       sender: "",
