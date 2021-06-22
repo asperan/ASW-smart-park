@@ -18,6 +18,7 @@ export async function beaconEntry(vehicleId: string, spotId: string, userEmail: 
     await validateVehicleIsBoundToUser(vehicleId, userEmail);
     await vehicleService.addParkingToVehicle(vehicleId, spotId);
     await citiesService.updateParkingSpotBeaconEntry(spotId);
+    await sendPushNotification(userEmail, spotId);
 }
 
 export async function beaconExit(vehicleId: string, spotId: string, userEmail: string) {
