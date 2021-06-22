@@ -1,6 +1,6 @@
 import { citiesService } from "./city-service";
-import * as vehicleService from "./vehicle-service"
-
+import * as vehicleService from "./vehicle-service";
+import * as notificationService from "./notification-service";
 
 export type VehicleMessage = {
     vehicleId: string
