@@ -34,3 +34,11 @@ async function validateVehicleIsBoundToUser(vehicleId: string, userEmail: string
     }
     return;
 }
+
+async function sendPushNotification(userEmail: string, spotId: string) {
+    const ids = await citiesService.getCityAndParkingIdFromSpot(spotId);
+    const cityId = ids.cityId;
+    const parkingId = ids.parkingId;
+    const notificationPayload = notificationService.buildGotoNotificationPayload("Parking spotted", "payment/" + cityId + "/" + parkingId, {});
+    notificationService.sendNotification(userEmail, notificationPayload);
+}
