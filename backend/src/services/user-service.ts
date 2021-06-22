@@ -31,6 +31,11 @@ export async function addUserVehicle(email: string, vehicleId: string, vehicleNa
   return 1; // Everything OK
 }
 
+export async function removeUserVehicle(email: string, vehicleId: string) {
+  return (await userRepository.removeUserVehicle(email, vehicleId)) &&
+    (await vehicleService.unbindUserFromVehicle(vehicleId, email));
+}
+
 export async function isVehicleLinked(email: string, vehicleId: string) {
   return userRepository.isVehicleLinked(email, vehicleId);
 }

@@ -9,12 +9,16 @@ export async function isVehiclePresent(vehicleId: string) {
   return vehicleRepository.isVehiclePresent(vehicleId);
 }
 
+export async function getVehicleLinkedToUser(userEmail: string) {
+  return vehicleRepository.getVehicleLinkedToUser(userEmail);
+}
+
 export async function bindUserToVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
   return vehicleRepository.bindUserToVehicle(vehicleId, userEmail);
 }
 
-export async function unbindUserFromVehicle(vehicleId: string): Promise<boolean> {
-  return vehicleRepository.unbindUserFromVehicle(vehicleId);
+export async function unbindUserFromVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
+  return vehicleRepository.unbindUserFromVehicle(vehicleId, userEmail);
 }
 
 export async function isVehicleLinkedToUser(vehicleId: string, userEmail: string): Promise<boolean> {

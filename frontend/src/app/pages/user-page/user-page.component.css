@@ -1,6 +1,6 @@
 .greeting-container {
-  margin-top: 10%;
-  margin-bottom: 20%;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .content-container {
-  margin-top: 20%;
+  margin-top: 2rem;
 }
 
 .button {
@@ -50,8 +50,13 @@
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+button.nav-link {
+  padding: 0.5rem 0.25rem;
+}
+
 .logout-button {
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
+  float: right;
 }
