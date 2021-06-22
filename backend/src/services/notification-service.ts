@@ -12,8 +12,10 @@ export async function getUserNotifications(userEmail: string, limit?: number) {
 }
 
 export async function countUnreadNotifications(userEmail: string) {
-  const lastCheckDate = new Date(await userRepository.getLastNotificationCheck(userEmail));
-  return notificationRepository.countUnreadNotifications(userEmail, lastCheckDate);
+  const lastCheckObject = await userRepository.getLastNotificationCheck(userEmail);
+  if (lastCheckObject) {
+    return notificationRepository.countUnreadNotifications(userEmail, new Date(lastCheckObject.lastNotificationCheck));
+  } else { return 0; }
 }
 
 export async function sendNotification(userEmail: string, payload: any) {

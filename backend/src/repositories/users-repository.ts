@@ -23,7 +23,7 @@ export async function checkUserPassword(email: string, password: string): Promis
 }
 
 export async function getLastNotificationCheck(email:string): Promise<any> {
-  return (await mongoClient.db.collection("users").findOne({email: email}, { projection: {lastNotificationCheck: 1, _id: 0}})).lastNotificationCheck;
+  return (await mongoClient.db.collection("users").findOne({email: email}, { projection: {lastNotificationCheck: 1, _id: 0}}));
 }
 
 export async function updateLastNotificationCheck(email: string, date: Date): Promise<boolean> {
