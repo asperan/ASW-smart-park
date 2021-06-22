@@ -17,6 +17,10 @@ export class CitiesService {
         return await citiesRepository.getCityByName(name);
     }
 
+    async getCityAndParkingIdFromSpot(spotId: string): Promise<{cityId: string, parkingId: number}> {
+        return await citiesRepository.getCityAndParkingIdBySpot(spotId);
+    }
+
     async updateParkingSpotBeaconEntry(spotId: string) {
         await this.setParkingSpotStatus(spotId, true);
     }
