@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DateService } from 'src/app/services/date.service';
 import { Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
+import { PaymentInfoService } from "../user-page/user-services/payment-info.service";
+import { nanoid } from "nanoid";
 
 @Component({
   selector: 'app-payment-page',
@@ -11,7 +13,7 @@ import { Parking, ParkingSearchService } from 'src/app/services/parking-search.s
 })
 export class PaymentPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router , private parkingService: ParkingSearchService, private dateService: DateService) { }
+  constructor(private route: ActivatedRoute, private router: Router , private parkingService: ParkingSearchService, private dateService: DateService, private paymentService: PaymentInfoService) { }
 
   faCalendar = faCalendar;
   faMinus = faMinus;
@@ -151,10 +153,15 @@ export class PaymentPageComponent implements OnInit {
   }
 
   onPayment() {
-    const price = this.price;
-    const parkingEndTime = this.endDateHours + ":" + this.endDateMinutes;
-    // TODO handle payment logic....
-    this.isPayed = true;
+    const price = this.price * 100;
+    const paymentId = nanoid(16);
+    this.paymentService.postPermanenceInfo(price, paymentId, this.hours, this.minutes).then(result => {
+      this.isPayed = true;
+    }).catch(reason => {
+      console.log(reason);
+      // TODO: error message
+      this.isPayed = false;
+    });
   }
 
   goBack() {
