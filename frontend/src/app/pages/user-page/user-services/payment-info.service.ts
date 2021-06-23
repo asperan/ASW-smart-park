@@ -10,6 +10,6 @@ export class PaymentInfoService {
   constructor(private http: HttpClient, private tokenManagerService: TokenManagerService) {}
 
   async requestPermanenceInfos(): Promise<any> {
-    return this.http.get(environment.baseUrl + "/user/info-payments", {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
+    return this.http.get(environment.baseUrl + "/user/info-permanences", {headers: {"x-access-token": this.tokenManagerService.getToken()}}).toPromise();
   }
 }

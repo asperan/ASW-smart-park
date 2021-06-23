@@ -8,7 +8,7 @@ export function setUserRoutes(app: express.Application): void {
      .get(getVehicleUserInfo)
      .post(postUserVehicle)
      .delete(deleteUserVehicle);
-  app.route("/api/user/info-payments").all(validateAccessToken)
+  app.route("/api/user/info-permanences").all(validateAccessToken)
      .get(getUserPaymentsInfo)
      .post(addUserPayment)
      .put(resolvePendingPayment);
