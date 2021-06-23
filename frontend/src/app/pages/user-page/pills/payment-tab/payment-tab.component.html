@@ -1,5 +1,5 @@
 <p *ngIf="userPermanences.length === 0">No Payments found</p>
 <div class="paymentListElement" *ngFor="let permanence of userPermanences">
-  {{ permanence.parkingId }} - {{ permanence.amount | price }}<br/>
-  {{ permanence.date | date:"YYYY-MM-dd HH:mm:ss a (O)" }}
+  {{ permanence.parkingId }} - {{ permanence.payment.amount | price }}<br/>
+  {{ permanence.entryDate | date:"YYYY-MM-dd HH:mm:ss a (O)" }}
 </div>
