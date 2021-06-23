@@ -1,6 +1,7 @@
 import { citiesService } from "./city-service";
 import * as vehicleService from "./vehicle-service";
 import * as notificationService from "./notification-service";
+import { endPermanence } from "./payment-service";
 
 export type VehicleMessage = {
     vehicleId: string,
@@ -25,6 +26,7 @@ export async function beaconExit(vehicleId: string, spotId: string, userEmail: s
     await validateVehicleIsBoundToUser(vehicleId, userEmail);
     await vehicleService.removeParkingFromVehicle(vehicleId);
     await citiesService.updateParkingSpotBeaconExit(spotId);
+    await endPermanence(userEmail, vehicleId, spotId, new Date());
 }
 
 async function validateVehicleIsBoundToUser(vehicleId: string, userEmail: string) {
