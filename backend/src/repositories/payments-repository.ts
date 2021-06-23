@@ -9,5 +9,5 @@ export async function resolvePendingPayment(userEmail: string, parkingId: string
 }
 
 export async function getUserPermanences(email: string): Promise<any[]> {
-  return await mongoClient.db.collection("parkingstays").find({ userEmail: email }).sort("date", -1).toArray();
+  return await mongoClient.db.collection("parkingstays").find({ userEmail: email }).sort("entryDate", -1).toArray();
 }
