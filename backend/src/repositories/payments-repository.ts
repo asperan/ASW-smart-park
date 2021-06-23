@@ -8,6 +8,6 @@ export async function resolvePendingPayment(userEmail: string, parkingId: string
   return (await mongoClient.db.collection("payments").updateOne({userEmail: userEmail, parkingId: parkingId, date: date, pending: true}, {$set: {pending: false}})).result.ok === 1;
 }
 
-export async function getUserPayments(email: string): Promise<any[]> {
-  return await mongoClient.db.collection("payments").find({ userEmail: email }).sort("date", -1).toArray();
+export async function getUserPermanences(email: string): Promise<any[]> {
+  return await mongoClient.db.collection("parkingstays").find({ userEmail: email }).sort("date", -1).toArray();
 }

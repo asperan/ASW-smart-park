@@ -1,5 +1,5 @@
 import express from "express";
-import { addUserPayment, deleteUserVehicle, getBasicUserInfo, getUserPaymentsInfo, getUserStatistics, getVehicleLinkedToUser, getVehicleUserInfo, linkUserToVehicle, postUserVehicle, resolvePendingPayment, unlinkUserFromVehicle, updateLastNotificationCheck, updateUserSubscription } from "../controllers/user-controller";
+import { addUserPayment, deleteUserVehicle, getBasicUserInfo, getUserPermanencesInfo, getUserStatistics, getVehicleLinkedToUser, getVehicleUserInfo, linkUserToVehicle, postUserVehicle, resolvePendingPayment, unlinkUserFromVehicle, updateLastNotificationCheck, updateUserSubscription } from "../controllers/user-controller";
 import { validateAccessToken } from "../middleware/token-auth";
 
 export function setUserRoutes(app: express.Application): void {
@@ -9,7 +9,7 @@ export function setUserRoutes(app: express.Application): void {
      .post(postUserVehicle)
      .delete(deleteUserVehicle);
   app.route("/api/user/info-permanences").all(validateAccessToken)
-     .get(getUserPaymentsInfo)
+     .get(getUserPermanencesInfo)
      .post(addUserPayment)
      .put(resolvePendingPayment);
   app.route("/api/user/linked-vehicle").all(validateAccessToken)

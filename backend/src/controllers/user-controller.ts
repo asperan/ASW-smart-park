@@ -38,8 +38,8 @@ export function deleteUserVehicle(request: express.Request, response: express.Re
   }
 }
 
-export function getUserPaymentsInfo(request: express.Request, response: express.Response) {
-  if (request.userEmail) userService.getUserPaymentsInfo(request.userEmail).then(data => response.status(200).json(data));
+export function getUserPermanencesInfo(request: express.Request, response: express.Response) {
+  if (request.userEmail) userService.getUserPermanencesInfo(request.userEmail).then(data => response.status(200).json(data));
 }
 
 export function addUserPayment(request: express.Request, response: express.Response) {

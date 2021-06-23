@@ -1,7 +1,7 @@
 import * as userRepository from "../repositories/users-repository";
 import { InsertOneWriteOpResult } from "mongodb";
 import * as vehicleService from "./vehicle-service";
-import { getUserPayments } from "../repositories/payments-repository";
+import { getUserPermanences } from "../repositories/payments-repository";
 
 export async function isUserAlreadyPresent(email: string): Promise<boolean> {
   return userRepository.isUserAlreadyPresent(email);
@@ -40,8 +40,8 @@ export async function isVehicleLinked(email: string, vehicleId: string) {
   return userRepository.isVehicleLinked(email, vehicleId);
 }
 
-export async function getUserPaymentsInfo(email: string) {
-  return getUserPayments(email);
+export async function getUserPermanencesInfo(email: string) {
+  return getUserPermanences(email);
 }
 
 export async function getUserStatistics(email: string): Promise<any> {
