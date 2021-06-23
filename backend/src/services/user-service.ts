@@ -44,6 +44,7 @@ export async function getUserPermanencesInfo(email: string) {
   return getUserPermanences(email);
 }
 
+// TODO: adds statistics
 export async function getUserStatistics(email: string): Promise<any> {
   return [{ name: "FirstStat", value: "1" }, { name: "Most payed", value: "150,00" }];
 }
