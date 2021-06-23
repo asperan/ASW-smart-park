@@ -16,14 +16,14 @@ type PaymentObject = {
 })
 export class PaymentTabComponent implements OnInit {
 
-  userPayments!: Array<PaymentObject>;
+  userPermanences!: Array<PaymentObject>;
 
   constructor(private paymentService: PaymentInfoService ) {
-    this.userPayments = [];
+    this.userPermanences = [];
   }
 
   ngOnInit(): void {
-    this.paymentService.requestPaymentInfos().then(data => this.userPayments = data);
+    this.paymentService.requestPermanenceInfos().then(data => this.userPermanences = data);
   }
 
 }
