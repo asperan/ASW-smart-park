@@ -42,9 +42,9 @@ export function getUserPermanencesInfo(request: express.Request, response: expre
   if (request.userEmail) userService.getUserPermanencesInfo(request.userEmail).then(data => response.status(200).json(data));
 }
 
-export function addUserPayment(request: express.Request, response: express.Response) {
+export function addUserPermanence(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-  paymentService.addPayment(request.userEmail, request.body.parkingId, request.body.date, request.body.amount)
+  paymentService.addPermanence(request.userEmail, request.body.parkingId, request.body.date, request.body.amount)
     .then(ok => {
       if (ok) { response.status(200).json({code: 0, message: "Pending payment added."}); } 
       else { response.status(400).json({code: 1, message: "Failed to create a new pending payment."}); }
