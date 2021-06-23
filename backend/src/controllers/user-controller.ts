@@ -44,10 +44,16 @@ export function getUserPermanencesInfo(request: express.Request, response: expre
 
 export function addUserPermanence(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-  paymentService.addPermanence(request.userEmail, request.body.parkingId, request.body.date, request.body.amount)
-    .then(ok => {
-      if (ok) { response.status(200).json({code: 0, message: "Pending payment added."}); } 
-      else { response.status(400).json({code: 1, message: "Failed to create a new pending payment."}); }
+    vehicleService.getVehicleLinkedToUser(request.userEmail).then(vehicle => {
+      const vehicleId = vehicle.id;
+      const parkingId = vehicle.parkingId;
+      const entryDate = new Date(request.body.entryDate);
+      const payedUntilDate = new Date(entryDate.valueOf() + request.body.payedForMillis);
+      paymentService.addPermanence(request.userEmail as string, vehicleId, parkingId, request.body.entryDate, payedUntilDate, {paymentId: request.body.paymentId, amount: request.body.amount})
+      .then(ok => {
+        if (ok) { response.status(200).json({code: 0, message: "Pending payment added."}); } 
+        else { response.status(400).json({code: 1, message: "Failed to create a new pending payment."}); }
+      });
     });
   }
 }
