@@ -11,3 +11,7 @@ export async function resolvePendingPayment(userEmail: string, parkingId: string
 export async function getUserPermanences(email: string): Promise<any[]> {
   return await mongoClient.db.collection("parkingstays").find({ userEmail: email }).sort("entryDate", -1).toArray();
 }
+
+export async function endPermanence(userEmail: string, vehicleId: string, parkingSpotId: string, exitDate: Date): Promise<boolean> {
+  return (await mongoClient.db.collection("parkingstays").findOneAndUpdate({ userEmail: userEmail, vehicleId: vehicleId, parkingSpotId: parkingSpotId, exitDate: null }, { $set: { exitDate: exitDate } })).ok === 1;
+}
