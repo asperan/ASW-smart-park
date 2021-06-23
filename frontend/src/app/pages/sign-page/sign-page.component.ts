@@ -50,7 +50,7 @@ export class SignPageComponent implements OnInit {
     this.signupService.requestSignup(userCredentials).then(data => {
       //alert("You are subscribed! You will be redirected to sing in page where you can log in.");
       router.navigate(['signin']);
-    }, reason => this.onRequestError(reason.error));
+    }, reason => this.onRequestError(reason));
   }
 
   private onSubmitSignin(userCredentials: UserCredentials): void {
@@ -65,7 +65,7 @@ export class SignPageComponent implements OnInit {
           this.onRequestError(response);
         }
       });
-    }, reason => this.onRequestError(reason.error));
+    }, reason => this.onRequestError(reason));
   }
 
   private onRequestError(error: any) {
