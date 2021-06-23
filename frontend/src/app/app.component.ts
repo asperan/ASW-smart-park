@@ -25,8 +25,6 @@ export class AppComponent {
         }
       });
     this.swPush.notificationClicks.subscribe(notification => {
-      // console.log(notification);
-      // TODO: handle notification
       switch (notification.notification.data.type) {
         case "goto":
           this.router.navigate([notification.notification.data.url]);  
