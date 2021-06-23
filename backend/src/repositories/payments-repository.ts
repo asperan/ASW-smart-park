@@ -1,7 +1,7 @@
 import { mongoClient } from "../services/mongo-client";
 
-export async function addPermanence(userEmail: string, parkingId: string, date: Date, amount: number): Promise<boolean> {
-  return (await mongoClient.db.collection("payments").insertOne({userEmail: userEmail, parkingId: parkingId, date: date, amount: amount, pending: true})).result.ok === 1;
+export async function addPermanence(userEmail: string, vehicleId: string, parkingSpotId: string, entryDate: Date, payedUntil: Date, payment: {paymentId: string, amount: number}): Promise<boolean> {
+  return (await mongoClient.db.collection("parkingstays").insertOne({userEmail: userEmail, vehicleId: vehicleId, parkingSpotId: parkingSpotId, entryDate: entryDate, payedUntil: payedUntil, payment: payment})).result.ok === 1;
 }
 
 export async function resolvePendingPayment(userEmail: string, parkingId: string, date: Date): Promise<boolean> {
