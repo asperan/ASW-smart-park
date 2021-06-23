@@ -10,8 +10,8 @@
             <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.MyVehicles}">
                 <button class="nav-link" [ngClass]="selectedTab == SubComponent.MyVehicles ? 'active-tab' : ''" (click)="selectTab(SubComponent.MyVehicles)">vehicles</button>
             </li>
-            <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.PaymentHistory}">
-                <button class="nav-link" [ngClass]="selectedTab == SubComponent.PaymentHistory ? 'active-tab' : ''" (click)="selectTab(SubComponent.PaymentHistory)">payments</button>
+            <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.PermanenceHistory}">
+                <button class="nav-link" [ngClass]="selectedTab == SubComponent.PermanenceHistory ? 'active-tab' : ''" (click)="selectTab(SubComponent.PermanenceHistory)">permanences</button>
             </li>
             <li class="detail-nav-link" [ngClass]="{'active-nav-link': selectedTab == SubComponent.Statistics}">
                 <button class="nav-link" [ngClass]="selectedTab == SubComponent.Statistics ? 'active-tab' : ''" (click)="selectTab(SubComponent.Statistics)">statistics</button>    
@@ -21,7 +21,7 @@
 
     <div class="content-container">
         <app-vehicle-tab *ngIf="selectedTab == SubComponent.MyVehicles"></app-vehicle-tab>
-        <app-payment-tab *ngIf="selectedTab == SubComponent.PaymentHistory"></app-payment-tab>
+        <app-payment-tab *ngIf="selectedTab == SubComponent.PermenenceHistory"></app-payment-tab>
         <app-statistics-tab *ngIf="selectedTab == SubComponent.Statistics"></app-statistics-tab>
     </div>
 

@@ -43,6 +43,6 @@ export class UserPageComponent implements OnInit {
 
 enum SubComponent {
   MyVehicles,
-  PaymentHistory,
+  PermanenceHistory,
   Statistics
 };
