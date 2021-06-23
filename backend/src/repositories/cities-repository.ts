@@ -68,6 +68,13 @@ export class CitiesRepository {
             }
         });
     }
+
+    async getCityAndParkingIdBySpot(spotId: string) {
+        const citiesCollection = mongoClient.db.collection("cities");
+        const result = await citiesCollection.findOne({"parkings.parkingSpots.uid": spotId}, {projection: {name: 1, "parkings.id": 1, "parkings.parkingSpots.uid": 1, "_id": 0}});
+        const parkingId = result.parkings.filter((parking: any) => parking.parkingSpots.some((spot: any) => spot.uid === spotId))[0].id;
+        return {cityId: result.name, parkingId: parkingId};
+    }
     
     private formCityEntity(res: any): CityEntity {
         return {
@@ -91,7 +98,7 @@ export class CitiesRepository {
     
     private formParkingSpotEntity(res: any): ParkingSpotEntity {
         return {
-            uid: res.id,
+            uid: res.uid,
             occupied: res.occupied,
             paidFor: res.paidFor,
             longitude: Number(res.longitude),
