@@ -58,16 +58,6 @@ export function addUserPermanence(request: express.Request, response: express.Re
   }
 }
 
-export function resolvePendingPayment(request: express.Request, response: express.Response) {
-  if(request.userEmail) {
-    paymentService.resolvePendingPayment(request.userEmail, request.body.parkingId, request.body.date)
-    .then(ok => {
-      if (ok) { response.status(200).json({code: 0, message: "Pending payment resolved."}); } 
-      else { response.status(400).json({code: 1, message: "Failed to resolve the selected payment."}); }
-    });
-  }
-}
-
 export function getUserStatistics(request: express.Request, response: express.Response) {
   if(request.userEmail) userService.getUserStatistics(request.userEmail).then(data => response.status(200).json(data));
 }
