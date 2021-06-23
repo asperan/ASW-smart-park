@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { SwPush } from '@angular/service-worker';
 import { TokenManagerService } from './access-token/token-manager';
+import { AuthenticationListenerService } from './services/authentication-listener-service.service';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +16,29 @@ export class AppComponent {
 
   isAuthenticated = false;
 
-  constructor(private router: Router, private auth: TokenManagerService) {
-    this.currentRoute = router.url;
-    router.events
+  constructor(private router: Router, private authListener: AuthenticationListenerService, private auth: TokenManagerService, private swPush: SwPush) {
+    this.currentRoute = this.router.url;
+    this.router.events
       .subscribe((event: any) => {
         if (event instanceof NavigationEnd) {
           this.currentRoute = event.url;
         }
       });
+    this.swPush.notificationClicks.subscribe(notification => {
+      // console.log(notification);
+      // TODO: handle notification
+      switch (notification.notification.data.type) {
+        case "goto":
+          this.router.navigate([notification.notification.data.url]);  
+          break;
+        default:
+          break;
+      }
+    });
   }
-  
+
   ngOnInit() {
-    this.auth.isAuthenticated().subscribe(isAuthenticated => {
+    this.authListener.sharedIsAuthenticated.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
     });
   }

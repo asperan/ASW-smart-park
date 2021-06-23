@@ -6,11 +6,6 @@ import { ParkingSearchComponent } from './pages/parking-search/parking-search.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { MapComponent } from './components/map/map.component';
-import { MarkerService } from './marker.service';
-import { PopupService } from './popup.service';
 import { SignPageComponent } from './pages/sign-page/sign-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { VehicleTabComponent } from './pages/user-page/pills/vehicle-tab/vehicle-tab.component';
@@ -27,13 +22,15 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { AuthGuardService } from './access-token/token-guard';
 import { AuthInterceptor } from './access-token/auth-http-interceptor';
 import { StatisticsDetailComponent } from './pages/parking-detail/pills/statistics-detail/statistics-detail.component';
+import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { ZXingScannerModule } from "@mirror520/ngx-scanner";
+import { NotificationIconComponent } from './notifications/notification-icon/notification-icon.component';
+import { NotificationPageComponent } from './notifications/notification-page/notification-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    MapComponent,
     ParkingSearchComponent,
     SignPageComponent,
     UserPageComponent,
@@ -41,6 +38,8 @@ import { StatisticsDetailComponent } from './pages/parking-detail/pills/statisti
     PaymentTabComponent,
     StatisticsTabComponent,
     PricePipe,
+    NotificationIconComponent,
+    NotificationPageComponent,
     SearchbarComponent,
     ParkingDetailComponent,
     PricingDetailComponent,
@@ -48,6 +47,7 @@ import { StatisticsDetailComponent } from './pages/parking-detail/pills/statisti
     ContactFormComponent,
     StatisticsDetailComponent,
     HomepageComponent,
+    PaymentPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,17 +57,23 @@ import { StatisticsDetailComponent } from './pages/parking-detail/pills/statisti
     AppRoutingModule,
     FontAwesomeModule,
     AppRoutingModule,
-    NgStorageModule
+    NgStorageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: true,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    ZXingScannerModule,
   ],
   providers: [
-    MarkerService,
-    PopupService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }],
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

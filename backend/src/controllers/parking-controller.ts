@@ -1,7 +1,7 @@
 
 import { ParkingEntity, ParkingPricingEntity, ParkingSpotEntity } from "../repositories/cities-repository";
 import { Coordinates } from "../services/geo-service";
-import * as parkingService from "../services/parking-service";
+import { parkingService } from "../services/parking-service";
 
 export async function getParkingInCity(name: string): Promise<any[]> {
     const parkings = await parkingService.findAvailableParkingByCityId(name)
@@ -26,8 +26,6 @@ export async function getParkingSpotsByParkingId(cityName: string, parkingId: nu
 function makeDtoFromParking(parking: ParkingEntity) {
     return {
         id: parking.id,
-        capacity: parking.capacity,
-        occupancy: parking.occupancy,
         longitude: parking.longitude,
         latitude: parking.latitude,
         parkingSpots: parking.parkingSpots.map(s => makeDtoFromParkingSpot(s)),
