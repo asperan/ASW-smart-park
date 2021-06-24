@@ -2,6 +2,9 @@
     <div class="title">
         <h2>{{ parkingName }}</h2>
     </div>
+    <div class="error-banner" *ngIf="errorMessage.length > 0">
+        {{ errorMessage }}
+    </div>
     <div class="d-flex justify-content-center date-container">
         <p><fa-icon [icon]="faCalendar"></fa-icon><br/>{{ currentDate }}</p>
     </div>
