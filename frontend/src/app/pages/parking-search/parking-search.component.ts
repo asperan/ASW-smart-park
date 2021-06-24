@@ -131,11 +131,11 @@ export class ParkingSearchComponent implements AfterViewInit {
       this.selectedCity = city;
       this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
       this.updateGraphics();
-      if(shouldPan) {
+      if (shouldPan) {
         this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
       }
-  });
-}
+    });
+  }
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -166,9 +166,9 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.locatePosition();
 
     interval(8000)
-    .subscribe(() => {
-      this.updateParkingsStatus();
-    });
+      .subscribe(() => {
+        this.updateParkingsStatus();
+      });
   }
 
   private updateGraphics() {
@@ -307,12 +307,12 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   private updateParkingsStatus() {
-    if(this.selectedCity && this.selectedParkingId) {
+    if (this.selectedCity && this.selectedParkingId) {
       this.parkingSearchService.getParkingByCityNameAndParkingId(this.selectedCity.name, this.selectedParkingId)
-      .subscribe((data: Parking) => {
-        this.parkingSpots = data.parkingSpots;
-        this.updateParkingSpotsMarkers();
-      });
+        .subscribe((data: Parking) => {
+          this.parkingSpots = data.parkingSpots;
+          this.updateParkingSpotsMarkers();
+        });
     }
   }
 

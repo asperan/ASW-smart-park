@@ -31,7 +31,7 @@ export class ParkingDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private parkingSearchService: ParkingSearchService) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.cityName = params['cityName'];
       this.parkingId = params['id'];
@@ -43,7 +43,7 @@ export class ParkingDetailComponent implements OnInit {
           this.parkingType = parking.detail.type;
           this.parkingsAvailable = parking.parkingSpots.length - parking.parkingSpots.filter(p => p.occupied).length;
           this.pricings = this.parsePricings(parking);
-          if(parking.detail.imageUrl) {
+          if (parking.detail.imageUrl) {
             this.imageUrl = parking.detail.imageUrl;
           }
         });
@@ -54,13 +54,13 @@ export class ParkingDetailComponent implements OnInit {
   private parsePricings(parking: Parking): Pricing[] {
     const pricings: Pricing[] = [];
     const pricingMask = parking.pricing.days.split('');
-    
-    const freeDays:string[] = [];
-    const paidDays:string[] = [];
-    
+
+    const freeDays: string[] = [];
+    const paidDays: string[] = [];
+
     let index = 0;
     pricingMask.forEach((bit) => {
-      if(bit == "0") {
+      if (bit == "0") {
         freeDays.push(this.weekdays[index]);
       } else {
         paidDays.push(this.weekdays[index]);
@@ -98,8 +98,8 @@ export class ParkingDetailComponent implements OnInit {
 
     let index = 1;
     hoursBits.slice(1).forEach((bit) => {
-      if(lastBit == "0") {
-        if(bit == "0") {
+      if (lastBit == "0") {
+        if (bit == "0") {
           rangeEnd = index;
         } else {
           rangeEnd = index;
@@ -107,7 +107,7 @@ export class ParkingDetailComponent implements OnInit {
           rangeStart = index;
         }
       } else {
-        if(bit == "1") {
+        if (bit == "1") {
           rangeEnd = index;
         } else {
           rangeEnd = index;
@@ -115,12 +115,12 @@ export class ParkingDetailComponent implements OnInit {
           rangeStart = index;
         }
       }
-      
+
       lastBit = bit;
       index++;
     });
-    
-    if(lastBit == "0") {
+
+    if (lastBit == "0") {
       rangeEnd = index;
       ranges.push(this.makeRange(rangeStart, rangeEnd, false));
     } else {
@@ -139,13 +139,13 @@ export class ParkingDetailComponent implements OnInit {
   }
 
   private indexToHour(index: number): string {
-    if(index < 10) {
+    if (index < 10) {
       return "0" + index + ":00";
     } else {
       return index + ":00";
     }
   }
-  
+
   setCurrentPill(pillName: string) {
     this.currentPill = pillName;
   }

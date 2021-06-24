@@ -1,7 +1,8 @@
 import * as userRepository from "../repositories/users-repository";
 import { InsertOneWriteOpResult } from "mongodb";
 import * as vehicleService from "./vehicle-service";
-import { getUserPayments } from "../repositories/payments-repository";
+import { getUserPermanences } from "../repositories/payments-repository";
+import { citiesService } from "./city-service";
 
 export async function isUserAlreadyPresent(email: string): Promise<boolean> {
   return userRepository.isUserAlreadyPresent(email);
@@ -15,7 +16,7 @@ export async function checkUserPassword(email: string, password: string): Promis
   return userRepository.checkUserPassword(email, password);
 }
 
-export async function getVehicleUserInfo(email:string) {
+export async function getVehicleUserInfo(email: string) {
   return userRepository.getUserLinkedVehicles(email);
 }
 
@@ -40,10 +41,23 @@ export async function isVehicleLinked(email: string, vehicleId: string) {
   return userRepository.isVehicleLinked(email, vehicleId);
 }
 
-export async function getUserPaymentsInfo(email: string) {
-  return getUserPayments(email);
+export async function getUserPermanencesInfo(email: string) {
+  const permanences = await getUserPermanences(email);
+  const infos = [];
+  for (const permanence of permanences) {
+    if (permanence.parkingSpotId) {
+      infos.push({
+        parkingAddress: (await citiesService.getParkingDetailFromSpot(permanence.parkingSpotId)).address,
+        entryDate: permanence.entryDate,
+        exitDate: permanence.exitDate,
+        amountPayed: permanence.payment.amount
+      });
+    }
+  }
+  return infos;
 }
 
+// TODO: adds statistics
 export async function getUserStatistics(email: string): Promise<any> {
   return [{ name: "FirstStat", value: "1" }, { name: "Most payed", value: "150,00" }];
 }

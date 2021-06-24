@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentInfoService } from "../../user-services/payment-info.service";
 
-type PaymentObject = {
-  userEmail: string,
-  parkingId: string,
-  date: Date,
-  amount: number,
-  pending: boolean,
+type PermanenceObject = {
+  parkingAddress: string,
+  entryDate: Date,
+  exitDate: Date,
+  amountPayed: number
 };
 
 @Component({
@@ -16,14 +15,14 @@ type PaymentObject = {
 })
 export class PaymentTabComponent implements OnInit {
 
-  userPayments!: Array<PaymentObject>;
+  userPermanences!: Array<PermanenceObject>;
 
-  constructor(private paymentService: PaymentInfoService ) {
-    this.userPayments = [];
+  constructor(private paymentService: PaymentInfoService) {
+    this.userPermanences = [];
   }
 
   ngOnInit(): void {
-    this.paymentService.requestPaymentInfos().then(data => this.userPayments = data);
+    this.paymentService.requestPermanenceInfos().then(data => this.userPermanences = data);
   }
 
 }

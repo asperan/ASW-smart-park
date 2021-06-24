@@ -1,37 +1,39 @@
-<!-- TODO: add error message if present -->
+<div class="error-banner" *ngIf="errorMessage.length > 0">
+  {{ errorMessage }}
+</div>
 
 <div class="search-container">
-    <div class="input-group mb-3">
-        <input class="form-control vehicleSearch" type="text" (input)="onFilterChange($event)" placeholder="Search..."/>
-        <div class="input-group-append">
-            <button class="btn btn-success add-button" (click)="openAddVehicleForm()"><fa-icon [icon]="faPlus" title="add vehicle"></fa-icon></button>
-        </div>
+  <div class="input-group mb-3">
+    <input class="form-control vehicleSearch" type="text" (input)="onFilterChange($event)" placeholder="Search..." />
+    <div class="input-group-append">
+      <button class="btn btn-success add-button" (click)="openAddVehicleForm()">
+        <fa-icon [icon]="faPlus" title="add vehicle"></fa-icon>
+      </button>
     </div>
+  </div>
 </div>
 
 <ng-template [ngIf]="addVehicleFormVisible">
-    <form #vehiclelink="ngForm" (ngSubmit)="onAddVehicle(vehiclelink.value)" class="form-control">
-        <zxing-scanner *ngIf="qrcodeScannerVisible" (scanSuccess)="capturedQr($event)"></zxing-scanner>
-        <label class="form-label vehicle-form-label vehicle-id-label">Vehicle id <input class="form-control" type="text" name="vehicleId" [value]="vehicleFormId" ngModel required disabled/><fa-icon class="camera-icon" [icon]="faCamera" (click)="toggleQrScanner()"></fa-icon></label>
-        <label class="form-label vehicle-form-label">Vehicle name <input class="form-control" type="text" name="vehicleName" ngModel required/></label>
-        <input class="form-control" type="submit" value="Link vehicle" />
-    </form>
+  <form #vehiclelink="ngForm" (ngSubmit)="onAddVehicle(vehiclelink.value)" class="form-control">
+    <zxing-scanner *ngIf="qrcodeScannerVisible" (scanSuccess)="capturedQr($event)"></zxing-scanner>
+    <label class="form-label vehicle-form-label vehicle-id-label">Vehicle id <input class="form-control" type="text" name="vehicleId" [value]="vehicleFormId" ngModel required disabled /><fa-icon class="camera-icon" [icon]="faCamera" (click)="toggleQrScanner()"></fa-icon></label>
+    <label class="form-label vehicle-form-label">Vehicle name <input class="form-control" type="text" name="vehicleName" ngModel required /></label>
+    <input class="form-control" type="submit" value="Link vehicle" />
+  </form>
 </ng-template>
 
 <div class="error-message">
-    <p *ngIf="userVehicles.length === 0">No vehicles found :(</p>
+  <p *ngIf="userVehicles.length === 0">No vehicles found :(</p>
 </div>
 
 <div class="results-container">
-    <p *ngIf="userVehicles.length > 0 && filteredVehicleList.length === 0">No vehicles found for the given query...</p>
-    <ul>
-        <li class="vehicleListElement" *ngFor="let vehicle of filteredVehicleList">
-            <div class="vehicleElementContainer">
-                <b class="vehicle-name" (click)="toggleVehicleLink(vehicle.vehicleId)">{{vehicle.name}}</b><fa-icon class="vehicle-link-icon" *ngIf="vehicle.vehicleId === linkedVehicleId" [icon]="faLink"></fa-icon>
-                <button class="btn btn-danger remove-button" (click)="onRemoveVehicle(vehicle.vehicleId)">
-                    <fa-icon [icon]="faTrash" title="Remove vehicle"></fa-icon>
-                </button>
-            </div>
-        </li>
-    </ul>
+  <p *ngIf="userVehicles.length > 0 && filteredVehicleList.length === 0">No vehicles found for the given query...</p>
+  <ul>
+    <li class="vehicleListElement" *ngFor="let vehicle of filteredVehicleList">
+      <div class="vehicleElementContainer">
+        <b class="vehicle-name" (click)="toggleVehicleLink(vehicle.vehicleId)">{{vehicle.name}}</b><fa-icon class="vehicle-link-icon" *ngIf="vehicle.vehicleId === linkedVehicleId" [icon]="faLink"></fa-icon>
+        <button class="btn btn-danger remove-button" (click)="onRemoveVehicle(vehicle.vehicleId)"><fa-icon [icon]="faTrash" title="Remove vehicle"></fa-icon></button>
+      </div>
+    </li>
+  </ul>
 </div>

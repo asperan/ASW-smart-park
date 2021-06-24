@@ -11,7 +11,7 @@ export class SigninService {
   constructor(private http: HttpClient) { }
 
   requestSignin(credentials: UserCredentials): Promise<any> {
-    return this.http.post(environment.baseUrl + "/auth/signin", credentials, {responseType: "json"}).toPromise();
+    return this.http.post(environment.baseUrl + "/auth/signin", credentials, { responseType: "json" }).toPromise();
   }
 
 }

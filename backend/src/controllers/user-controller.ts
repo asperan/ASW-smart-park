@@ -13,66 +13,78 @@ export function getVehicleUserInfo(request: express.Request, response: express.R
 
 export function postUserVehicle(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    userService.addUserVehicle(request.userEmail, request.body.vehicleId, request.body.vehicleName).then(result => {
-      switch (result) {
-        case 1:
-          response.status(201).json({code: 0, message: "Vehicle linked to user."});  
-          break;
-        case 2:
-          response.status(200).json({code: 0, message: "Vehicle already linked to user"});
-          break;
-        default:
-          response.status(400).json({code: 1, message: "Failed to link vehicle to user."});
-          break;
-      }
-    });
+    if (request.body.vehicleId && request.body.vehicleName) {
+      userService.addUserVehicle(request.userEmail, request.body.vehicleId, request.body.vehicleName).then(result => {
+        switch (result) {
+          case 1:
+            response.status(201).json({ code: 0, message: "Vehicle linked to user." });
+            break;
+          case 2:
+            response.status(200).json({ code: 0, message: "Vehicle already linked to user" });
+            break;
+          default:
+            response.status(400).json({ code: 1, message: "Failed to link vehicle to user." });
+            break;
+        }
+      });
+    } else {
+      response.status(400).json({ code: 1, message: "Invalid form parameters." });
+    }
   }
 }
 
 export function deleteUserVehicle(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    userService.removeUserVehicle(request.userEmail, request.query.vehicleId as string).then(ok => {
-      if (ok) { response.status(200).json({code: 0, message: "Vehicle removed."}); }
-      else {response.status(400).json({code: 1, message: "Failed to remove vehicle"}); }
-    });
+    if (request.body.vehicleId) {
+      userService.removeUserVehicle(request.userEmail, request.query.vehicleId as string).then(ok => {
+        if (ok) { response.status(200).json({ code: 0, message: "Vehicle removed." }); }
+        else { response.status(400).json({ code: 1, message: "Failed to remove vehicle" }); }
+      });
+    } else {
+      response.status(400).json({ code: 1, message: "Vehicle id not sent." });
+    }
   }
 }
 
-export function getUserPaymentsInfo(request: express.Request, response: express.Response) {
-  if (request.userEmail) userService.getUserPaymentsInfo(request.userEmail).then(data => response.status(200).json(data));
+export function getUserPermanencesInfo(request: express.Request, response: express.Response) {
+  if (request.userEmail) userService.getUserPermanencesInfo(request.userEmail).then(data => response.status(200).json(data));
 }
 
-export function addUserPayment(request: express.Request, response: express.Response) {
+export function addUserPermanence(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-  paymentService.addPayment(request.userEmail, request.body.parkingId, request.body.date, request.body.amount)
-    .then(ok => {
-      if (ok) { response.status(200).json({code: 0, message: "Pending payment added."}); } 
-      else { response.status(400).json({code: 1, message: "Failed to create a new pending payment."}); }
-    });
-  }
-}
-
-export function resolvePendingPayment(request: express.Request, response: express.Response) {
-  if(request.userEmail) {
-    paymentService.resolvePendingPayment(request.userEmail, request.body.parkingId, request.body.date)
-    .then(ok => {
-      if (ok) { response.status(200).json({code: 0, message: "Pending payment resolved."}); } 
-      else { response.status(400).json({code: 1, message: "Failed to resolve the selected payment."}); }
-    });
+    if (request.body.entryDate && request.body.payedForMillis !== undefined && request.body.paymentId && request.body.amount !== undefined) {
+      vehicleService.getVehicleLinkedToUser(request.userEmail).then(vehicle => {
+        const vehicleId = vehicle.id;
+        const parkingId = vehicle.parkingId;
+        const entryDate = new Date(request.body.entryDate);
+        const payedUntilDate = new Date(entryDate.valueOf() + request.body.payedForMillis);
+        paymentService.addPermanence(request.userEmail as string, vehicleId, parkingId, request.body.entryDate, payedUntilDate, { paymentId: request.body.paymentId, amount: request.body.amount })
+          .then(ok => {
+            if (ok) { response.status(200).json({ code: 0, message: "Pending payment added." }); }
+            else { response.status(400).json({ code: 1, message: "Failed to create a new pending payment." }); }
+          });
+      });
+    } else {
+      response.status(400).json({ code: 1, message: "Request body is missing arguments." });
+    }
   }
 }
 
 export function getUserStatistics(request: express.Request, response: express.Response) {
-  if(request.userEmail) userService.getUserStatistics(request.userEmail).then(data => response.status(200).json(data));
+  if (request.userEmail) userService.getUserStatistics(request.userEmail).then(data => response.status(200).json(data));
 }
 
 export function updateLastNotificationCheck(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    userService.updateLastNotificationCheck(request.userEmail, new Date(request.body.date))
-      .then(ok => {
-        if (ok) { response.status(200).json({code: 0, message: "Date updated."}); }
-        else { response.status(400).json({code: 1, message: "Failed to update the date."}); }
-    });
+    if (request.body.date) {
+      userService.updateLastNotificationCheck(request.userEmail, new Date(request.body.date))
+        .then(ok => {
+          if (ok) { response.status(200).json({ code: 0, message: "Date updated." }); }
+          else { response.status(400).json({ code: 1, message: "Failed to update the date." }); }
+        });
+    } else {
+      response.status(400).json({ code: 1, message: "Request body is missing arguments" });
+    }
   }
 }
 
@@ -97,10 +109,14 @@ export function getVehicleLinkedToUser(request: express.Request, response: expre
 
 export function linkUserToVehicle(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    vehicleService.bindUserToVehicle(request.body.vehicleId, request.userEmail).then(ok => {
-      if (ok) { response.status(200).json({ code: 0, message: "User and vehicle linked successfully." }); }
-      else { response.status(400).json({ code: 1, message: "Failed to link user and vehicle." }); }
-    });
+    if (request.body.vehicleId) {
+      vehicleService.bindUserToVehicle(request.body.vehicleId, request.userEmail).then(ok => {
+        if (ok) { response.status(200).json({ code: 0, message: "User and vehicle linked successfully." }); }
+        else { response.status(400).json({ code: 1, message: "Failed to link user and vehicle." }); }
+      });
+    } else {
+      response.status(400).json({ code: 1, message: "Vehicle id not sent." });
+    }
   }
 }
 

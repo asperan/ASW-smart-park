@@ -10,9 +10,9 @@ describe('SearchbarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [ SearchbarComponent ]
+      declarations: [SearchbarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

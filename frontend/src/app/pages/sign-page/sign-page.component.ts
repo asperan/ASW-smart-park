@@ -22,19 +22,19 @@ export class SignPageComponent implements OnInit {
   faUser = faUser;
 
   constructor(
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private route: ActivatedRoute,
+    private router: Router,
     private signupService: SignupService,
     private signinService: SigninService,
     private tokenManagerService: TokenManagerService,
-    private notificationService: NotificationService) { 
-      this.signError = SignErrors.None.None;
-      this.errorMessage = SignErrors.errorMessages[this.signError];
-    }
+    private notificationService: NotificationService) {
+    this.signError = SignErrors.None.None;
+    this.errorMessage = SignErrors.errorMessages[this.signError];
+  }
 
   onSubmit(data: any) {
     const userCredentials: UserCredentials = { email: data.email, password: data.password };
-    if(this.isSignup) {
+    if (this.isSignup) {
       this.onSubmitSignup(userCredentials);
     } else {
       this.onSubmitSignin(userCredentials);
@@ -50,7 +50,7 @@ export class SignPageComponent implements OnInit {
     this.signupService.requestSignup(userCredentials).then(data => {
       //alert("You are subscribed! You will be redirected to sing in page where you can log in.");
       router.navigate(['signin']);
-    }, reason => this.onRequestError(reason.error));
+    }, reason => this.onRequestError(reason));
   }
 
   private onSubmitSignin(userCredentials: UserCredentials): void {
@@ -58,14 +58,14 @@ export class SignPageComponent implements OnInit {
     this.signinService.requestSignin(userCredentials).then(data => {
       this.tokenManagerService.setToken(data.access_token);
       this.notificationService.subcribeToPushNotification().then((response: any) => {
-        if(response.code === 0) {
+        if (response.code === 0) {
           router.navigate(["parking-search"]);
         } else {
           this.tokenManagerService.setToken("");
           this.onRequestError(response);
         }
       });
-    }, reason => this.onRequestError(reason.error));
+    }, reason => this.onRequestError(reason));
   }
 
   private onRequestError(error: any) {

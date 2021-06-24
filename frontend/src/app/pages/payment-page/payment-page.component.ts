@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DateService } from 'src/app/services/date.service';
 import { Parking, ParkingSearchService } from 'src/app/services/parking-search.service';
+import { PaymentInfoService } from "../user-page/user-services/payment-info.service";
+import { nanoid } from "nanoid";
 
 @Component({
   selector: 'app-payment-page',
@@ -11,7 +13,7 @@ import { Parking, ParkingSearchService } from 'src/app/services/parking-search.s
 })
 export class PaymentPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router , private parkingService: ParkingSearchService, private dateService: DateService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private parkingService: ParkingSearchService, private dateService: DateService, private paymentService: PaymentInfoService) { }
 
   faCalendar = faCalendar;
   faMinus = faMinus;
@@ -37,8 +39,10 @@ export class PaymentPageComponent implements OnInit {
   hours = 0;
   isLeapHour = false;
   minutes = 0;
-  
+
   price = 0;
+
+  errorMessage!: string;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -47,6 +51,7 @@ export class PaymentPageComponent implements OnInit {
 
       this.loadParking();
     });
+    this.errorMessage = "";
   }
 
   private parseCurrentDate() {
@@ -70,7 +75,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private updateEndDateTime() {
-    if(this.currentHours > this.upperBound) {
+    if (this.currentHours > this.upperBound) {
       this.endDateHours = "Free until 00";
       this.endDateMinutes = this.makeEndDateTime(0);
     } else {
@@ -78,12 +83,12 @@ export class PaymentPageComponent implements OnInit {
       const correctedMinutes = minutes < 60 ? this.makeMinutes(minutes) : this.makeLeapMinutes(minutes)
       const hours = this.currentHours + this.hours + (this.isLeapHour ? 1 : 0)
       this.endDateHours = this.makeEndDateTime(hours <= 24 ? hours : 24);
-      if(hours < this.upperBound) {
+      if (hours < this.upperBound) {
         this.endDateMinutes = this.makeEndDateTime(correctedMinutes);
       } else {
         this.endDateMinutes = this.makeEndDateTime(0);
       }
-    }    
+    }
   }
 
   private makeMinutes(minutes: number) {
@@ -118,8 +123,8 @@ export class PaymentPageComponent implements OnInit {
     const isNewMonutesInBounds = this.isBetween(this.minutes + ammount, 0, 45);
     const isHoursInBounds = this.isHoursInBounds(this.hours);
     const isMinutesInBounds = this.isMinutesInBounds(this.minutes + ammount);
-    
-    if (isNewMonutesInBounds && isHoursInBounds  && isMinutesInBounds) {
+
+    if (isNewMonutesInBounds && isHoursInBounds && isMinutesInBounds) {
       this.minutes += ammount;
       this.updateEndDateTime();
       this.updatePrice();
@@ -131,7 +136,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private updatePrice() {
-    if(this.parking) {
+    if (this.parking) {
       const hourlyPrice = this.parking.pricing.price;
       const hoursPrice = hourlyPrice * this.hours;
       const minutesPrice = hourlyPrice / 60 * this.minutes;
@@ -141,14 +146,14 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private findTimeUpperBound() {
-    if(this.parking) {
+    if (this.parking) {
       return this.parking.pricing.hours.lastIndexOf("1") + 1;
     }
     return 24;
   }
 
   private findTimeLowerBound() {
-    if(this.parking) {
+    if (this.parking) {
       return this.parking?.pricing.hours.indexOf("1");
     }
     return 0;
@@ -163,14 +168,27 @@ export class PaymentPageComponent implements OnInit {
   }
 
   onPayment() {
-    const price = this.price;
-    const parkingEndTime = this.endDateHours + ":" + this.endDateMinutes;
-    // TODO handle payment logic....
-    this.isPayed = true;
+    const price = this.price * 100;
+    const paymentId = nanoid(16);
+    this.paymentService.postPermanenceInfo(price, paymentId, this.hours, this.minutes).then(result => {
+      this.hideErrorMessage();
+      this.isPayed = true;
+    }).catch(reason => {
+      this.showErrorMessage(reason.error.message);
+      this.isPayed = false;
+    });
   }
 
   goBack() {
     this.router.navigate(['parking-search']);
+  }
+
+  private showErrorMessage(message: string) {
+    this.errorMessage = message;
+  }
+
+  private hideErrorMessage() {
+    this.errorMessage = "";
   }
 
 }

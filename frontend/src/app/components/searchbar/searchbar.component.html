@@ -1,7 +1,6 @@
-    <div class="d-flex justify-content-center">
-        <select #citySelect class="form-control city-search" (change)="onSearchCityChange(citySelect.value)">
-          <option value="" disabled>Choose your city</option>
-          <option *ngFor="let city of availableCities" [ngValue]="city.name">{{city.name}}</option>
-        </select>
-    </div>
-    
+<div class="d-flex justify-content-center">
+  <select #citySelect class="form-control city-search" (change)="onSearchCityChange(citySelect.value)">
+    <option value="" disabled>Choose your city</option>
+    <option *ngFor="let city of availableCities" [ngValue]="city.name">{{city.name}}</option>
+  </select>
+</div>

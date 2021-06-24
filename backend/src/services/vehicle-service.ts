@@ -1,7 +1,7 @@
 import * as vehicleRepository from "../repositories/vehicles-repository";
 import * as userRepository from "../repositories/users-repository";
 
-export async function insertVehicle(vehicleId:string) {
+export async function insertVehicle(vehicleId: string) {
   return vehicleRepository.insertVehicle(vehicleId);
 }
 
@@ -23,8 +23,8 @@ export async function unbindUserFromVehicle(vehicleId: string, userEmail: string
 
 export async function isVehicleLinkedToUser(vehicleId: string, userEmail: string): Promise<boolean> {
   const userVehicles = (await userRepository.getUserLinkedVehicles(userEmail)).linkedVehicles;
-  if(userVehicles && userVehicles.length > 0) {
-    return userVehicles.map((veh:any) => veh.vehicleId).includes(vehicleId);
+  if (userVehicles && userVehicles.length > 0) {
+    return userVehicles.map((veh: any) => veh.vehicleId).includes(vehicleId);
   } else {
     return false;
   }

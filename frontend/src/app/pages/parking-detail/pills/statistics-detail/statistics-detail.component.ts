@@ -107,11 +107,8 @@ export class StatisticsDetailComponent implements OnInit {
         this.parkingId,
         index * 2
       ).subscribe(res => {
-          this.updateReviews();
+        this.updateReviews();
       });
     }
   }
-
 }
-
-

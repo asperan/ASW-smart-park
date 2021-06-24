@@ -1,36 +1,49 @@
 <div *ngIf="!isPayed" class="payment-form">
-    <div class="title">
-        <h2>{{ parkingName }}</h2>
+  <div class="title">
+    <h2>{{ parkingName }}</h2>
+  </div>
+  <div class="error-banner" *ngIf="errorMessage.length > 0">
+    {{ errorMessage }}
+  </div>
+  <div class="d-flex justify-content-center date-container">
+    <p>
+      <fa-icon [icon]="faCalendar"></fa-icon><br />{{ currentDate }}
+    </p>
+  </div>
+  <div class="time-container">
+    <div class="button-row">
+      <button class="btn btn-primary circle-button" (click)="addHours(-1)">
+        <fa-icon [icon]="faMinus"></fa-icon>
+      </button>
+      <span class="circle-span">{{ hours }}h</span>
+      <button class="btn btn-primary circle-button" (click)="addHours(1)">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
     </div>
-    <div class="d-flex justify-content-center date-container">
-        <p><fa-icon [icon]="faCalendar"></fa-icon><br/>{{ currentDate }}</p>
+    <div class="button-row">
+      <button class="btn btn-primary circle-button" (click)="addMinutes(-15)">
+        <fa-icon [icon]="faMinus"></fa-icon>
+      </button>
+      <span class="circle-span">{{ minutes }}m</span>
+      <button class="btn btn-primary circle-button" (click)="addMinutes(15)">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
     </div>
-    <div class="time-container">
-        <div class="button-row">
-            <button class="btn btn-primary circle-button" (click)="addHours(-1)"><fa-icon [icon]="faMinus"></fa-icon></button>
-            <span class="circle-span">{{ hours }}h</span>
-            <button class="btn btn-primary circle-button" (click)="addHours(1)"><fa-icon [icon]="faPlus"></fa-icon></button>
-        </div>
-        <div class="button-row">
-            <button class="btn btn-primary circle-button" (click)="addMinutes(-15)"><fa-icon [icon]="faMinus"></fa-icon></button>
-            <span class="circle-span">{{ minutes }}m</span>
-            <button class="btn btn-primary circle-button" (click)="addMinutes(15)"><fa-icon [icon]="faPlus"></fa-icon></button>
-        </div>
-        <div class="price-container">
-            <div class="d-flex justify-content-center">
-                <span>{{ endDateHours }}:{{ endDateMinutes }}</span>
-            </div>
-            <div class="d-flex justify-content-center">
-                <span>{{ price > 0 ? price : "FREE" }} €</span>
-            </div>
-        </div>
+    <div class="price-container">
+      <div class="d-flex justify-content-center">
+        <span>{{ endDateHours }}:{{ endDateMinutes }}</span>
+      </div>
+      <div class="d-flex justify-content-center">
+        <span>{{ price > 0 ? price : "FREE" }} €</span>
+      </div>
     </div>
-    <div class="d-flex justify-content-center payment-button">
-        <button class="btn btn-primary" (click)="onPayment()">Pay Now</button>
-    </div>
+  </div>
+  <div class="d-flex justify-content-center payment-button">
+    <button class="btn btn-primary" (click)="onPayment()">Pay Now</button>
+  </div>
 </div>
 <div *ngIf="isPayed" class="congratulations-form">
-    <h1>Thank you!</h1>
-    <h3>Your parking has been payed ;)</h3>
-    <button class="btn btn-primary back-button" (click)="goBack()">Go Back</button>
+  <h1>Thank you!</h1>
+  <h3>Your parking has been payed ;)</h3>
+  <button class="btn btn-primary back-button" (click)="goBack()">Go Back</button>
 </div>

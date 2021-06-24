@@ -1,6 +1,6 @@
 <h3>Past notifications</h3>
 <div class="notification-card" *ngFor="let notification of userNotifications">
-  From: {{ notification.senderReference }}<br/>
-  {{ notification.message }}<br/>
+  From: {{ notification.senderReference }}<br />
+  {{ notification.message }}<br />
   {{ notification.date | date:"YYYY-MM-dd HH:mm:ss a (O)"}}
 </div>

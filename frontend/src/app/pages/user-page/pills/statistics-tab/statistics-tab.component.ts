@@ -15,7 +15,7 @@ export class StatisticsTabComponent implements OnInit {
 
   userStatistics!: UserStatistic[];
 
-  constructor(private userStatisticsService: UserStatisticsService) { 
+  constructor(private userStatisticsService: UserStatisticsService) {
     this.userStatistics = [];
   }
 
