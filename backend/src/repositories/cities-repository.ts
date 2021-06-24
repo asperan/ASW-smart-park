@@ -76,6 +76,12 @@ export class CitiesRepository {
         return {cityId: result.name, parkingId: parkingId};
     }
     
+    async getParkingDetailFromSpot(spotId: string) {
+        const result = await mongoClient.db.collection("cities").findOne({"parkings.parkingSpots.uid": spotId}, {projection: {parkings: 1, _id: 0}});
+        const parkingDetails = result.parkings.filter((parking: any) => parking.parkingSpots.some((spot:any) => spot.uid === spotId))[0].detail;
+        return parkingDetails;
+    }
+
     private formCityEntity(res: any): CityEntity {
         return {
             name: res.name,
