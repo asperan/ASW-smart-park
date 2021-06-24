@@ -68,17 +68,21 @@ export class ParkingDetailComponent implements OnInit {
       index++;
     });
 
-    pricings.push({
-      day: freeDays.reduce((a, b) => a + ", " + b),
-      rates: [],
-      price: 0.0
-    });
+    if(freeDays.length) {
+      pricings.push({
+        day: freeDays.length ? freeDays.reduce((a, b) => a + ", " + b) : "",
+        rates: [],
+        price: 0.0
+      });
+    }
 
-    pricings.push({
-      day: paidDays.reduce((a, b) => a + ", " + b),
-      rates: this.makePriceRangesFromMask(parking.pricing.hours),
-      price: parking.pricing.price
-    });
+    if(paidDays.length) {
+      pricings.push({
+        day: paidDays.length ? paidDays.reduce((a, b) => a + ", " + b) : "",
+        rates: this.makePriceRangesFromMask(parking.pricing.hours),
+        price: parking.pricing.price
+      });
+    }
 
     return pricings;
   }
