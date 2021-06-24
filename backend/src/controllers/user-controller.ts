@@ -13,19 +13,23 @@ export function getVehicleUserInfo(request: express.Request, response: express.R
 
 export function postUserVehicle(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    userService.addUserVehicle(request.userEmail, request.body.vehicleId, request.body.vehicleName).then(result => {
-      switch (result) {
-        case 1:
-          response.status(201).json({code: 0, message: "Vehicle linked to user."});  
-          break;
-        case 2:
-          response.status(200).json({code: 0, message: "Vehicle already linked to user"});
-          break;
-        default:
-          response.status(400).json({code: 1, message: "Failed to link vehicle to user."});
-          break;
-      }
-    });
+    if (request.body.vehicleId && request.body.vehicleName) {
+      userService.addUserVehicle(request.userEmail, request.body.vehicleId, request.body.vehicleName).then(result => {
+        switch (result) {
+          case 1:
+            response.status(201).json({ code: 0, message: "Vehicle linked to user." });
+            break;
+          case 2:
+            response.status(200).json({ code: 0, message: "Vehicle already linked to user" });
+            break;
+          default:
+            response.status(400).json({ code: 1, message: "Failed to link vehicle to user." });
+            break;
+        }
+      });
+    } else {
+      response.status(400).json({ code: 1, message: "Invalid form parameters." });
+    }
   }
 }
 
