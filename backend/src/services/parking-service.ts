@@ -40,6 +40,13 @@ export class ParkingService {
       throw "Parking not found";
     }
   }
+
+  public async getParkingStatistics(cityName: string, parkingId: number): Promise<{name: string, value: string}[]> {
+    return [
+      {name: "Statistica parcheggio 1", value: "Ciao"}, 
+      {name: "Altra stat", value: "Hello"}
+    ];
+  }
 }
 
 export const parkingService: ParkingService = new ParkingService();
