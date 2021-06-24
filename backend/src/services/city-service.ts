@@ -17,6 +17,10 @@ export class CitiesService {
         return await citiesRepository.getCityByName(name);
     }
 
+    async getCityAndParkingIdFromSpot(spotId: string): Promise<{cityId: string, parkingId: number}> {
+        return await citiesRepository.getCityAndParkingIdBySpot(spotId);
+    }
+
     async updateParkingSpotBeaconEntry(spotId: string) {
         await this.setParkingSpotStatus(spotId, true);
     }
@@ -28,7 +32,7 @@ export class CitiesService {
     private async setParkingSpotStatus(spotId: string, isOccupied: boolean) {
         const city = await this.getCityByParkingSpotId(spotId);
         const parkingIndex = this.findParkingIndex(city, spotId);
-        if (parkingIndex > 0) {
+        if (parkingIndex >= 0) {
             const spotIndex = city.parkings[parkingIndex].parkingSpots.findIndex(spot => spot.uid == spotId);
             const occupied = city.parkings[parkingIndex].parkingSpots[spotIndex].occupied;
             if (occupied != isOccupied) {
