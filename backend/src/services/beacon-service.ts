@@ -10,11 +10,6 @@ export type VehicleMessage = {
   operation: string,
 };
 
-/* 
-TODO 
-- Payment
-- Statistics
-*/
 export async function beaconEntry(vehicleId: string, spotId: string, userEmail: string) {
   await validateVehicleIsBoundToUser(vehicleId, userEmail);
   await vehicleService.addParkingToVehicle(vehicleId, spotId);
@@ -24,6 +19,7 @@ export async function beaconEntry(vehicleId: string, spotId: string, userEmail: 
 
 export async function beaconExit(vehicleId: string, spotId: string, userEmail: string) {
   await validateVehicleIsBoundToUser(vehicleId, userEmail);
+  await validateVehicleInSpot(vehicleId, spotId);
   await vehicleService.removeParkingFromVehicle(vehicleId);
   await citiesService.updateParkingSpotBeaconExit(spotId);
   await endPermanence(userEmail, vehicleId, spotId, new Date());
@@ -36,6 +32,19 @@ async function validateVehicleIsBoundToUser(vehicleId: string, userEmail: string
     throw new Error("Vehicle is not bound to user");
   }
   return;
+}
+
+async function validateVehicleInSpot(vehicleId: string, spotId: string) {
+  const vehicle = await vehicleService.getVehicleParkingSpot(vehicleId);
+  if (vehicle) {
+    if (vehicle.parkingId === spotId) {
+      return;
+    } else {
+      throw new Error("Vehicle is not on the given spot.");
+    }
+  } else {
+    throw new Error("Vehicle is not registered.");
+  }
 }
 
 async function sendPushNotification(userEmail: string, spotId: string) {
