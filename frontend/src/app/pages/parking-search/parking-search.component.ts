@@ -71,10 +71,6 @@ export class ParkingSearchComponent implements AfterViewInit {
     iconUrl: '/assets/images/park-red.png',
     iconSize: [20, 20]
   });
-  private parkingYellow = L.icon({
-    iconUrl: '/assets/images/park-yellow.png',
-    iconSize: [20, 20]
-  });
 
 
   private map: any;
@@ -216,7 +212,7 @@ export class ParkingSearchComponent implements AfterViewInit {
 
   private updateCurrentLocationModeParkings() {
     if (this.selectedCity && this.currentLocation) {
-      this.parkingSearchService.getParkingsInRadiusPoint(this.selectedCity.name, this.currentLocation.lat, this.currentLocation.lng, this.searchRange / 1000).subscribe((data) => {
+      this.parkingSearchService.getParkingsInRadiusPoint(this.selectedCity.name, this.currentLocation.lng, this.currentLocation.lat, this.searchRange / 1000).subscribe((data) => {
         this.availableParkings = data;
         this.displayParkings();
       }, (error) => {
@@ -239,18 +235,19 @@ export class ParkingSearchComponent implements AfterViewInit {
   private displayParkings() {
     this.availableParkings.forEach(parking => {
       const capacity = parking.parkingSpots.length;
-      const occupancy = capacity - parking.parkingSpots.filter(p => p.occupied).length;
+      const freeSpots = capacity - parking.parkingSpots.filter(p => p.occupied).length;
+      console.log("Id: " + parking.detail.name + " Cap: " + capacity + " Occ: " + freeSpots + " Perc: " + (freeSpots / capacity * 100))
+      const freePerc = freeSpots / capacity * 100;
       let options;
-      if (occupancy == capacity) {
+      if (freePerc == 0) {
         options = { icon: this.redMarkerIcon };
-      } else if (occupancy / capacity * 100 >= 75) {
+      } else if (freePerc <= 25) {
         options = { icon: this.yellowMarkerIcon };
       } else {
         options = { icon: this.blueMarkerIcon };
       }
-      const availableSpots = capacity - occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" + ' ">More Info</button><div>')
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + freeSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" +  ' ">More Info</button><div>')
         .addEventListener("click", e => {
           this.selectedParkingId = parking.id;
           this.parkingSpots = parking.parkingSpots;
@@ -268,8 +265,8 @@ export class ParkingSearchComponent implements AfterViewInit {
         let options;
         if (spot.occupied && spot.paidFor) {
           options = { icon: this.parkingRed };
-        } else if (spot.occupied) {
-          options = { icon: this.parkingYellow };
+        } else if(spot.occupied){
+          options = { icon: this.parkingRed };
         } else {
           options = { icon: this.parkingGreen };
         }

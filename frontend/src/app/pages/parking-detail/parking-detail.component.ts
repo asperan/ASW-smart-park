@@ -38,6 +38,7 @@ export class ParkingDetailComponent implements OnInit {
 
       if (this.cityName && this.parkingId) {
         this.parkingSearchService.getParkingByCityNameAndParkingId(this.cityName, this.parkingId).subscribe((parking: Parking) => {
+          console.log(JSON.stringify(parking));
           this.parkingName = parking.detail.name;
           this.parkingAddress = parking.detail.address;
           this.parkingType = parking.detail.type;
@@ -68,17 +69,21 @@ export class ParkingDetailComponent implements OnInit {
       index++;
     });
 
-    pricings.push({
-      day: freeDays.reduce((a, b) => a + ", " + b),
-      rates: [],
-      price: 0.0
-    });
+    if(freeDays.length) {
+      pricings.push({
+        day: freeDays.length ? freeDays.reduce((a, b) => a + ", " + b) : "",
+        rates: [],
+        price: 0.0
+      });
+    }
 
-    pricings.push({
-      day: paidDays.reduce((a, b) => a + ", " + b),
-      rates: this.makePriceRangesFromMask(parking.pricing.hours),
-      price: parking.pricing.price
-    });
+    if(paidDays.length) {
+      pricings.push({
+        day: paidDays.length ? paidDays.reduce((a, b) => a + ", " + b) : "",
+        rates: this.makePriceRangesFromMask(parking.pricing.hours),
+        price: parking.pricing.price
+      });
+    }
 
     return pricings;
   }
