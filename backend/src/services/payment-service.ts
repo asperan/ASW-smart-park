@@ -18,7 +18,9 @@ function createRemainderNotificationTimeouts(email: string, entryDate: Date, pay
   if (!notificationTimeouts.has(email)) {
     notificationTimeouts.set(email, []);
   }
-  remainderIntervalMinutes.forEach(minutes => {
+  remainderIntervalMinutes
+  .filter(minutes => (payedUntil.valueOf() - entryDate.valueOf()) > (minutes * 60 * 1000))
+  .forEach(minutes => {
     notificationTimeouts.get(email)?.push(setTimeout(() => {
       notificationService.sendNotification(email, notificationService.buildRemainderNotificationPayload(minutes > 0 ? "Your parking payment expires in " + minutes + "minutes" : "Your parking payment has expired!", {}));
     }, (payedUntil.valueOf() - entryDate.valueOf()) - minutes * 60 * 1000));
