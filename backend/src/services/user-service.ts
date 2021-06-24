@@ -1,7 +1,7 @@
 import * as userRepository from "../repositories/users-repository";
 import { InsertOneWriteOpResult } from "mongodb";
 import * as vehicleService from "./vehicle-service";
-import { getUserPermanences } from "../repositories/payments-repository";
+import { getUserPermanences, countUserPermanences, getMostPayed, getUsedVehicles, getAveragePermanenceTime } from "../repositories/payments-repository";
 import { citiesService } from "./city-service";
 
 export async function isUserAlreadyPresent(email: string): Promise<boolean> {
@@ -57,9 +57,19 @@ export async function getUserPermanencesInfo(email: string) {
   return infos;
 }
 
-// TODO: adds statistics
 export async function getUserStatistics(email: string): Promise<any> {
-  return [{ name: "FirstStat", value: "1" }, { name: "Most payed", value: "150,00" }];
+  const numOfPermanences = await countUserPermanences(email);
+  const mostPayed = await getMostPayed(email);
+  const mostUsedVehicles = await getUsedVehicles(email);
+  const mostUsedVehicle = mostUsedVehicles.reduce((pv, cv) => cv.vehicleCount > pv.vehicleCount ? cv : pv , {_id: null, vehicleCount: 0});
+  const averagePermanenceTime = await getAveragePermanenceTime(email);
+  const averageTimeString = averagePermanenceTime.length > 0 ? computeAverageTimeString(averagePermanenceTime[0].avgTime) : "0";
+  return [
+    { name: "Totale parcheggi", value: "" + numOfPermanences.numOfPermanences}, 
+    { name: "Parcheggio più costoso", value: toPriceString(mostPayed.maxPayment) },
+    { name: "Veicolo più usato", value: await getVehicleName(email, mostUsedVehicle._id) },
+    { name: "Tempo di permanenza medio", value: averageTimeString },
+  ];
 }
 
 export async function updateLastNotificationCheck(email: string, date: Date) {
@@ -68,4 +78,24 @@ export async function updateLastNotificationCheck(email: string, date: Date) {
 
 export async function updateUserSubscription(email: string, subscriptionObject: any) {
   return userRepository.setUserSubscription(email, subscriptionObject);
+}
+
+function toPriceString(price: number): string {
+  return "" + Math.floor(price / 100) + "." + price % 100 + "€";
+}
+
+async function getVehicleName(email: string, vehicleId: string): Promise<string> {
+  const linkedVehiclesWithId = (await userRepository.getUserLinkedVehicles(email)).linkedVehicles.filter((vehicle: any) => vehicle.vehicleId === vehicleId);
+  if (linkedVehiclesWithId.length > 0) {
+    return linkedVehiclesWithId[0].name;
+  } else {
+    return "Veicolo eliminato";
+  }
+}
+
+function computeAverageTimeString(millis: number): string {
+  const minutes = Math.floor(millis / (1000 * 60));
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return "" + hours + ":" + remainingMinutes;
 }
