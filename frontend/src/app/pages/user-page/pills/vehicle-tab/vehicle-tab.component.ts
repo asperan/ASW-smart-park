@@ -17,6 +17,7 @@ export class VehicleTabComponent implements OnInit {
   qrcodeScannerVisible: boolean;
   vehicleFormId: string;
   linkedVehicleId: string;
+  errorMessage: string;
 
   userVehicles: Array<{vehicleId: string, name: string}>;
   filteredVehicleList: Array<{vehicleId: string, name: string}>;
@@ -28,6 +29,7 @@ export class VehicleTabComponent implements OnInit {
     this.qrcodeScannerVisible = false;
     this.vehicleFormId = "";
     this.linkedVehicleId = "";
+    this.errorMessage = "";
   }
 
   ngOnInit(): void {
@@ -55,12 +57,11 @@ export class VehicleTabComponent implements OnInit {
     this.qrcodeScannerVisible = false;
   }
 
-  // TODO: check for errors
-
   onAddVehicle(data: any) {
-    this.vehicleInfoService.addVehicleForUser(this.vehicleFormId, data.vehicleName).then(_value => {
-      this.updateVehicleList();
-    }).finally(() => {
+    this.vehicleInfoService.addVehicleForUser(this.vehicleFormId, data.vehicleName)
+    .then(_value => this.updateVehicleList())
+    .catch(reason => this.showErrorMessage(reason.error.message))
+    .finally(() => {
       this.addVehicleFormVisible = false;
       this.qrcodeScannerVisible = false;
     });
@@ -69,7 +70,7 @@ export class VehicleTabComponent implements OnInit {
   onRemoveVehicle(vehicleId: string) {
     this.vehicleInfoService.removeVehicleForUser(vehicleId).then(result => {
       this.updateVehicleList();
-    });
+    }).catch(reason => this.showErrorMessage(reason.error.message));
   }
 
   toggleVehicleLink(vehicleId: string) {
@@ -81,11 +82,11 @@ export class VehicleTabComponent implements OnInit {
   }
 
   private linkToVehicle(vehicleId: string) {
-    this.vehicleInfoService.bindVehicleToUser(vehicleId).then(_result => this.updateVehicleList());
+    this.vehicleInfoService.bindVehicleToUser(vehicleId).then(_result => this.updateVehicleList()).catch(reason => this.showErrorMessage(reason.error.message));
   }
 
   private unlinkVehicle(vehicleId: string) {
-    this.vehicleInfoService.unbindVehicleFromUser(vehicleId).then(_result => this.updateVehicleList());
+    this.vehicleInfoService.unbindVehicleFromUser(vehicleId).then(_result => this.updateVehicleList()).catch(reason => this.showErrorMessage(reason.error.message));
   }
 
   private updateVehicleList() {
@@ -96,6 +97,15 @@ export class VehicleTabComponent implements OnInit {
     this.vehicleInfoService.getLinkedVehicle().then(response => {
       this.linkedVehicleId = response.vehicleId;
     });
+    this.hideErrorMessage();
+  }
+
+  private showErrorMessage(message: string) {
+    this.errorMessage = message;
+  }
+
+  private hideErrorMessage() {
+    this.errorMessage = "";
   }
 
 }
