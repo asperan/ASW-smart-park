@@ -52,7 +52,7 @@ export function getUserPermanencesInfo(request: express.Request, response: expre
 
 export function addUserPermanence(request: express.Request, response: express.Response) {
   if (request.userEmail) {
-    if (request.body.entryDate && request.body.payedForMillis && request.body.paymentId && request.body.amount) {
+    if (request.body.entryDate && request.body.payedForMillis !== undefined && request.body.paymentId && request.body.amount !== undefined) {
       vehicleService.getVehicleLinkedToUser(request.userEmail).then(vehicle => {
         const vehicleId = vehicle.id;
         const parkingId = vehicle.parkingId;
