@@ -45,12 +45,14 @@ export async function getUserPermanencesInfo(email: string) {
   const permanences = await getUserPermanences(email);
   const infos = [];
   for (const permanence of permanences) {
-    infos.push({
-      parkingAddress: (await citiesService.getParkingDetailFromSpot(permanence.parkingSpotId)).address,
-      entryDate: permanence.entryDate,
-      exitDate: permanence.exitDate,
-      amountPayed: permanence.payment.amount
-    });
+    if (permanence.parkingSpotId) {
+      infos.push({
+        parkingAddress: (await citiesService.getParkingDetailFromSpot(permanence.parkingSpotId)).address,
+        entryDate: permanence.entryDate,
+        exitDate: permanence.exitDate,
+        amountPayed: permanence.payment.amount
+      });
+    }
   }
   return infos;
 }
