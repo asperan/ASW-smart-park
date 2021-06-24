@@ -2,6 +2,11 @@
   <div class="reviews-container">
     <div class="d-flex justify-content-center">
       <div class="content text-center">
+        <div class="statistics">
+          <div *ngFor="let stat of parkingStatistics">
+            {{ stat.name }}: {{ stat.value }}
+          </div>
+        </div>
         <div class="ratings">
           <h3>Your Rating</h3>
           <span class="product-rating">{{ userRating.toFixed(1) }}</span><span>/5</span>
