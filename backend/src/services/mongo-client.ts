@@ -1,4 +1,4 @@
-import MongoClient, { Db, Decimal128 } from "mongodb";
+import MongoClient, { Db } from "mongodb";
 
 class MongoWrapper {
 

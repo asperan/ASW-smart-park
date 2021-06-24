@@ -2,7 +2,7 @@ import express from "express";
 import { body } from "express-validator";
 import * as messageController from "../controllers/message-controller";
 import { validateAccessToken } from "../middleware/token-auth";
-import { make400ErrorResponse, make500ErrorResponse } from '../services/response-utils';
+import { make500ErrorResponse } from '../services/response-utils';
 
 const routes = express.Router();
 

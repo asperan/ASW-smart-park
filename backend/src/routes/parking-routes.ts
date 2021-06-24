@@ -1,5 +1,5 @@
 import express from 'express';
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
 import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../services/validation';
 import * as parkingController from "../controllers/parking-controller";
 import { make500ErrorResponse } from '../services/response-utils';

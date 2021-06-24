@@ -1,4 +1,3 @@
-import { Collection } from "mongodb";
 import { mongoClient } from "../services/mongo-client";
 
 export type CityEntity = {
