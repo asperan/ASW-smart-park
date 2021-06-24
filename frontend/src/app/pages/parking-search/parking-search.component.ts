@@ -135,11 +135,11 @@ export class ParkingSearchComponent implements AfterViewInit {
       this.selectedCity = city;
       this.selectedCityLocation = new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude);
       this.updateGraphics();
-      if(shouldPan) {
+      if (shouldPan) {
         this.map.panTo(new L.LatLng(this.selectedCity.latitude, this.selectedCity.longitude));
       }
-  });
-}
+    });
+  }
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -170,9 +170,9 @@ export class ParkingSearchComponent implements AfterViewInit {
     this.locatePosition();
 
     interval(8000)
-    .subscribe(() => {
-      this.updateParkingsStatus();
-    });
+      .subscribe(() => {
+        this.updateParkingsStatus();
+      });
   }
 
   private updateGraphics() {
@@ -250,7 +250,7 @@ export class ParkingSearchComponent implements AfterViewInit {
       }
       const availableSpots = capacity - occupancy;
       const marker = L.marker(new L.LatLng(parking.latitude, parking.longitude), options)
-        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" +  ' ">More Info</button><div>')
+        .bindPopup('<div class="d-flex justify-content-center"><b> Free Spots: ' + availableSpots + '</div></p><div class="d-flex justify-content-center"><button class="btn-info popup-button" onclick="window.location.href=' + "'" + "/parking/" + this.selectedCity?.name + "/" + parking.id + "'" + ' ">More Info</button><div>')
         .addEventListener("click", e => {
           this.selectedParkingId = parking.id;
           this.parkingSpots = parking.parkingSpots;
@@ -268,7 +268,7 @@ export class ParkingSearchComponent implements AfterViewInit {
         let options;
         if (spot.occupied && spot.paidFor) {
           options = { icon: this.parkingRed };
-        } else if(spot.occupied){
+        } else if (spot.occupied) {
           options = { icon: this.parkingYellow };
         } else {
           options = { icon: this.parkingGreen };
@@ -310,12 +310,12 @@ export class ParkingSearchComponent implements AfterViewInit {
   }
 
   private updateParkingsStatus() {
-    if(this.selectedCity && this.selectedParkingId) {
+    if (this.selectedCity && this.selectedParkingId) {
       this.parkingSearchService.getParkingByCityNameAndParkingId(this.selectedCity.name, this.selectedParkingId)
-      .subscribe((data: Parking) => {
-        this.parkingSpots = data.parkingSpots;
-        this.updateParkingSpotsMarkers();
-      });
+        .subscribe((data: Parking) => {
+          this.parkingSpots = data.parkingSpots;
+          this.updateParkingSpotsMarkers();
+        });
     }
   }
 

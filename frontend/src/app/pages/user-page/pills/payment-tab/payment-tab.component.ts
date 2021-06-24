@@ -17,7 +17,7 @@ export class PaymentTabComponent implements OnInit {
 
   userPermanences!: Array<PermanenceObject>;
 
-  constructor(private paymentService: PaymentInfoService ) {
+  constructor(private paymentService: PaymentInfoService) {
     this.userPermanences = [];
   }
 

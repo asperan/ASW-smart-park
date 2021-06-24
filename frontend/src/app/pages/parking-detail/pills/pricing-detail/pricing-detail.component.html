@@ -1,22 +1,22 @@
 <div class="pricing-container">
-    <div class="pricing" *ngFor="let pricing of pricings">
-      <div class="pricing-heading">
-        <b>{{ pricing.day }}</b>
-      </div>
-      <div *ngIf="pricing.price != 0.0">
-        <div *ngFor="let rate of pricing.rates">
-          <div class="price-range" *ngIf="rate.isPaid">
-            <p>{{ rate.range }} : {{ pricing.price }}€ per hour</p>
-          </div>
-          <div class="price-range" *ngIf="!rate.isPaid">
-            <p>{{ rate.range }} : Free</p>
-          </div>
+  <div class="pricing" *ngFor="let pricing of pricings">
+    <div class="pricing-heading">
+      <b>{{ pricing.day }}</b>
+    </div>
+    <div *ngIf="pricing.price != 0.0">
+      <div *ngFor="let rate of pricing.rates">
+        <div class="price-range" *ngIf="rate.isPaid">
+          <p>{{ rate.range }} : {{ pricing.price }}€ per hour</p>
         </div>
-      </div>
-      <div *ngIf="pricing.price == 0.0">
-        <div class="price-range">
-          <p>Free</p>
+        <div class="price-range" *ngIf="!rate.isPaid">
+          <p>{{ rate.range }} : Free</p>
         </div>
       </div>
     </div>
+    <div *ngIf="pricing.price == 0.0">
+      <div class="price-range">
+        <p>Free</p>
+      </div>
+    </div>
   </div>
+</div>

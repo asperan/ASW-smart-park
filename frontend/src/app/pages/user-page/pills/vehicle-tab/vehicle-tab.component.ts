@@ -8,7 +8,7 @@ import { VehicleInfoService } from '../../user-services/vehicle-info.service';
   styleUrls: ['./vehicle-tab.component.css']
 })
 export class VehicleTabComponent implements OnInit {
-  
+
   faTrash = faTrash;
   faPlus = faPlus;
   faCamera = faCamera;
@@ -19,10 +19,10 @@ export class VehicleTabComponent implements OnInit {
   linkedVehicleId: string;
   errorMessage: string;
 
-  userVehicles: Array<{vehicleId: string, name: string}>;
-  filteredVehicleList: Array<{vehicleId: string, name: string}>;
+  userVehicles: Array<{ vehicleId: string, name: string }>;
+  filteredVehicleList: Array<{ vehicleId: string, name: string }>;
 
-  constructor(private vehicleInfoService: VehicleInfoService) { 
+  constructor(private vehicleInfoService: VehicleInfoService) {
     this.userVehicles = [];
     this.filteredVehicleList = this.userVehicles;
     this.addVehicleFormVisible = false;
@@ -59,12 +59,12 @@ export class VehicleTabComponent implements OnInit {
 
   onAddVehicle(data: any) {
     this.vehicleInfoService.addVehicleForUser(this.vehicleFormId, data.vehicleName)
-    .then(_value => this.updateVehicleList())
-    .catch(reason => this.showErrorMessage(reason.error.message))
-    .finally(() => {
-      this.addVehicleFormVisible = false;
-      this.qrcodeScannerVisible = false;
-    });
+      .then(_value => this.updateVehicleList())
+      .catch(reason => this.showErrorMessage(reason.error.message))
+      .finally(() => {
+        this.addVehicleFormVisible = false;
+        this.qrcodeScannerVisible = false;
+      });
   }
 
   onRemoveVehicle(vehicleId: string) {
@@ -74,10 +74,10 @@ export class VehicleTabComponent implements OnInit {
   }
 
   toggleVehicleLink(vehicleId: string) {
-    if (vehicleId === this.linkedVehicleId) { 
-      this.unlinkVehicle(vehicleId); 
-    } else { 
-      this.linkToVehicle(vehicleId); 
+    if (vehicleId === this.linkedVehicleId) {
+      this.unlinkVehicle(vehicleId);
+    } else {
+      this.linkToVehicle(vehicleId);
     }
   }
 

@@ -13,7 +13,7 @@ import { nanoid } from "nanoid";
 })
 export class PaymentPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router , private parkingService: ParkingSearchService, private dateService: DateService, private paymentService: PaymentInfoService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private parkingService: ParkingSearchService, private dateService: DateService, private paymentService: PaymentInfoService) { }
 
   faCalendar = faCalendar;
   faMinus = faMinus;
@@ -39,7 +39,7 @@ export class PaymentPageComponent implements OnInit {
   hours = 0;
   isLeapHour = false;
   minutes = 0;
-  
+
   price = 0;
 
   errorMessage!: string;
@@ -75,7 +75,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private updateEndDateTime() {
-    if(this.currentHours > this.upperBound) {
+    if (this.currentHours > this.upperBound) {
       this.endDateHours = "Free until 00";
       this.endDateMinutes = this.makeEndDateTime(0);
     } else {
@@ -83,12 +83,12 @@ export class PaymentPageComponent implements OnInit {
       const correctedMinutes = minutes < 60 ? this.makeMinutes(minutes) : this.makeLeapMinutes(minutes)
       const hours = this.currentHours + this.hours + (this.isLeapHour ? 1 : 0)
       this.endDateHours = this.makeEndDateTime(hours <= 24 ? hours : 24);
-      if(hours < this.upperBound) {
+      if (hours < this.upperBound) {
         this.endDateMinutes = this.makeEndDateTime(correctedMinutes);
       } else {
         this.endDateMinutes = this.makeEndDateTime(0);
       }
-    }    
+    }
   }
 
   private makeMinutes(minutes: number) {
@@ -123,8 +123,8 @@ export class PaymentPageComponent implements OnInit {
     const isNewMonutesInBounds = this.isBetween(this.minutes + ammount, 0, 45);
     const isHoursInBounds = this.isHoursInBounds(this.hours);
     const isMinutesInBounds = this.isMinutesInBounds(this.minutes + ammount);
-    
-    if (isNewMonutesInBounds && isHoursInBounds  && isMinutesInBounds) {
+
+    if (isNewMonutesInBounds && isHoursInBounds && isMinutesInBounds) {
       this.minutes += ammount;
       this.updateEndDateTime();
       this.updatePrice();
@@ -136,7 +136,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private updatePrice() {
-    if(this.parking) {
+    if (this.parking) {
       const hourlyPrice = this.parking.pricing.price;
       const hoursPrice = hourlyPrice * this.hours;
       const minutesPrice = hourlyPrice / 60 * this.minutes;
@@ -146,14 +146,14 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private findTimeUpperBound() {
-    if(this.parking) {
+    if (this.parking) {
       return this.parking.pricing.hours.lastIndexOf("1") + 1;
     }
     return 24;
   }
 
   private findTimeLowerBound() {
-    if(this.parking) {
+    if (this.parking) {
       return this.parking?.pricing.hours.indexOf("1");
     }
     return 0;
