@@ -34,5 +34,4 @@ routes.get(
   }
 );
 
-
 export default routes;

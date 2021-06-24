@@ -2,15 +2,15 @@ import { InsertOneWriteOpResult } from "mongodb";
 import { mongoClient } from "../services/mongo-client";
 
 export async function insertVehicle(vehicleId: string): Promise<InsertOneWriteOpResult<any>> {
-  return await mongoClient.db.collection("vehicles").insertOne({id: vehicleId});
+  return await mongoClient.db.collection("vehicles").insertOne({ id: vehicleId });
 }
 
 export async function isVehiclePresent(vehicleId: string): Promise<boolean> {
-  return (await mongoClient.db.collection("vehicles").countDocuments({id: vehicleId})) === 1;
+  return (await mongoClient.db.collection("vehicles").countDocuments({ id: vehicleId })) === 1;
 }
 
 export async function getVehicleLinkedToUser(userEmail: string): Promise<any> {
-  return await mongoClient.db.collection("vehicles").findOne({userEmail: userEmail});
+  return await mongoClient.db.collection("vehicles").findOne({ userEmail: userEmail });
 }
 
 export async function bindUserToVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
@@ -19,12 +19,12 @@ export async function bindUserToVehicle(vehicleId: string, userEmail: string): P
 }
 
 export async function unbindUserFromVehicle(vehicleId: string, userEmail: string): Promise<boolean> {
-  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId, userEmail: userEmail}, {$unset: {userEmail: ""}})).ok === 1;
+  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId, userEmail: userEmail }, { $unset: { userEmail: "" } })).ok === 1;
 }
 
 export async function isVehicleBoundToUser(vehicleId: string, userEmail: string): Promise<boolean> {
-  const vehicle = await mongoClient.db.collection("vehicles").findOne({id: vehicleId});
-  if(vehicle) {
+  const vehicle = await mongoClient.db.collection("vehicles").findOne({ id: vehicleId });
+  if (vehicle) {
     return vehicle.userEmail == userEmail;
   } else {
     return false;
@@ -32,9 +32,9 @@ export async function isVehicleBoundToUser(vehicleId: string, userEmail: string)
 }
 
 export async function addParkingToVehicle(vehicleId: string, parkingId: string): Promise<boolean> {
-  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId}, {$set: {parkingId: parkingId}})).ok === 1;
+  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId }, { $set: { parkingId: parkingId } })).ok === 1;
 }
 
 export async function removeParkingFromVehicle(vehicleId: string) {
-  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({id: vehicleId}, {$unset: {parkingId: ""}})).ok === 1;
+  return (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId }, { $unset: { parkingId: "" } })).ok === 1;
 }

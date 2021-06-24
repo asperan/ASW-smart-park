@@ -10,21 +10,21 @@ export function signupUser(request: express.Request, response: express.Response)
   ) {
     userService.isUserAlreadyPresent(userEmail).then(value => {
       if (value) {
-        response.status(400).json({code: 3, message: "The inserted email is already taken."});
+        response.status(400).json({ code: 3, message: "The inserted email is already taken." });
       } else {
         const userSalt = userAuth.generateNewSalt();
         const hashedPassword = userAuth.hashPassword(userPassword, userSalt);
         userService.insertNewUser(userEmail, userSalt, hashedPassword).then(insertResult => {
           if (insertResult.result.ok) {
-            response.status(200).json({code: 0, message: "User signed up correctly."});
+            response.status(200).json({ code: 0, message: "User signed up correctly." });
           } else {
-            response.status(500).json({code: 1, message: "Failed to insert new user."});
+            response.status(500).json({ code: 1, message: "Failed to insert new user." });
           }
         });
       }
     })
   } else {
-    response.status(400).json({code: 2, message: "Email or password have not the correct format."});
+    response.status(400).json({ code: 2, message: "Email or password have not the correct format." });
   }
 }
 

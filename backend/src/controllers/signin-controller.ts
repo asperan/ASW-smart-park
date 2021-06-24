@@ -2,7 +2,7 @@ import express from "express";
 import * as userService from "../services/user-service";
 import * as userAuth from "../services/user-auth";
 
-export function signinUser(request : express.Request, response: express.Response) {
+export function signinUser(request: express.Request, response: express.Response) {
   if (request.body.email && request.body.password) {
     const userEmail = request.body.email;
     const userPassword = request.body.password;

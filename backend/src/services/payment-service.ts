@@ -4,7 +4,7 @@ import * as notificationService from "./notification-service";
 const remainderIntervalMinutes = [15, 10, 5, 1, 0];
 const notificationTimeouts: Map<string, Array<NodeJS.Timeout>> = new Map();
 
-export async function addPermanence(email: string, vehicleId: string,  parkingId: string, entryDate: Date, payedUntil: Date, payment: {paymentId: string, amount: number}): Promise<boolean> {
+export async function addPermanence(email: string, vehicleId: string, parkingId: string, entryDate: Date, payedUntil: Date, payment: { paymentId: string, amount: number }): Promise<boolean> {
   createRemainderNotificationTimeouts(email, entryDate, payedUntil);
   return paymentRepository.addPermanence(email, vehicleId, parkingId, entryDate, payedUntil, payment);
 }
@@ -19,12 +19,12 @@ function createRemainderNotificationTimeouts(email: string, entryDate: Date, pay
     notificationTimeouts.set(email, []);
   }
   remainderIntervalMinutes
-  .filter(minutes => (payedUntil.valueOf() - entryDate.valueOf()) > (minutes * 60 * 1000))
-  .forEach(minutes => {
-    notificationTimeouts.get(email)?.push(setTimeout(() => {
-      notificationService.sendNotification(email, notificationService.buildRemainderNotificationPayload(minutes > 0 ? "Your parking payment expires in " + minutes + "minutes" : "Your parking payment has expired!", {}));
-    }, (payedUntil.valueOf() - entryDate.valueOf()) - minutes * 60 * 1000));
-  });
+    .filter(minutes => (payedUntil.valueOf() - entryDate.valueOf()) > (minutes * 60 * 1000))
+    .forEach(minutes => {
+      notificationTimeouts.get(email)?.push(setTimeout(() => {
+        notificationService.sendNotification(email, notificationService.buildRemainderNotificationPayload(minutes > 0 ? "Your parking payment expires in " + minutes + "minutes" : "Your parking payment has expired!", {}));
+      }, (payedUntil.valueOf() - entryDate.valueOf()) - minutes * 60 * 1000));
+    });
 }
 
 function deleteRemainingTimeouts(email: string) {

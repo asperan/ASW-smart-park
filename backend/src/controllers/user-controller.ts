@@ -41,7 +41,7 @@ export function deleteUserVehicle(request: express.Request, response: express.Re
         else { response.status(400).json({ code: 1, message: "Failed to remove vehicle" }); }
       });
     } else {
-      response.status(400).json({code: 1, message: "Vehicle id not sent."});
+      response.status(400).json({ code: 1, message: "Vehicle id not sent." });
     }
   }
 }
@@ -65,13 +65,13 @@ export function addUserPermanence(request: express.Request, response: express.Re
           });
       });
     } else {
-      response.status(400).json({code: 1, message: "Request body is missing arguments."});
+      response.status(400).json({ code: 1, message: "Request body is missing arguments." });
     }
   }
 }
 
 export function getUserStatistics(request: express.Request, response: express.Response) {
-  if(request.userEmail) userService.getUserStatistics(request.userEmail).then(data => response.status(200).json(data));
+  if (request.userEmail) userService.getUserStatistics(request.userEmail).then(data => response.status(200).json(data));
 }
 
 export function updateLastNotificationCheck(request: express.Request, response: express.Response) {
@@ -83,7 +83,7 @@ export function updateLastNotificationCheck(request: express.Request, response: 
           else { response.status(400).json({ code: 1, message: "Failed to update the date." }); }
         });
     } else {
-      response.status(400).json({code: 1, message: "Request body is missing arguments"});
+      response.status(400).json({ code: 1, message: "Request body is missing arguments" });
     }
   }
 }
@@ -115,7 +115,7 @@ export function linkUserToVehicle(request: express.Request, response: express.Re
         else { response.status(400).json({ code: 1, message: "Failed to link user and vehicle." }); }
       });
     } else {
-      response.status(400).json({code: 1, message: "Vehicle id not sent."});
+      response.status(400).json({ code: 1, message: "Vehicle id not sent." });
     }
   }
 }
