@@ -41,6 +41,8 @@ export class PaymentPageComponent implements OnInit {
   
   price = 0;
 
+  errorMessage!: string;
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.cityId = params['cityName'];
@@ -48,6 +50,7 @@ export class PaymentPageComponent implements OnInit {
 
       this.loadParking();
     });
+    this.errorMessage = "";
   }
 
   private parseCurrentDate() {
@@ -156,16 +159,24 @@ export class PaymentPageComponent implements OnInit {
     const price = this.price * 100;
     const paymentId = nanoid(16);
     this.paymentService.postPermanenceInfo(price, paymentId, this.hours, this.minutes).then(result => {
+      this.hideErrorMessage();
       this.isPayed = true;
     }).catch(reason => {
-      console.log(reason);
-      // TODO: error message
+      this.showErrorMessage(reason.error.message);
       this.isPayed = false;
     });
   }
 
   goBack() {
     this.router.navigate(['parking-search']);
+  }
+
+  private showErrorMessage(message: string) {
+    this.errorMessage = message;
+  }
+
+  private hideErrorMessage() {
+    this.errorMessage = "";
   }
 
 }
