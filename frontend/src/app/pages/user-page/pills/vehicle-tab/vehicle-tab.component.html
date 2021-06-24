@@ -1,4 +1,6 @@
-<!-- TODO: add error message if present -->
+<div class="error-banner" *ngIf="errorMessage.length > 0">
+    {{ errorMessage }}
+</div>
 
 <div class="search-container">
     <div class="input-group mb-3">
