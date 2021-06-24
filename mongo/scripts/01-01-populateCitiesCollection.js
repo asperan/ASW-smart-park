@@ -92,7 +92,7 @@ db.cities.insertMany([{
                 }
             },
             {
-                "id": NumberInt(4),
+                "id": NumberInt(3),
                 "longitude": NumberDecimal("12.247764"),
                 "latitude": NumberDecimal("44.143680"),
                 "parkingSpots": [
@@ -130,7 +130,7 @@ db.cities.insertMany([{
         "latitude": NumberDecimal("44.059444"),
         "parkings": [
             {
-                "id": NumberInt(1),
+                "id": NumberInt(4),
                 "longitude": NumberDecimal("12.575013443421387"),
                 "latitude": NumberDecimal("44.07618528605304"),
                 "parkingSpots": [
@@ -142,7 +142,7 @@ db.cities.insertMany([{
                         "longitude": NumberDecimal("12.575080403801849"),
                     },
                     {
-                        "uid": "rim-port-1",
+                        "uid": "rim-port-2",
                         "occupied": false,
                         "paidFor": false,
                         "latitude": NumberDecimal("44.07604662921078"),
@@ -150,8 +150,8 @@ db.cities.insertMany([{
                     }
                 ],
                 "detail": {
-                    "name": "Piazza A. Moro",
-                    "address": "Piazza Aldo Moro, 47522 Cesena FC",
+                    "name": "Rimini Porto",
+                    "address": "Via Destra Del Porto, 12, Rimini RN, 47923",
                     "type": "open park"
                 },
                 "pricing": {

@@ -38,7 +38,6 @@ export class ParkingDetailComponent implements OnInit {
 
       if (this.cityName && this.parkingId) {
         this.parkingSearchService.getParkingByCityNameAndParkingId(this.cityName, this.parkingId).subscribe((parking: Parking) => {
-          console.log(JSON.stringify(parking));
           this.parkingName = parking.detail.name;
           this.parkingAddress = parking.detail.address;
           this.parkingType = parking.detail.type;
