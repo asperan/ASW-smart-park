@@ -31,5 +31,5 @@
 </div>
 
 <app-pricing-detail *ngIf="currentPill == 'pricing'" [pricings]=pricings></app-pricing-detail>
-<app-statistics-detail *ngIf="currentPill == 'statistics'" [parkingId]=parkingId></app-statistics-detail>
+<app-statistics-detail *ngIf="currentPill == 'statistics'" [parkingId]=parkingId [cityName]=cityName></app-statistics-detail>
 <app-support-detail *ngIf="currentPill == 'support'"></app-support-detail>
