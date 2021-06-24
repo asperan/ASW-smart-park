@@ -1,4 +1,3 @@
-
 import { ParkingEntity, ParkingPricingEntity, ParkingSpotEntity } from "../repositories/cities-repository";
 import { Coordinates } from "../services/geo-service";
 import { parkingService } from "../services/parking-service";
