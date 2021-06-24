@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentInfoService } from "../../user-services/payment-info.service";
 
-// TODO: update permanence object
-type PaymentObject = {
-  userEmail: string,
-  parkingId: string,
-  date: Date,
-  amount: number,
-  pending: boolean,
+type PermanenceObject = {
+  parkingAddress: string,
+  entryDate: Date,
+  exitDate: Date,
+  amountPayed: number
 };
 
 @Component({
@@ -17,7 +15,7 @@ type PaymentObject = {
 })
 export class PaymentTabComponent implements OnInit {
 
-  userPermanences!: Array<any>;
+  userPermanences!: Array<PermanenceObject>;
 
   constructor(private paymentService: PaymentInfoService ) {
     this.userPermanences = [];
