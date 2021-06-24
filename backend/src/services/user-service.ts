@@ -2,6 +2,7 @@ import * as userRepository from "../repositories/users-repository";
 import { InsertOneWriteOpResult } from "mongodb";
 import * as vehicleService from "./vehicle-service";
 import { getUserPermanences } from "../repositories/payments-repository";
+import { citiesService } from "./city-service";
 
 export async function isUserAlreadyPresent(email: string): Promise<boolean> {
   return userRepository.isUserAlreadyPresent(email);
@@ -41,7 +42,17 @@ export async function isVehicleLinked(email: string, vehicleId: string) {
 }
 
 export async function getUserPermanencesInfo(email: string) {
-  return getUserPermanences(email);
+  const permanences = await getUserPermanences(email);
+  const infos = [];
+  for (const permanence of permanences) {
+    infos.push({
+      parkingAddress: (await citiesService.getParkingDetailFromSpot(permanence.parkingSpotId)).address,
+      entryDate: permanence.entryDate,
+      exitDate: permanence.exitDate,
+      amountPayed: permanence.payment.amount
+    });
+  }
+  return infos;
 }
 
 // TODO: adds statistics
