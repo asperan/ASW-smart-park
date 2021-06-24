@@ -37,6 +37,7 @@ export class PaymentPageComponent implements OnInit {
   endDateHours: string = "";
   endDateMinutes: string = "";
   hours = 0;
+  isLeapHour = false;
   minutes = 0;
   
   price = 0;
@@ -54,7 +55,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private parseCurrentDate() {
-    const today = this.dateService.now();
+    const today = this.dateService.now(); //this.dateService.mock(2021, 6, 23, 18, 17)
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
@@ -78,15 +79,26 @@ export class PaymentPageComponent implements OnInit {
       this.endDateHours = "Free until 00";
       this.endDateMinutes = this.makeEndDateTime(0);
     } else {
-      const hours = this.currentHours + this.hours
       const minutes = this.currentMinutes + this.minutes;
+      const correctedMinutes = minutes < 60 ? this.makeMinutes(minutes) : this.makeLeapMinutes(minutes)
+      const hours = this.currentHours + this.hours + (this.isLeapHour ? 1 : 0)
       this.endDateHours = this.makeEndDateTime(hours <= 24 ? hours : 24);
       if(hours < this.upperBound) {
-        this.endDateMinutes = this.makeEndDateTime(minutes < 60 ? minutes : 0);
+        this.endDateMinutes = this.makeEndDateTime(correctedMinutes);
       } else {
         this.endDateMinutes = this.makeEndDateTime(0);
       }
     }    
+  }
+
+  private makeMinutes(minutes: number) {
+    this.isLeapHour = false;
+    return minutes;
+  }
+
+  private makeLeapMinutes(minutes: number) {
+    this.isLeapHour = true;
+    return minutes - 60;
   }
 
   private loadParking() {
@@ -152,7 +164,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   private isMinutesInBounds(offset: number) {
-    return this.currentMinutes + offset >= 0 && this.currentMinutes + offset <= 75;
+    return this.currentMinutes + offset >= 0
   }
 
   onPayment() {
