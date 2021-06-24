@@ -62,7 +62,7 @@ export class CitiesRepository {
     
     async updateCityParkings(cityName: string, parkings: ParkingEntity[]) {
         const citiesCollection = mongoClient.db.collection("cities");
-        return citiesCollection.updateOne({ "city": cityName }, {
+        return citiesCollection.updateOne({ "name": cityName }, {
             $set: {
                 parkings: parkings
             }
