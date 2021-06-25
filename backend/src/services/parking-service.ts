@@ -2,6 +2,7 @@ import { geoService } from "./geo-service";
 import { citiesRepository } from "../repositories/cities-repository";
 import { ParkingEntity } from "../repositories/cities-repository";
 import { Coordinates } from "./geo-service";
+import { countSpotsPermanences, getAveragePayment } from "../repositories/payments-repository";
 
 export class ParkingService {
 
@@ -39,6 +40,20 @@ export class ParkingService {
     } else {
       throw "Parking not found";
     }
+  }
+
+  public async getParkingStatistics(cityName: string, parkingId: number): Promise<{name: string, value: string}[]> {
+    const parkingSpotIds = await citiesRepository.getSpotsOfParking(cityName, parkingId);
+    const permanenceCount = await countSpotsPermanences(parkingSpotIds);
+    const avgPayment = await getAveragePayment(parkingSpotIds);
+    return [
+      {name: "Totale permanenze", value: permanenceCount.length > 0 ? "" + permanenceCount[0].count : "0"}, 
+      {name: "Media pagamenti", value: avgPayment.length > 0 ? this.toPriceString(avgPayment[0].avgPayment) : "--" }
+    ];
+  }
+
+  private toPriceString(price: number): string {
+    return "" + Math.floor(price / 100) + "." + price % 100 + "€";
   }
 }
 

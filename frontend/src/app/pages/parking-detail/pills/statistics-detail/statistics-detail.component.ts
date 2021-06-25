@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
 import { Review, ReviewsService } from 'src/app/services/reviews.service';
+import { ParkingStatisticsService } from 'src/app/services/parking-statistics.service';
 
 @Component({
   selector: 'app-statistics-detail',
@@ -11,6 +12,9 @@ import { Review, ReviewsService } from 'src/app/services/reviews.service';
 export class StatisticsDetailComponent implements OnInit {
 
   @Input() parkingId: number | undefined;
+  @Input() cityName: string | undefined;
+
+  parkingStatistics: {name: string, value: string}[] = [];
 
   userReview: Review | undefined;
   reviews: Review[] = [];
@@ -26,10 +30,11 @@ export class StatisticsDetailComponent implements OnInit {
   faStarHalf = faStarHalf;
   faStarEmpty = faStarEmpty;
 
-  constructor(private reviewsService: ReviewsService) { }
+  constructor(private reviewsService: ReviewsService, private parkingStatisticsService: ParkingStatisticsService) { }
 
   ngOnInit(): void {
     this.updateReviews();
+    this.updateStatistics();
   }
 
   private updateReviews() {
@@ -109,6 +114,12 @@ export class StatisticsDetailComponent implements OnInit {
       ).subscribe(res => {
         this.updateReviews();
       });
+    }
+  }
+
+  updateStatistics() {
+    if (this.parkingId && this.cityName) {
+      this.parkingStatisticsService.getParkingStatistics(this.cityName, this.parkingId).then(statistics => this.parkingStatistics = statistics);
     }
   }
 }

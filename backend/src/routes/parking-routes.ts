@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { request } from 'express';
 import { body } from 'express-validator';
 import { validateExpressArgumentsNoErrorsElseReturnBadArguments } from '../services/validation';
 import * as parkingController from "../controllers/parking-controller";
@@ -81,5 +81,20 @@ routes.get(
       make500ErrorResponse(res, err);
     }
   });
+
+routes.get(
+  "/statistics/:cityName/:id", 
+  validateAccessToken, 
+  async (req:express.Request, res: express.Response) => {
+    const cityName = req.params.cityName;
+    const parkingId = req.params.id;
+    try {
+      const parkingStatistics = await parkingController.getParkingStatistics(cityName, Number(parkingId));
+      res.status(200).json(parkingStatistics);
+    } catch (err) {
+      res.status(400).json({name: "Error", value: "Failed to retreive parking statistics"});
+    }
+  }
+);
 
 export default routes;

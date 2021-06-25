@@ -81,6 +81,16 @@ export class CitiesRepository {
     return parkingDetails;
   }
 
+  async getSpotsOfParking(cityName: string, parkingId: number) {
+    return (await mongoClient.db.collection("cities").aggregate([
+      {$match: {name: cityName}}, 
+      {$unwind: "$parkings"}, 
+      {$match: {"parkings.id": parkingId}}, 
+      {$group: {_id: null, spotIds: {$addToSet: "$parkings.parkingSpots.uid"}}}, 
+      {$unwind: "$spotIds"}
+    ]).toArray())[0].spotIds;
+  }
+
   private formCityEntity(res: any): CityEntity {
     return {
       name: res.name,

@@ -37,3 +37,7 @@ export async function addParkingToVehicle(vehicleId: string, parkingId: string):
 export async function removeParkingFromVehicle(vehicleId: string) {
   return vehicleRepository.removeParkingFromVehicle(vehicleId);
 }
+
+export async function getVehicleParkingSpot(vehicleId: string) {
+  return vehicleRepository.getVehicleParkingSpot(vehicleId);
+}

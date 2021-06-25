@@ -38,3 +38,7 @@ export async function addParkingToVehicle(vehicleId: string, parkingId: string):
 export async function removeParkingFromVehicle(vehicleId: string) {
   return (await mongoClient.db.collection("vehicles").findOneAndUpdate({ id: vehicleId }, { $unset: { parkingId: "" } })).ok === 1;
 }
+
+export async function getVehicleParkingSpot(vehicleId: string) {
+  return await mongoClient.db.collection("vehicles").findOne({ id: vehicleId }, { projection: { parkingId: 1, _id: 0 } });
+}

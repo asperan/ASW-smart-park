@@ -22,6 +22,10 @@ export async function getParkingSpotsByParkingId(cityName: string, parkingId: nu
   return makeDtoFromParking(parking);
 }
 
+export async function getParkingStatistics(cityName: string, parkingId: number) {
+  return await parkingService.getParkingStatistics(cityName, parkingId);
+}
+
 function makeDtoFromParking(parking: ParkingEntity) {
   return {
     id: parking.id,
