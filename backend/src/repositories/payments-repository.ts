@@ -43,3 +43,11 @@ export async function getAveragePermanenceTime(userEmail: string) {
       }
     }]).toArray());
 }
+
+export async function countSpotsPermanences(spots: string[]) {
+  return (await mongoClient.db.collection("parkingstays").aggregate([{$match: {parkingSpotId: { $in: spots }}}, {$group: {_id: null, count: {$sum: 1}}}]).toArray());
+}
+
+export async function getAveragePayment(spots: string[]) {
+  return (await mongoClient.db.collection("parkingstays").aggregate([{$match: {parkingSpotId: { $in: spots }}}, {$group: {_id: null, avgPayment: {$avg: "$payment.amount"}}}]).toArray());
+}
