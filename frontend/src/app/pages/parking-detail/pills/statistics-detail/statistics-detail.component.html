@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-center">
       <div class="content text-center">
         <div class="statistics">
-          <div *ngFor="let stat of parkingStatistics">
+          <div class="statListElement" *ngFor="let stat of parkingStatistics">
             {{ stat.name }}: {{ stat.value }}
           </div>
         </div>
