@@ -5,6 +5,7 @@ type PermanenceObject = {
   parkingAddress: string,
   entryDate: Date,
   exitDate: Date,
+  payedUntil: Date,
   amountPayed: number
 };
 
