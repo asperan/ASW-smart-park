@@ -8,6 +8,8 @@
 
 .vehicleElementContainer {
   display: flex;
+  margin: 0.5em 0;
+  cursor: pointer;
 }
 
 /* .results-container {
@@ -57,4 +59,10 @@
   right: 0;
   bottom: 0;
   padding: 0.375rem 0.75rem;
+}
+
+.guideParagraph {
+  font-style: italic;
+  font-size: small;
+  text-align: center;
 }

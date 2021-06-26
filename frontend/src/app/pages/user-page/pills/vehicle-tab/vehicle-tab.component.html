@@ -1,7 +1,7 @@
 <div class="error-banner" *ngIf="errorMessage.length > 0">
   {{ errorMessage }}
 </div>
-
+<p class="guideParagraph">Clicca su un veicolo della tua lista indicare che lo stai usando.</p>
 <div class="search-container">
   <div class="input-group mb-3">
     <input class="form-control vehicleSearch" type="text" (input)="onFilterChange($event)" placeholder="Search..." />
