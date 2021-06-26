@@ -1,6 +1,7 @@
 <p *ngIf="userPermanences.length === 0">No Payments found</p>
 <div class="paymentListElement" *ngFor="let permanence of userPermanences">
-  {{ permanence.parkingAddress }} - {{ permanence.amountPayed | price }}<br />
-  {{ permanence.entryDate | date:"YYYY-MM-dd HH:mm:ss a (O)" }}<br />
-  {{ permanence.exitDate | date:"YYYY-MM-dd HH:mm:ss a (O)" }}
+  <b>Luogo:</b> {{ permanence.parkingAddress }}<br />
+  <b>Costo:</b> {{ permanence.amountPayed | price }}<br />
+  <b>Ingresso:</b> {{ permanence.entryDate | date:"YYYY-MM-dd HH:mm:ss a (O)" }}<br />
+  <b>{{ permanence.exitDate ? "Uscita" : "Scadenza" }}:</b> {{ (permanence.exitDate ? permanence.exitDate : permanence.payedUntil) | date:"YYYY-MM-dd HH:mm:ss a (O)" }}
 </div>
