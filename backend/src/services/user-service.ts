@@ -50,6 +50,7 @@ export async function getUserPermanencesInfo(email: string) {
         parkingAddress: (await citiesService.getParkingDetailFromSpot(permanence.parkingSpotId)).address,
         entryDate: permanence.entryDate,
         exitDate: permanence.exitDate,
+        payedUntil: permanence.payedUntil,
         amountPayed: permanence.payment.amount
       });
     }
