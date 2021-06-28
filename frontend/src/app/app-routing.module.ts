@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'parking-search', component: ParkingSearchComponent, canActivate: [AuthGuardService] },
   { path: "signup", component: SignPageComponent, data: { isSignup: true } },
   { path: "signin", component: SignPageComponent, data: { isSignup: false } },
-  { path: "notifications", component: NotificationPageComponent },
+  { path: "notifications", component: NotificationPageComponent, canActivate: [AuthGuardService] },
   { path: "userpage", component: UserPageComponent, canActivate: [AuthGuardService] },
   { path: "parking/:cityName/:id", component: ParkingDetailComponent, canActivate: [AuthGuardService] },
   { path: "contact-us", component: ContactFormComponent, canActivate: [AuthGuardService] },
