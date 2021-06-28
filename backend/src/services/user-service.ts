@@ -66,9 +66,9 @@ export async function getUserStatistics(email: string): Promise<any> {
   const averagePermanenceTime = await getAveragePermanenceTime(email);
   const averageTimeString = averagePermanenceTime.length > 0 ? computeAverageTimeString(averagePermanenceTime[0].avgTime) : "0";
   return [
-    { name: "Totale parcheggi", value: "" + numOfPermanences.numOfPermanences}, 
-    { name: "Parcheggio più costoso", value: toPriceString(mostPayed.maxPayment) },
-    { name: "Veicolo più usato", value: await getVehicleName(email, mostUsedVehicle._id) },
+    { name: "Totale parcheggi", value: "" + (numOfPermanences ? numOfPermanences.numOfPermanences : "0")}, 
+    { name: "Parcheggio più costoso", value: mostPayed ? toPriceString(mostPayed.maxPayment) : "--" },
+    { name: "Veicolo più usato", value: (mostUsedVehicle._id ? await getVehicleName(email, mostUsedVehicle._id) : "--") },
     { name: "Tempo di permanenza medio", value: averageTimeString },
   ];
 }
